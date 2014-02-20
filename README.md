@@ -14,3 +14,12 @@ Download iTerm2 from http://www.iterm2.com. Never use Terminal again.
     2. ```git clone git@github.com:zsh-users/antigen.git```
 3. Get the powerline patched fonts from https://github.com/Lokaltog/powerline-fonts, they include the pretty branch icon that the theme in this .zshrc uses
 4. Configure zsh by copying the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~
+
+The included .zshrc and .zsh_aliases files enable:
+* cross-session shared history
+* proper command history search
+* deduping history
+* syntax highlighting at the command line
+* oh-my-zsh plugins and themes (via antigen)
+* tab completion of Rakefile targets
+* various helper functions for interacting with OS X's clipboard and quicklook
