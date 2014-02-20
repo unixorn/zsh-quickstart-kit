@@ -1,4 +1,5 @@
 # Switch to iTerm2
+
 Download iTerm2 from http://www.iterm2.com. Never use Terminal again.
 
 # Switch to zsh
@@ -11,4 +12,5 @@ Download iTerm2 from http://www.iterm2.com. Never use Terminal again.
 2. Install Antigen
     1. ```cd ~```
     2. ```git clone git@github.com:zsh-users/antigen.git```
-3. Configure zsh by copying the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~
+3. Get the powerline patched fonts from https://github.com/Lokaltog/powerline-fonts, they include the pretty branch icon that the theme in this .zshrc uses
+4. Configure zsh by copying the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~
