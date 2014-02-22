@@ -32,11 +32,26 @@ antigen use oh-my-zsh
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen-bundle zsh-users/zsh-history-substring-search
+antigen bundle unixorn/rake-completion.zshplugin
 
-for plugin in thor screen rsync knife gem git github osx textmate ruby vagrant history-substring-search rake screen encode64
-do
-  antigen bundle ${plugin}
-done
+antigen bundles <<EOBUNDLES
+gem
+git
+github
+history-substring-search
+knife
+osx
+python
+rake
+rsync
+ruby
+screen
+screen
+textmate
+thor
+vagrant
+virtualenvwrapper
+EOBUNDLES
 
 # Get the powerline patched fonts from https://github.com/Lokaltog/powerline-fonts
 # if you want the pretty branch icon in your prompt
@@ -88,7 +103,7 @@ PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # Conditional PATH additions
 if [ -d /Developer/Tools ]; then
-	export PATH=$PATH:/Developer/Tools
+  export PATH=$PATH:/Developer/Tools
 fi
 
 if [ -d /opt/local/sbin ]; then
@@ -112,29 +127,29 @@ if [ -d ~/.cabal/bin ]; then
 fi
 
 if [ -d ~/.rbenv/bin ]; then
-	export PATH=${HOME}/.rbenv/bin:${PATH}
+  export PATH=${HOME}/.rbenv/bin:${PATH}
 fi
 
 export LOCATE_PATH=/var/db/locate.database
 
 # Load AWS credentials
 if [ -f ~/.aws/aws_variables ]; then
-	source ~/.aws/aws_variables
+  source ~/.aws/aws_variables
 fi
 
 # AWS cli tools
 if [ -d ~/bin/ec2-api/bin ]; then
-	export PATH=$PATH:~/bin/ec2-api/bin
+  export PATH=$PATH:~/bin/ec2-api/bin
 fi
 
 # JAVA setup - needed for iam-* tools
 if [ -d /Library/Java/Home ];then
-	export JAVA_HOME=/Library/Java/Home
+  export JAVA_HOME=/Library/Java/Home
 fi
 
 # more AWS cli tools
 if [ -d ~/bin/iamcli-current/bin ]; then
-	export PATH=$PATH:~/bin/iamcli-current/bin
+  export PATH=$PATH:~/bin/iamcli-current/bin
 fi
 
 # Fun with SSH
@@ -164,9 +179,9 @@ echo
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # We're on osx
-	if [ -f .osx_aliases ]; then
-		source .osx_aliases
-	fi
+  if [ -f .osx_aliases ]; then
+    source .osx_aliases
+  fi
   if [ -d $HOME/.osx_aliases.d ]; then
     for alias_file in $HOME/.osx_aliases.d/*
     do
@@ -214,9 +229,9 @@ fi
 # brew install grc to check it out.
 if [ -f /usr/local/etc/grc.bashrc ]; then
   source "`brew --prefix`/etc/grc.bashrc"
-	alias ping5='colourify ping -c 5'
+  alias ping5='colourify ping -c 5'
 else
-	alias ping5='ping -c 5'
+  alias ping5='ping -c 5'
 fi
 
 # speed up autocomplete, force prefix mapping
@@ -225,7 +240,10 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
-# rake task completion
-if [ -f ~/.zsh-completions/rake_completion.zsh ]; then
-  source ~/.zsh-completions/rake_completion.zsh
+# zsh completions
+if [ -d ~/.zsh-completions ]; then
+  for completion in ~/.zsh-completions/*
+  do
+    source completion
+  done
 fi
