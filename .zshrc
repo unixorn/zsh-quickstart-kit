@@ -166,12 +166,16 @@ if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
   fi
 fi
 
-if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
-  ssh-add ~/.ssh/id_rsa
+if [ -f ~/.ssh/id_rsa ]; then
+  if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_rsa
+  fi
 fi
 
-if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
-  ssh-add ~/.ssh/id_dsa
+if [ -f ~/.ssh/id_dsa ]; then
+  if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_dsa
+  fi
 fi
 
 echo
@@ -242,7 +246,7 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
-# zsh completions
+# load any custom zsh completions we've installed
 if [ -d ~/.zsh-completions ]; then
   for completion in ~/.zsh-completions/*
   do
