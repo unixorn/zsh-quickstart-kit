@@ -42,7 +42,6 @@ git
 github
 history-substring-search
 knife
-osx
 python
 rake
 rsync
@@ -54,6 +53,10 @@ thor
 vagrant
 virtualenvwrapper
 EOBUNDLES
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  antigen bundle osx
+fi
 
 # Get the powerline patched fonts from https://github.com/Lokaltog/powerline-fonts
 # if you want the pretty branch icon in your prompt

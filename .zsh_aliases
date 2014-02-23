@@ -159,13 +159,13 @@ function procs_for_path() {
 }
 
 function pledit() { # plist editor.
-if [ $# -ne 1 ]; then
+  if [ $# -ne 1 ]; then
     echo -e "pledit: Edit Apple plist file\nusage: pledit plist_filename"
-    else
-        sudo plutil -convert xml1 ${1}; # convert the binary file to xml 
-        sudo ${EDITOR} ${1}; # use the default editor
-        sudo plutil -convert binary1 ${1} # convert it back to binary
-        fi
+  else
+    sudo plutil -convert xml1 ${1}; # convert the binary file to xml 
+    sudo ${EDITOR} ${1}; # use the default editor
+    sudo plutil -convert binary1 ${1} # convert it back to binary
+  fi
 }
 
 # begin sysadvent2011 functions
@@ -210,19 +210,19 @@ get_load() {
 }
 
 function bash_repeat() {
-    n=$1
-    shift
-    while [ $(( n -= 1 )) -ge 0 ]
-    do
-        "$@"
-    done
+  n=$1
+  shift
+  while [ $(( n -= 1 )) -ge 0 ]
+  do
+      "$@"
+  done
 }
 
 # Deal with various stupidities
 
 # thanks so much for being a tard, fink
 if [ -d /sw/bin ];then
-    alias ldapsearch=/usr/bin/ldapsearch
+  alias ldapsearch=/usr/bin/ldapsearch
 fi
 
 function authme {
@@ -265,20 +265,21 @@ if [ -f /usr/bin/vagrant ]; then
 fi
 
 show_terminal_colors() {
-	for i in {0..255} ; do
-		printf "\x1b[38;5;${i}mcolour${i}\n"
-	done
+  for i in {0..255} ; do
+    printf "\x1b[38;5;${i}mcolour${i}\n"
+  done
 }
 
 # Use brew versions if present
 if [ -x /usr/local/bin/mysql/bin/mysql ]; then
   alias mysql="/usr/local/mysql/bin/mysql"
 fi
+
 if [ -x /usr/local/bin/mysql/bin/mysqladmin ]; then
   alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
 fi
 
 # batch change extension
 chgext() {
-	for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
+  for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
 }
