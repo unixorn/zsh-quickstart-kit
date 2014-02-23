@@ -15,7 +15,9 @@ ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-# turn off the infernal correctall
+# Correct spelling for commands
+setopt correct
+# turn off the infernal correctallf for filenames
 unsetopt correctall
 
 # Configure antigen.
@@ -102,8 +104,8 @@ fi
 PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # Conditional PATH additions
-if [ -d /Developer/Tools ]; then
-  export PATH=$PATH:/Developer/Tools
+if [ -d /Applications/Xcode.app/Contents/Developer/usr/bin ]; then
+  export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
 fi
 
 if [ -d /opt/local/sbin ]; then
