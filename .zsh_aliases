@@ -43,7 +43,7 @@ else
   alias ll="ls -la | less"
 fi
 
-if [ $(uname -a | grep -ci LINUX) -eq 1 ]; then
+if [[ "$(uname -s)" == "Linux" ]]; then
   # we're on linux
   alias l-d="ls -lFaGd"
   alias l="ls -laFG"
@@ -88,29 +88,33 @@ alias mac2unix="tr '\015' '\012'"
 alias unix2mac="tr '\012' '\015'"
 
 alias ..="cd .."
+
 # A couple of different external IP lookups depending on which is down.
 alias external_ip="curl -s icanhazip.com"
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# Show laptop's IP addresses
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
 alias reattach='screen -r'
 
-# 
+# Pass our credentials by default
 alias ssh="ssh -A"
-alias sshnohostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias ssh_unkeyed="/usr/bin/ssh"
+alias ssh_no_hostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
-# 
+# strip color codes from commands that insist on spewing them so we can
+# pipe them into files cleanly
 alias stripcolors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
 
+# If I don't want to continue a download I can always delete the incomplete
+# fragment
 alias wget="wget -c"
+
+# Dump the last 20 history entries
 alias zh='fc -l -d -D'
 
 # My typical tyops.
-alias tartvf="tar tvf"
-alias tartvzf="tar tvzf"
-alias tarxvf="tar xvf"
-
-# common tyops
 alias gerp='grep'
 alias grep-i='grep -i'
 alias grep='GREP_COLOR="1;37;41" LANG=C grep --color=auto'
@@ -121,6 +125,9 @@ alias psax='ps ax'
 alias pswax='ps wax'
 alias psxa='ps ax'
 alias raek='rake'
+alias tartvf="tar tvf"
+alias tartvzf="tar tvzf"
+alias tarxvf="tar xvf"
 
 # from cads
 ff() { find . -type f -iname '*'$*'*' -ls ; }

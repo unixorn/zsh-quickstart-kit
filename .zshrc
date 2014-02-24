@@ -20,6 +20,30 @@ setopt correct
 # turn off the infernal correctallf for filenames
 unsetopt correctall
 
+# Fun with SSH
+if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    # We're on OS X. Try to load our ssh keys using pass phrases stored in
+    # the OSX keychain.
+    ssh-add -k
+  else
+    ssh-add ~/.ssh/id_dsa
+    ssh-add ~/.ssh/id_rsa
+  fi
+fi
+
+if [ -f ~/.ssh/id_rsa ]; then
+  if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_rsa
+  fi
+fi
+
+if [ -f ~/.ssh/id_dsa ]; then
+  if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_dsa
+  fi
+fi
+
 # Configure antigen.
 # Path to antigen checkout
 ANTIGEN=${HOME}/antigen
@@ -157,35 +181,6 @@ if [ -d ~/bin/iamcli-current/bin ]; then
   export PATH=$PATH:~/bin/iamcli-current/bin
 fi
 
-# Fun with SSH
-if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    # We're on OS X. Try to load our ssh keys using pass phrases stored in
-    # the OSX keychain.
-    ssh-add -k
-  else
-    ssh-add ~/.ssh/id_dsa
-    ssh-add ~/.ssh/id_rsa
-  fi
-fi
-
-if [ -f ~/.ssh/id_rsa ]; then
-  if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_rsa
-  fi
-fi
-
-if [ -f ~/.ssh/id_dsa ]; then
-  if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_dsa
-  fi
-fi
-
-echo
-echo "Current SSH Keys:"
-ssh-add -l
-echo
-
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # We're on osx
   if [ -f .osx_aliases ]; then
@@ -256,3 +251,8 @@ if [ -d ~/.zsh-completions ]; then
     source completion
   done
 fi
+
+echo
+echo "Current SSH Keys:"
+ssh-add -l
+echo
