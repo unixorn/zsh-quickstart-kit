@@ -131,33 +131,25 @@ fi
 PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # Conditional PATH additions
-if [ -d /Applications/Xcode.app/Contents/Developer/usr/bin ]; then
-  export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
-fi
 
-if [ -d /opt/local/sbin ]; then
-  export PATH=$PATH:/opt/local/sbin
-fi
+for path_candidate in /opt/local/sbin \
+  /opt/local/bin \
+  /Applications/Xcode.app/Contents/Developer/usr/bin
+  /usr/local/share/npm/bin \
+  ~/.bin/ec2-api/bin \
+  ~/.cabal/bin \
+  ~/.rbenv/bin \
+  ~/bin \
+  ~/bin/iamcli-current/bin \
+  ~/bin/sysadmin-util \
+  ~/nta/packer \
+  ~/src/gocode/bin
+do
+  if [ -d ${path_candidate} ]; then
+    export PATH=${PATH}:${path_candidate}
+  fi
+done
 
-if [ -d /opt/local/bin ]; then
-  export PATH=$PATH:/opt/local/bin
-fi
-
-if [ -d /usr/local/share/npm/bin ]; then
-  export PATH=$PATH:/usr/local/share/npm/bin
-fi
-
-if [ -d ~/bin ]; then
-  export PATH=$PATH:~/bin
-fi
-
-if [ -d ~/.cabal/bin ]; then
-  export PATH=$PATH:~/.cabal/bin
-fi
-
-if [ -d ~/.rbenv/bin ]; then
-  export PATH=${HOME}/.rbenv/bin:${PATH}
-fi
 
 export LOCATE_PATH=/var/db/locate.database
 
