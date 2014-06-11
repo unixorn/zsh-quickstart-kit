@@ -19,6 +19,7 @@ The included .zshrc and .zsh_aliases files enable:
 * cross-session shared history
 * proper command history search
 * deduping history
+* automatic periodic update of antigen and your plugins
 * syntax highlighting at the command line
 * oh-my-zsh plugins and themes (via antigen)
 * tab completion of Rakefile targets
