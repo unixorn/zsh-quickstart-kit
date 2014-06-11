@@ -56,6 +56,7 @@ source $ANTIGEN/antigen.zsh
 
 antigen use oh-my-zsh
 
+antigen bundle unixorn/autoupdate-antigen.zshplugin
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen-bundle zsh-users/zsh-history-substring-search
 antigen bundle unixorn/rake-completion.zshplugin
