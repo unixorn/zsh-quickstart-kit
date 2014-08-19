@@ -135,9 +135,9 @@ PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 for path_candidate in /opt/local/sbin \
   /opt/local/bin \
-  /Applications/Xcode.app/Contents/Developer/usr/bin
+  /Applications/Xcode.app/Contents/Developer/usr/bin \
   /usr/local/share/npm/bin \
-  ~/.bin/ec2-api/bin \
+  ~/bin/ec2-api/bin \
   ~/.cabal/bin \
   ~/.rbenv/bin \
   ~/bin \
