@@ -88,7 +88,9 @@ fi
 
 # Get the powerline patched fonts from https://github.com/Lokaltog/powerline-fonts
 # if you want the pretty branch icon in your prompt
-antigen theme https://gist.github.com/016e035175cbf0059876.git jpb-segmented
+#antigen theme https://gist.github.com/016e035175cbf0059876.git jpb-segmented
+
+antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bul    let-train
 
 antigen apply
 
