@@ -1,6 +1,8 @@
 #!/bin/bash
 #
-# Copyright 2006-2013 Joseph Block <jpb@apesseekingknowledge.net>
+# Copyright 2006-2014 Joseph Block <jpb@apesseekingknowledge.net>
+#
+# BSD licensed, see LICENSE.txt
 
 export GOPATH=~/gocode
 

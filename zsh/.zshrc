@@ -1,7 +1,10 @@
+# Copyright 2006-2014 Joseph Block <jpb@apesseekingknowledge.net>
+#
+# BSD licensed, see LICENSE.txt
 
 # Set zsh syntax highlighters
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+export ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -13,7 +16,7 @@ ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
+export COMPLETION_WAITING_DOTS="true"
 
 # Correct spelling for commands
 setopt correct
@@ -48,11 +51,11 @@ fi
 # Path to antigen checkout
 ANTIGEN=${HOME}/antigen
 
-if [ ! -d ${ANTIGEN} ]; then
+if [ ! -d "${ANTIGEN}" ]; then
   git clone git@github.com:zsh-users/antigen.git ~/antigen
 fi
 
-source $ANTIGEN/antigen.zsh
+source "$ANTIGEN/antigen.zsh"
 
 antigen use oh-my-zsh
 
@@ -190,7 +193,7 @@ fi
 # deal with screen, if we're using it - courtesy MacOSXHints.com
 # Login greeting ------------------
 if [ "$TERM" = "screen" -a ! "$SHOWED_SCREEN_MESSAGE" = "true" ]; then
-  detached_screens=`screen -list | grep Detached`
+  detached_screens=$(screen -list | grep Detached)
   if [ ! -z "$detached_screens" ]; then
     echo "+---------------------------------------+"
     echo "| Detached screens are available:       |"
@@ -203,20 +206,20 @@ fi
 # one, list them instead.
 #
 # Based on http://ptone.com/dablog/2009/02/getting-the-screen-religion/
-AM_I_REMOTE=`who am i | grep -c ")$"`
+AM_I_REMOTE=$(who am i | grep -c ")$")
 if [ $AM_I_REMOTE -gt 0 ]; then
-  SCREENS=`screen -list | head -1 | awk '{ print $1 }'`
+  SCREENS=$(screen -list | head -1 | awk '{ print $1 }')
   if [ $SCREENS = 'No' ]; then
     screen -t Main
   else
-    SCREENCOUNT=`screen -list | tail -2 | head -1 | awk '{ print $1 }'`
+    SCREENCOUNT=$(screen -list | tail -2 | head -1 | awk '{ print $1 }')
     if [ $SCREENCOUNT -eq 1 ]; then
       screen -r
     else
-      CANDIDATE_SCREEN=`screen -list | grep "(Detached)" | head -1 | awk -F "." '{print $1}'`
-      DETACHED_SCREENCOUNT=`screen -list | grep -c "(Detached)"`
+      CANDIDATE_SCREEN=$(screen -list | grep "(Detached)" | head -1 | awk -F "." '{print $1}')
+      DETACHED_SCREENCOUNT=$(screen -list | grep -c "(Detached)")
       if [ $DETACHED_SCREENCOUNT -gt 0 ];then
-        screen -R $CANDIDATE_SCREEN
+        screen -R "$CANDIDATE_SCREEN"
       fi
     fi
   fi
@@ -225,7 +228,7 @@ fi
 # I use grc to colorize some command output for clarity.
 # brew install grc to check it out.
 if [ -f /usr/local/etc/grc.bashrc ]; then
-  source "`brew --prefix`/etc/grc.bashrc"
+  source "$(brew --prefix)/etc/grc.bashrc"
   alias ping5='colourify ping -c 5'
 else
   alias ping5='ping -c 5'
@@ -241,7 +244,7 @@ zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:
 if [ -d ~/.zsh-completions ]; then
   for completion in ~/.zsh-completions/*
   do
-    source completion
+    source "$completion"
   done
 fi
 
