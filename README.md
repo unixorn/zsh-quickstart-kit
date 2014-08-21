@@ -18,7 +18,7 @@
 1. Install Antigen
     1. ```cd ~```
     2. ```git clone git@github.com:zsh-users/antigen.git```
-2. Configure zsh by copying the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~ with stow by running ```stow zsh``` in the top level of this repository.
+2. Configure zsh by symlinking the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~ with stow by running ```stow zsh``` in the top level of this repository.
 
 The included .zshrc and .zsh_aliases files enable:
 * cross-session shared history
