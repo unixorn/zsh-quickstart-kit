@@ -75,7 +75,6 @@ rake
 rsync
 ruby
 screen
-screen
 textmate
 thor
 vagrant
@@ -90,7 +89,7 @@ fi
 # if you want the pretty branch icon in your prompt
 #antigen theme https://gist.github.com/016e035175cbf0059876.git jpb-segmented
 
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bul    let-train
+antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 
 antigen apply
 
@@ -156,7 +155,6 @@ do
   fi
 done
 
-
 export LOCATE_PATH=/var/db/locate.database
 
 # Load AWS credentials
@@ -164,19 +162,9 @@ if [ -f ~/.aws/aws_variables ]; then
   source ~/.aws/aws_variables
 fi
 
-# AWS cli tools
-if [ -d ~/bin/ec2-api/bin ]; then
-  export PATH=$PATH:~/bin/ec2-api/bin
-fi
-
 # JAVA setup - needed for iam-* tools
 if [ -d /Library/Java/Home ];then
   export JAVA_HOME=/Library/Java/Home
-fi
-
-# more AWS cli tools
-if [ -d ~/bin/iamcli-current/bin ]; then
-  export PATH=$PATH:~/bin/iamcli-current/bin
 fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
