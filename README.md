@@ -29,3 +29,4 @@ The included .zshrc and .zsh_aliases files enable:
 * oh-my-zsh plugins and themes (via antigen)
 * tab completion of Rakefile targets
 * various helper functions for interacting with OS X's clipboard and quicklook
+* Appending your own customizations (stick them in ~/.zshrc.local)
