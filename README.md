@@ -2,13 +2,14 @@
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). Never use Terminal again.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. ```brew install stow```
-4. Switch your shell to zsh
+5. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to get it.
+6. Switch your shell to zsh
     1. System Preferences -> Users & Groups.
     2. Unlock the preferences
     3. Select your user
-    3. Select advanced options
-    4. Set your login shell to ```/bin/zsh``` (```/usr/local/bin/zsh``` if you're using a newer version from brew)
-5. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses
+    4. Select advanced options
+    5. Set your login shell to ```/bin/zsh``` (```/usr/local/bin/zsh``` if you're using a newer version from brew)
+7. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses
 
 # On Linux
 1. Switch your shell to zsh with chsh ```chsh -s /bin/zsh```
