@@ -9,7 +9,7 @@
     3. Select your user
     4. Select advanced options
     5. Set your login shell to ```/bin/zsh``` (```/usr/local/bin/zsh``` if you're using a newer version from brew)
-7. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses
+7. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses. You'll need to clone that repository, then copy the fonts into `~/Library/Fonts`
 
 # On Linux
 1. Switch your shell to zsh with chsh ```chsh -s /bin/zsh```
