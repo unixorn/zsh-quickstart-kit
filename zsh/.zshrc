@@ -26,12 +26,12 @@ unsetopt correctall
 # Fun with SSH
 if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
   if [[ "$(uname -s)" == "Darwin" ]]; then
-    # We're on OS X. Try to load our ssh keys using pass phrases stored in
+    # We're on OS X. Try to load ssh keys using pass phrases stored in
     # the OSX keychain.
+    #
+    # You can use ssh-add -K /path/to/key to store pass phrases into
+    # the OSX keychain
     ssh-add -k
-  else
-    ssh-add ~/.ssh/id_dsa
-    ssh-add ~/.ssh/id_rsa
   fi
 fi
 
@@ -217,7 +217,7 @@ fi
 
 # I use grc to colorize some command output for clarity.
 # brew install grc to check it out.
-if [ -f /usr/local/etc/grc.bashrc ]; then
+if [ -f "$(brew --prefix)/etc/grc.bashrc" ]; then
   source "$(brew --prefix)/etc/grc.bashrc"
   alias ping5='colourify ping -c 5'
 else
