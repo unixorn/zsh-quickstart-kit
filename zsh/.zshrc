@@ -132,6 +132,10 @@ if [ -r ~/.zsh_aliases ]; then
   source ~/.zsh_aliases
 fi
 
+if [ -r ~/.zsh_functions ]; then
+  source ~/.zsh_functions
+fi
+
 # Path nonsense
 PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
