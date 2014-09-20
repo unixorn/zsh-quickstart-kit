@@ -17,6 +17,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias l-l="ls -laFG"
   alias l="ls -laFG"
   alias ll="ls -lFa | TERM=vt100 less"
+
   # These assume you've installed memcached, mysql & postgresql with brew
   alias memcached_load="launchctl load -w /usr/local/Cellar/memcached/1.4.13/homebrew.mxcl.memcached.plist"
   alias memcached_unload="launchctl unload -w /usr/local/Cellar/memcached/1.4.13/homebrew.mxcl.memcached.plist"
@@ -29,11 +30,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias gpaste="pbpaste | perl -pe 's/\r\n|\r/\n/g'"
   alias pbconvert="pbpaste | perl -pe 's/\r\n|\r/\n/g' | pbcopy"
   alias pbsort="pbpaste | sort | pbcopy"
+
   # QuickLook stuff
   alias ql='qlmanage -p'
   alias quicklook='qlmanage -p'
   alias spotlighter='mdfind -onlyin `pwd`'
   alias top='TERM=vt100 top'
+
   # Sound.
   alias stfu="osascript -e 'set volume output muted true'"
   alias mute="osascript -e 'set volume output muted true'"

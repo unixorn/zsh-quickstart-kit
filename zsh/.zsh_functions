@@ -44,7 +44,10 @@ function calc() {
 }
 
 function procs_for_path() {
-    for pid in $(lsof "$*" | cut -d' ' -f 3 | sort | uniq); do ps -f -p $pid; done
+    for pid in $(lsof "$*" | cut -d' ' -f 3 | sort | uniq)
+    do
+      ps -f -p $pid
+    done
 }
 
 function pledit() { # plist editor.
@@ -87,7 +90,7 @@ function countby() {
 
 # ssh helper
 function rmhost () {
-    perl -i -ne "print unless $1 .. $1" ~/.ssh/known_hosts;
+  perl -i -ne "print unless $1 .. $1" ~/.ssh/known_hosts;
 }
 
 get_nr_jobs() {
@@ -109,8 +112,7 @@ function bash_repeat() {
 
 
 function authme {
-  ssh "$1" 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' \
-  < ~/.ssh/id_dsa.pub
+  ssh "$1" 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
 }
 
 function mtr_url {
@@ -126,12 +128,12 @@ function jsoncurl() {
 # recursively touch, e.g. touch + mkdir -p
 # so files can easily be created at depth
 #
-canhaz () {
+canhaz() {
   mkdir -p -- "${1%/*}" && touch -- "$1"
 }
 
 pong() {
-    ping -c 10 "$@"
+  ping -c 10 "$@"
 }
 
 fix_tmux_ssh_agent() {
@@ -151,7 +153,10 @@ show_terminal_colors() {
 
 # batch change extension
 chgext() {
-  for file in *.$1 ; do mv $file `echo $file | sed "s/\(.*\.\)$1/\1$2/"` ; done
+  for file in *.$1
+  do
+    mv $file $(echo $file | sed "s/\(.*\.\)$1/\1$2/")
+  done
 }
 
 # Make extending easier
