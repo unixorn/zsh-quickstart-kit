@@ -137,7 +137,7 @@ if [ -r ~/.zsh_functions ]; then
 fi
 
 # Path nonsense
-PATH=/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:$PATH
 
 # Conditional PATH additions
 
