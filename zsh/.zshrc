@@ -2,10 +2,6 @@
 #
 # BSD licensed, see LICENSE.txt
 
-# Set zsh syntax highlighters
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-export ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
-
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
@@ -22,6 +18,29 @@ export COMPLETION_WAITING_DOTS="true"
 setopt correct
 # turn off the infernal correctallf for filenames
 unsetopt correctall
+
+# Base PATH
+PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin
+
+# Conditional PATH additions
+
+for path_candidate in /opt/local/sbin \
+  /opt/local/bin \
+  /Applications/Xcode.app/Contents/Developer/usr/bin \
+  /usr/local/share/npm/bin \
+  ~/bin/ec2-api/bin \
+  ~/.cabal/bin \
+  ~/.rbenv/bin \
+  ~/bin \
+  ~/bin/iamcli-current/bin \
+  ~/bin/sysadmin-util \
+  ~/nta/packer \
+  ~/src/gocode/bin
+do
+  if [ -d ${path_candidate} ]; then
+    export PATH=${PATH}:${path_candidate}
+  fi
+done
 
 # Fun with SSH
 if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
@@ -47,7 +66,8 @@ if [ -f ~/.ssh/id_dsa ]; then
   fi
 fi
 
-# Configure antigen.
+# Now that we have $PATH set up and ssh keys loaded, configure antigen.
+
 # Path to antigen checkout
 ANTIGEN=${HOME}/antigen
 
@@ -103,6 +123,7 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
+
 # Share your history across all your terminal windows
 setopt share_history
 #setopt noclobber
@@ -136,29 +157,6 @@ if [ -r ~/.zsh_functions ]; then
   source ~/.zsh_functions
 fi
 
-# Path nonsense
-PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:$PATH
-
-# Conditional PATH additions
-
-for path_candidate in /opt/local/sbin \
-  /opt/local/bin \
-  /Applications/Xcode.app/Contents/Developer/usr/bin \
-  /usr/local/share/npm/bin \
-  ~/bin/ec2-api/bin \
-  ~/.cabal/bin \
-  ~/.rbenv/bin \
-  ~/bin \
-  ~/bin/iamcli-current/bin \
-  ~/bin/sysadmin-util \
-  ~/nta/packer \
-  ~/src/gocode/bin
-do
-  if [ -d ${path_candidate} ]; then
-    export PATH=${PATH}:${path_candidate}
-  fi
-done
-
 export LOCATE_PATH=/var/db/locate.database
 
 # Load AWS credentials
@@ -173,9 +171,7 @@ fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # We're on osx
-  if [ -f .osx_aliases ]; then
-    source .osx_aliases
-  fi
+  [ -f .osx_aliases ] && source .osx_aliases
   if [ -d $HOME/.osx_aliases.d ]; then
     for alias_file in $HOME/.osx_aliases.d/*
     do

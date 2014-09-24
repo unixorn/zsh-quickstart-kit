@@ -134,7 +134,7 @@ alias tarxvf="tar xvf"
 
 # Deal with various stupidities
 
-# thanks so much for being a tard, fink
+# thanks so much for breaking ldapsearch, fink
 if [ -d /sw/bin ];then
   alias ldapsearch=/usr/bin/ldapsearch
 fi
