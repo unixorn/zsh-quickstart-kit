@@ -249,6 +249,13 @@ if [ -f ~/.zshrc.local ]; then
   source .zshrc.local
 fi
 
+# load all files from .zshrc.d directory
+if [ -d $HOME/.zshrc.d ]; then
+  for file in $HOME/.zshrc.d/*.zsh; do
+    source $file
+  done
+fi
+
 # In case a plugin adds a redundant path entry, remove duplicate entries
 # from PATH
 #
