@@ -99,6 +99,7 @@ textmate
 thor
 vagrant
 virtualenvwrapper
+zsh-users/zsh-completions src
 EOBUNDLES
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
