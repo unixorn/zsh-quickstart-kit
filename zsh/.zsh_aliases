@@ -101,10 +101,13 @@ alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
 alias reattach='screen -r'
 
+# SSH stuff
 # Pass our credentials by default
 alias ssh="ssh -A"
 alias ssh_unkeyed="/usr/bin/ssh"
-alias ssh_no_hostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
+alias ssh_no_hostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias scp_no_hostchecks="scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 # strip color codes from commands that insist on spewing them so we can
 # pipe them into files cleanly
