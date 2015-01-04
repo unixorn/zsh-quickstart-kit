@@ -216,11 +216,7 @@ if [ $AM_I_REMOTE -gt 0 ]; then
   fi
 fi
 
-# I use grc to colorize some command output for clarity.
-# brew install grc to check it out.
-if [ -f "$(brew --prefix)/etc/grc.bashrc" ]; then
-  source "$(brew --prefix)/etc/grc.bashrc"
-  alias ping5='colourify ping -c 5'
+
 else
   alias ping5='ping -c 5'
 fi
