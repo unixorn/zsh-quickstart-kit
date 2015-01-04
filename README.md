@@ -8,18 +8,18 @@
     2. Unlock the preferences
     3. Select your user
     4. Select advanced options
-    5. Set your login shell to ```/bin/zsh``` (```/usr/local/bin/zsh``` if you're using a newer version from brew)
+    5. Set your login shell to `/bin/zsh` (`/usr/local/bin/zsh` if you're using a newer version from brew)
 6. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses. You'll need to clone that repository, then copy the fonts into `~/Library/Fonts`. Select one of them in your profile in your iTerm 2 preferences.
 
 # On Linux
-1. Switch your shell to zsh with chsh ```chsh -s /bin/zsh```
-2. Install GNU Stow - ```yum install -y stow``` on Red Hat / CentOS systems
+1. Switch your shell to zsh with chsh `chsh -s /bin/zsh`
+2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 
 # On both
 1. Install Antigen
-    1. ```cd ~```
-    2. ```git clone git@github.com:zsh-users/antigen.git```
-2. Configure zsh by symlinking the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~ with stow by running ```stow --target=/Users/YourUsername zsh``` in the top level of this repository. Replace /Users/YourUsername with /home/YourUsername if you're on Linux.
+    1. `cd ~`
+    2. `git clone git@github.com:zsh-users/antigen.git`
+2. Configure zsh by symlinking the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~ with stow by running `stow --target=/Users/YourUsername zsh` in the top level of this repository. Replace /Users/YourUsername with /home/YourUsername if you're on Linux.
 
 The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * cross-session shared history
