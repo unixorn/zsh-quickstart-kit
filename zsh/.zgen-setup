@@ -1,0 +1,106 @@
+#!/bin/zsh
+
+# Clone zgen if you haven't already
+if [ ! -f ~/zgen/zgen.zsh ]; then
+  pushd ~
+  git clone git@github.com:unixorn/zgen.git
+  popd
+fi
+source ~/zgen/zgen.zsh
+
+setup-zgen-repos() {
+  echo "creating a zgen save"
+  ZGEN_LOADED=()
+  ZGEN_COMPLETIONS=()
+
+  zgen oh-my-zsh
+
+  # Here's where you update your plugins. You'll want to
+  # 1. Update the zgen load statements here
+  # 2. source ~/.zgen-setup
+  # 3. run setup-zgen-repos
+
+  # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
+  # they break, so get the order right.
+  zgen load zsh-users/zsh-syntax-highlighting
+  zgen load zsh-users/zsh-history-substring-search
+
+  # Set keystrokes for substring searching
+  zmodload zsh/terminfo
+  bindkey "$terminfo[kcuu1]" history-substring-search-up
+  bindkey "$terminfo[kcud1]" history-substring-search-down
+
+  # Tab complete rakefile targets
+  zgen load unixorn/rake-completion.zshplugin
+
+  # Automatically run zgen update and zgen selfupdate every 7 days
+  zgen load unixorn/autoupdate-zgen
+
+  zgen load unixorn/jpb.zshplugin
+
+  # Warn you when you run a command that you've got an alias for
+  zgen load djui/alias-tips
+
+  # Add my collection of git helper scripts
+  zgen load unixorn/git-extra-commands
+
+  # A collection of scripts that might be useful to sysadmins
+  zgen load skx/sysadmin-util
+
+  # Berkshelf helpers
+  zgen load berkshelf/berkshelf-zsh-plugin
+
+  # Adds aliases to open your current repo & branch on github.
+  zgen load peterhurford/git-it-on.zsh
+
+  # Tom Limoncelli's tooling for storing private information (keys, etc)
+  # in a repo securely by encrypting them with gnupg
+  zgen load StackExchange/blackbox
+
+  # Load some oh-my-zsh plugins
+  zgen oh-my-zsh plugins/pip
+  zgen oh-my-zsh plugins/sudo
+  zgen oh-my-zsh plugins/aws
+  zgen oh-my-zsh plugins/brew
+  zgen oh-my-zsh plugins/chruby
+  zgen oh-my-zsh plugins/colored-man
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/github
+  zgen oh-my-zsh plugins/knife
+  zgen oh-my-zsh plugins/knife_ssh
+  zgen oh-my-zsh plugins/osx
+  zgen oh-my-zsh plugins/python
+  zgen oh-my-zsh plugins/rsync
+  zgen oh-my-zsh plugins/screen
+  zgen oh-my-zsh plugins/vagrant
+
+  # A set of shell functions to make it easy to install small apps and
+  # utilities distributed with pip.
+  zgen load sharat87/pip-app
+
+  zgen load chrissicool/zsh-256color
+
+  # More completion files for zsh
+  zgen completions zsh-users/zsh-completions src
+
+  # Docker completion
+  zgen load srijanshetty/docker-zsh
+
+  # Load me last
+  GENCOMPL_FPATH=$HOME/.zsh/complete
+
+  # Very cool plugin that generates zsh completion functions for commands from
+  # if they have getopt-style help text.
+  zgen load RobSis/zsh-completion-generator
+
+  # Bullet train prompt setup
+  zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+
+  # Save it all to init script
+  zgen save
+}
+
+# check if there's no init script
+if ! zgen saved; then
+  setup-zgen-repos
+fi

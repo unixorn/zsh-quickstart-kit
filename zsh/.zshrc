@@ -1,4 +1,4 @@
-# Copyright 2006-2014 Joseph Block <jpb@apesseekingknowledge.net>
+# Copyright 2006-2015 Joseph Block <jpb@apesseekingknowledge.net>
 #
 # BSD licensed, see LICENSE.txt
 
@@ -16,7 +16,7 @@ export COMPLETION_WAITING_DOTS="true"
 
 # Correct spelling for commands
 setopt correct
-# turn off the infernal correctallf for filenames
+# turn off the infernal correctall for filenames
 unsetopt correctall
 
 # Base PATH
@@ -25,16 +25,12 @@ PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin
 # Conditional PATH additions
 
 for path_candidate in /opt/local/sbin \
-  /opt/local/bin \
   /Applications/Xcode.app/Contents/Developer/usr/bin \
+  /opt/local/bin \
   /usr/local/share/npm/bin \
-  ~/bin/ec2-api/bin \
   ~/.cabal/bin \
   ~/.rbenv/bin \
   ~/bin \
-  ~/bin/iamcli-current/bin \
-  ~/bin/sysadmin-util \
-  ~/nta/packer \
   ~/src/gocode/bin
 do
   if [ -d ${path_candidate} ]; then
@@ -66,53 +62,13 @@ if [ -f ~/.ssh/id_dsa ]; then
   fi
 fi
 
-# Now that we have $PATH set up and ssh keys loaded, configure antigen.
+# Now that we have $PATH set up and ssh keys loaded, configure zgen.
 
-# Path to antigen checkout
-ANTIGEN=${HOME}/antigen
-
-if [ ! -d "${ANTIGEN}" ]; then
-  git clone git@github.com:zsh-users/antigen.git ~/antigen
+# start zgen
+if [ -f ~/.zgen-setup ]; then
+  source ~/.zgen-setup
 fi
-
-source "$ANTIGEN/antigen.zsh"
-
-antigen use oh-my-zsh
-
-antigen bundle unixorn/autoupdate-antigen.zshplugin
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen-bundle zsh-users/zsh-history-substring-search
-antigen bundle unixorn/rake-completion.zshplugin
-
-antigen bundles <<EOBUNDLES
-gem
-git
-github
-history-substring-search
-knife
-python
-rake
-rsync
-ruby
-screen
-textmate
-thor
-vagrant
-virtualenvwrapper
-zsh-users/zsh-completions src
-EOBUNDLES
-
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  antigen bundle osx
-fi
-
-# Get the powerline patched fonts from https://github.com/Lokaltog/powerline-fonts
-# if you want the pretty branch icon in your prompt
-#antigen theme https://gist.github.com/016e035175cbf0059876.git jpb-segmented
-
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
-
-antigen apply
+# end zgen
 
 # set some history options
 setopt append_history
@@ -217,6 +173,12 @@ if [ $AM_I_REMOTE -gt 0 ]; then
 fi
 
 
+if [ -f /usr/local/etc/grc.bashrc ]; then
+  source "`brew --prefix`/etc/grc.bashrc"
+
+  function ping5(){
+    grc --color=auto ping -c 5 "$@"
+  }
 else
   alias ping5='ping -c 5'
 fi

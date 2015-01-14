@@ -3,7 +3,7 @@ function ff() {
   find . -type f -iname '*'$*'*' -ls
 }
 
-# Find crap in that enormous command history file
+# Find things in that enormous command history file
 function hgrep40 {
   history | grep -i "$@" | tail -40
 }
@@ -152,7 +152,7 @@ show_terminal_colors() {
   done
 }
 
-# batch change extension
+# batch change extension from $1 to $2
 chgext() {
   for file in *.$1
   do

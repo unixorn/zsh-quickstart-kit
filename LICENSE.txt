@@ -1,4 +1,4 @@
-Copyright (c) 2006-2014, Joseph Block <jpb@apesseekingknowledge.net>
+Copyright (c) 2006-2015, Joseph Block <jpb@apesseekingknowledge.net>
 
 All rights reserved.
 

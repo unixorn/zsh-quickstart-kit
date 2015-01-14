@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2006-2014 Joseph Block <jpb@apesseekingknowledge.net>
+# Copyright 2006-2015 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 
@@ -59,7 +59,7 @@ export CVS_RSH=ssh
 
 alias historysummary="history|awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}'|sort -rn|head"
 
-# I really like vim.
+# Clearly, I really like vim.
 if [ -x /bin/vim ]; then
     alias vi="/bin/vim"
     alias vim="/bin/vim"
@@ -104,6 +104,7 @@ alias reattach='screen -r'
 # SSH stuff
 # Pass our credentials by default
 alias ssh="ssh -A"
+alias sshA="ssh -A"
 alias ssh_unkeyed="/usr/bin/ssh"
 
 alias ssh_no_hostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
@@ -113,8 +114,9 @@ alias scp_no_hostchecks="scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHosts
 # pipe them into files cleanly
 alias stripcolors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
 
-# If I don't want to continue a download I can always delete the incomplete
-# fragment
+# On the rare occasions I don't want to continue a download I can always
+# delete the incomplete fragment explicitly. I usually just want to
+# complete it.
 alias wget="wget -c"
 
 # Dump the last 20 history entries
@@ -160,5 +162,5 @@ alias ...='cd ../..'
 
 # Make extending easier
 if [ -f ~/.zsh_aliases.local ]; then
-  source .zsh_aliases.local
+  source ~/.zsh_aliases.local
 fi
