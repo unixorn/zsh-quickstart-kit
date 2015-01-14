@@ -80,7 +80,7 @@ setup-zgen-repos() {
 
   zgen load chrissicool/zsh-256color
 
-  # More completion files for zsh
+  # Load more completion files for zsh from the zsh-lovers github repo
   zgen completions zsh-users/zsh-completions src
 
   # Docker completion
