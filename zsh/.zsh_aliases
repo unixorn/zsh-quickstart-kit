@@ -59,7 +59,6 @@ export CVS_RSH=ssh
 
 alias historysummary="history|awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}'|sort -rn|head"
 
-# Clearly, I really like vim.
 if [ -x /bin/vim ]; then
     alias vi="/bin/vim"
     alias vim="/bin/vim"
@@ -85,6 +84,7 @@ if [ -x /usr/local/bin/vim ]; then
     alias vi="/usr/local/bin/vim"
     export EDITOR="/usr/local/bin/vim"
 fi
+# Clearly, I really like vim.
 
 export VISUAL=${EDITOR}
 
@@ -110,7 +110,7 @@ alias ssh_unkeyed="/usr/bin/ssh"
 alias ssh_no_hostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias scp_no_hostchecks="scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
-# strip color codes from commands that insist on spewing them so we can
+# Strip color codes from commands that insist on spewing them so we can
 # pipe them into files cleanly
 alias stripcolors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
 
@@ -139,7 +139,7 @@ alias tarxvf="tar xvf"
 
 # Deal with various stupidities
 
-# thanks so much for breaking ldapsearch, fink
+# Thanks so much for breaking ldapsearch, fink
 if [ -d /sw/bin ];then
   alias ldapsearch=/usr/bin/ldapsearch
 fi

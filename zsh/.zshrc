@@ -2,7 +2,7 @@
 #
 # BSD licensed, see LICENSE.txt
 
-# Set to this to use case-sensitive completion
+# Set this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
 # Uncomment following line if you want to disable colors in ls
@@ -85,7 +85,7 @@ setopt hist_verify
 setopt share_history
 #setopt noclobber
 
-#set some more options
+# set some more options
 setopt pushd_ignore_dups
 #setopt pushd_silent
 
@@ -95,7 +95,8 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
-# Long running processes should return time after they complete
+# Long running processes should return time after they complete. Specified
+# in seconds.
 REPORTTIME=2
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
@@ -172,7 +173,6 @@ if [ $AM_I_REMOTE -gt 0 ]; then
   fi
 fi
 
-
 if [ -f /usr/local/etc/grc.bashrc ]; then
   source "`brew --prefix`/etc/grc.bashrc"
 
@@ -183,13 +183,13 @@ else
   alias ping5='ping -c 5'
 fi
 
-# speed up autocomplete, force prefix mapping
+# Speed up autocomplete, force prefix mapping
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
-# load any custom zsh completions we've installed
+# Load any custom zsh completions we've installed
 if [ -d ~/.zsh-completions ]; then
   for completion in ~/.zsh-completions/*
   do
@@ -210,7 +210,9 @@ fi
 # load all files from .zshrc.d directory
 if [ -d $HOME/.zshrc.d ]; then
   for file in $HOME/.zshrc.d/*.zsh; do
-    source $file
+    if [ -r $file ]; then
+      source $file
+    fi
   done
 fi
 

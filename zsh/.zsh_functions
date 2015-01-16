@@ -13,7 +13,7 @@ function hgrep {
 }
 
 function hgrep_full {
-  history | grep -i "$@" | sort | uniq
+  history | grep -i "$@"
 }
 
 # From Dan Ryan's blog - http://danryan.co/using-antigen-for-zsh.html
@@ -29,7 +29,7 @@ man() {
       man "$@"
 }
 
-# from commandlinefu.com
+# From commandlinefu.com
 function watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
 
 function cleanxmlclip {
@@ -62,7 +62,7 @@ function pledit() { # plist editor.
   fi
 }
 
-# begin sysadvent2011 functions
+# Begin sysadvent2011 functions
 function _awk_col() {
   echo "$1" | egrep -v '^[0-9]+$' || echo "\$$1"
 }
@@ -125,12 +125,15 @@ function jsoncurl() {
   curl "$@" | python -m json.tool
 }
 
-#
-# recursively touch, e.g. touch + mkdir -p
+# Recursively touch, e.g. touch + mkdir -p
 # so files can easily be created at depth
 #
 canhaz() {
   mkdir -p -- "${1%/*}" && touch -- "$1"
+}
+
+canhaz-script() {
+  canhaz "${1}" && chmod +x "$1"
 }
 
 pong() {
@@ -152,7 +155,7 @@ show_terminal_colors() {
   done
 }
 
-# batch change extension from $1 to $2
+# Batch change extension from $1 to $2
 chgext() {
   for file in *.$1
   do
