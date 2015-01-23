@@ -37,6 +37,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias spotlighter='mdfind -onlyin `pwd`'
   alias top='TERM=vt100 top'
 
+  # Manually remove a downloaded app or file from the quarantine
+  function unquarantine() {
+    for attribute in com.apple.metadata:kMDItemDownloadedDate com.apple.metadata:kMDItemWhereFroms com.apple.quarantine; do
+      xattr -r -d "$attribute" "$@"
+    done
+  }
+
   # Sound.
   alias stfu="osascript -e 'set volume output muted true'"
   alias mute="osascript -e 'set volume output muted true'"

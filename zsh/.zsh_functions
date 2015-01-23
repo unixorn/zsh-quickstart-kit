@@ -155,6 +155,13 @@ show_terminal_colors() {
   done
 }
 
+# Manually remove a downloaded app or file from the quarantine
+function unquarantine() {
+  for attribute in com.apple.metadata:kMDItemDownloadedDate com.apple.metadata:kMDItemWhereFroms com.apple.quarantine; do
+    xattr -r -d "$attribute" "$@"
+  done
+}
+
 # Batch change extension from $1 to $2
 chgext() {
   for file in *.$1
