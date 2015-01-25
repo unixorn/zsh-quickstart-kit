@@ -22,11 +22,11 @@
 1. Install [Zgen](https://github.com/tarjoilija/zgen)
     1. `cd ~`
     2. `git clone git@github.com:tarjoilija/zgen.git`
-2. Configure zsh by symlinking the .zshrc, .zsh_aliases and .zsh-completions from this repo into your ~ with stow by running `stow --target=/Users/YourUsername zsh` in the top level of this repository. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
+2. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your ~ with stow by running `stow --target=/Users/YourUsername zsh` in the top level of this repository. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
 
 The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 
-* Appending your own customizations (stick them in ~/.zshrc.local, .zsh_aliases.local or .zsh_functions.local)
+* Appending your own customizations (stick them in `~/.zshrc.local`, `~/.zsh_aliases.local` or `~/.zsh_functions.local`)
 * automatic periodic update of zgen and your plugins
 * cross-session shared history
 * deduping your command history
