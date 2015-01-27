@@ -1,4 +1,10 @@
 #!/bin/zsh
+#
+# Only including a shebang to trigger Sublime Text to use shell syntax highlighting
+#
+# Copyright 2006-2015 Joseph Block <jpb@unixorn.net>
+#
+# BSD licensed, see LICENSE.txt
 
 # Clone zgen if you haven't already
 if [ ! -f ~/zgen/zgen.zsh ]; then

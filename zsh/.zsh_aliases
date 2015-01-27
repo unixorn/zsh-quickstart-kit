@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Only including a shebang to trigger Sublime Text to use shell syntax highlighting
+#
 # Copyright 2006-2015 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt

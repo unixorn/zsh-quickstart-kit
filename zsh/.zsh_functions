@@ -1,3 +1,11 @@
+#!/bin/zsh
+#
+# Only including a shebang to trigger Sublime Text to use shell syntax highlighting
+#
+# Copyright 2006-2015 Joseph Block <jpb@unixorn.net>
+#
+# BSD licensed, see LICENSE.txt
+
 # from cads
 function ff() {
   find . -type f -iname '*'$*'*' -ls
@@ -43,6 +51,10 @@ function mecp () {
 
 function calc() {
   awk "BEGIN{ print $* }" ;
+}
+
+function fix_airplay {
+  sudo kill $(ps -ax | grep '/usr/sbin/coreaudiod' | awk '{print $1}')
 }
 
 function procs_for_path() {
