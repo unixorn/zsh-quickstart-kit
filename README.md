@@ -10,14 +10,20 @@
     3. Select your user
     4. Select advanced options
     5. Set your login shell to `/bin/zsh` (`/usr/local/bin/zsh` if you decided to use a newer version from brew)
-6. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses. You'll need to clone that repository, then copy the fonts into `~/Library/Fonts`. Select one of them in your profile in your iTerm 2 preferences.
+6. Install the powerline patched fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts), they include the pretty branch icon that the theme in this .zshrc uses.
+    1. Clone the [powerline-fonts](https://github.com/Lokaltog/powerline-fonts) repository
+    2. Copy the fonts into `~/Library/Fonts`.
+    3. In iTerm 2, preferences->profile in your iTerm 2 preferences, then select one of the powerline fonts.
+    4.  Make sure you also specify a powerline font for non-ascii in your iTerm 2 preferences or the prompt separators will show up garbled.
 
 # On Linux
 
 1. Switch your shell to zsh with chsh `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 
-# On both
+I don't use a GUI on Linux, so you'll have to track down how to install the [powerline-fonts](https://github.com/Lokaltog/powerline-fonts) and specify one for your terminal application.
+
+# Now that your fonts are taken care of, set up Zgen
 
 1. Install [Zgen](https://github.com/tarjoilija/zgen)
     1. `cd ~`
@@ -30,8 +36,8 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * automatic periodic update of zgen and your plugins
 * cross-session shared history
 * deduping your command history
-* oh-my-zsh plugins and themes (via [zgen](https://github.com/tarjoilija/zgen))
+* oh-my-zsh compatible plugins and themes (via [zgen](https://github.com/tarjoilija/zgen))
 * proper command history search
 * syntax highlighting at the command line
 * tab completion of Rakefile targets
-* various helper functions for interacting with OS X's clipboard and quicklook
+* various helper functions for interacting with OS X's clipboard, audio volume,  and quicklook.
