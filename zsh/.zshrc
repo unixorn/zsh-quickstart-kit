@@ -174,7 +174,7 @@ if [ $AM_I_REMOTE -gt 0 ]; then
 fi
 
 if [ -f /usr/local/etc/grc.bashrc ]; then
-  source "`brew --prefix`/etc/grc.bashrc"
+  source "$(brew --prefix)/etc/grc.bashrc"
 
   function ping5(){
     grc --color=auto ping -c 5 "$@"

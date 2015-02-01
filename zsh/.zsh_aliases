@@ -13,7 +13,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   # do OS X specific things
   alias eject="diskutil eject"
   alias flushdns="dscacheutil -flushcache"
-  alias killSS='kill -9 `ps ww |grep ScreenSaverEngine |grep -v grep |awk "{print $1}"`'
+  alias killSS='kill -9 $(ps ww |grep ScreenSaverEngine |grep -v grep |awk "{print $1}")'
   alias l-d="ls -lFaGd"
   alias l-h="ls -laFGh"
   alias l-l="ls -laFG"
@@ -41,7 +41,9 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 
   # Manually remove a downloaded app or file from the quarantine
   function unquarantine() {
-    for attribute in com.apple.metadata:kMDItemDownloadedDate com.apple.metadata:kMDItemWhereFroms com.apple.quarantine; do
+    for attribute in com.apple.metadata:kMDItemDownloadedDate \
+      com.apple.metadata:kMDItemWhereFroms \
+      com.apple.quarantine; do
       xattr -r -d "$attribute" "$@"
     done
   }
@@ -149,11 +151,11 @@ alias tarxvf="tar xvf"
 # Deal with various stupidities
 
 # Thanks so much for breaking ldapsearch, fink
-if [ -d /sw/bin ];then
+if [ -x /sw/bin/ldapsearch ];then
   alias ldapsearch=/usr/bin/ldapsearch
 fi
 
-if [ -f /usr/bin/vagrant ]; then
+if [ -x /usr/bin/vagrant ]; then
   alias vagrant='/usr/bin/vagrant'
 fi
 

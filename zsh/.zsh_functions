@@ -8,7 +8,7 @@
 
 # from cads
 function ff() {
-  find . -type f -iname '*'$*'*' -ls
+  find . -type f -iname '*'$@'*' -ls
 }
 
 # Find things in that enormous command history file
@@ -155,7 +155,7 @@ pong() {
 fix_tmux_ssh_agent() {
   for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
     if (tmux show-environment | grep "^${key}" > /dev/null); then
-      value=`tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//"`
+      value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
       export ${key}="${value}"
     fi
   done

@@ -21,7 +21,7 @@ setup-zgen-repos() {
 
   zgen oh-my-zsh
 
-  # Here's where you update your plugins. You'll want to
+  # Here's where you update your plugins. You'll want to:
   # 1. Update the zgen load statements here
   # 2. source ~/.zgen-setup
   # 3. run setup-zgen-repos
@@ -53,14 +53,11 @@ setup-zgen-repos() {
   # A collection of scripts that might be useful to sysadmins
   zgen load skx/sysadmin-util
 
-  # Berkshelf helpers
-  zgen load berkshelf/berkshelf-zsh-plugin
-
   # Adds aliases to open your current repo & branch on github.
   zgen load peterhurford/git-it-on.zsh
 
   # Tom Limoncelli's tooling for storing private information (keys, etc)
-  # in a repo securely by encrypting them with gnupg
+  # in a repository securely by encrypting them with gnupg
   zgen load StackExchange/blackbox
 
   # Load some oh-my-zsh plugins
@@ -95,7 +92,7 @@ setup-zgen-repos() {
   # Load me last
   GENCOMPL_FPATH=$HOME/.zsh/complete
 
-  # Very cool plugin that generates zsh completion functions for commands from
+  # Very cool plugin that generates zsh completion functions for commands
   # if they have getopt-style help text.
   zgen load RobSis/zsh-completion-generator
 
