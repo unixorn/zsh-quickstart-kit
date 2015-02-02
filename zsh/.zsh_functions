@@ -175,6 +175,20 @@ chgext() {
   done
 }
 
+# Probe a /24 for hosts
+scan24() {
+  nmap -sP ${1}/24
+}
+
+# Netjoin - Block until a network connection is obtained.
+# Originally from https://github.com/bamos/dotfiles/blob/master/.funcs
+nj() {
+  while true; do
+    ping -c 1 8.8.8.8 &> /dev/null && break
+    sleep 1
+  done
+}
+
 # Make extending easier
 if [ -f ~/.zsh_functions.local ]; then
   source .zsh_functions.local
