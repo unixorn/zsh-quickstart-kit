@@ -68,30 +68,30 @@ fi
 
 export CVS_RSH=ssh
 
-alias historysummary="history|awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}'|sort -rn|head"
+alias historysummary="history | awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}' | sort -rn | head"
 
 if [ -x /bin/vim ]; then
     alias vi="/bin/vim"
     alias vim="/bin/vim"
-    export EDITOR='/bin/vim'
+    export EDITOR="/bin/vim"
 fi
 
 if [ -x /usr/bin/vim ]; then
     alias vi="/usr/bin/vim"
     alias vim="/usr/bin/vim"
-    export EDITOR='/usr/bin/vim'
+    export EDITOR="/usr/bin/vim"
 fi
 
 # MacPorts has a newer vim than Apple ships
 if [ -x /opt/local/bin/vim ]; then
-    alias vim='/opt/local/bin/vim'
+    alias vim="/opt/local/bin/vim"
     alias vi="/opt/local/bin/vim"
-    export EDITOR='/opt/local/bin/vim'
+    export EDITOR="/opt/local/bin/vim"
 fi
 
 # So does brew
 if [ -x /usr/local/bin/vim ]; then
-    alias vim='/usr/local/bin/vim'
+    alias vim="/usr/local/bin/vim"
     alias vi="/usr/local/bin/vim"
     export EDITOR="/usr/local/bin/vim"
 fi
@@ -110,7 +110,7 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 # Show laptop's IP addresses
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
-alias reattach='screen -r'
+alias reattach="screen -r"
 
 # SSH stuff
 # Pass our credentials by default
@@ -131,19 +131,19 @@ alias stripcolors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
 alias wget="wget -c"
 
 # Dump the last 20 history entries
-alias zh='fc -l -d -D'
+alias zh="fc -l -d -D"
 
 # My typical tyops.
-alias gerp='grep'
-alias grep-i='grep -i'
+alias gerp="grep"
+alias grep-i="grep -i"
 alias grep='GREP_COLOR="1;37;41" LANG=C grep --color=auto'
-alias grepi='grep -i'
-alias knfie='knife'
-alias maek='make'
-alias psax='ps ax'
-alias pswax='ps wax'
-alias psxa='ps ax'
-alias raek='rake'
+alias grepi="grep -i"
+alias knfie="knife"
+alias maek="make"
+alias psax="ps ax"
+alias pswax="ps wax"
+alias psxa="ps ax"
+alias raek="rake"
 alias tartvf="tar tvf"
 alias tartvzf="tar tvzf"
 alias tarxvf="tar xvf"
@@ -156,7 +156,7 @@ if [ -x /sw/bin/ldapsearch ];then
 fi
 
 if [ -x /usr/bin/vagrant ]; then
-  alias vagrant='/usr/bin/vagrant'
+  alias vagrant="/usr/bin/vagrant"
 fi
 
 # Use brew versions if present
@@ -168,8 +168,8 @@ if [ -x /usr/local/bin/mysql/bin/mysqladmin ]; then
   alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
 fi
 
-alias ..='cd ..'
-alias ...='cd ../..'
+alias ..="cd .."
+alias ...="cd ../.."
 
 # Make extending easier
 if [ -f ~/.zsh_aliases.local ]; then

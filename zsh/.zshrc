@@ -16,6 +16,7 @@ export COMPLETION_WAITING_DOTS="true"
 
 # Correct spelling for commands
 setopt correct
+
 # turn off the infernal correctall for filenames
 unsetopt correctall
 
