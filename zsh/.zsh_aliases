@@ -34,10 +34,10 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias pbsort="pbpaste | sort | pbcopy"
 
   # QuickLook stuff
-  alias ql='qlmanage -p'
-  alias quicklook='qlmanage -p'
-  alias spotlighter='mdfind -onlyin `pwd`'
-  alias top='TERM=vt100 top'
+  alias ql="qlmanage -p"
+  alias quicklook="qlmanage -p"
+  alias spotlighter="mdfind -onlyin `pwd`"
+  alias top="TERM=vt100 top"
 
   # Manually remove a downloaded app or file from the quarantine
   function unquarantine() {
