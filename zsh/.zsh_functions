@@ -189,6 +189,23 @@ nj() {
   done
 }
 
+# Pretty JSON
+# from: https://coderwall.com/p/hwu5uq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=zsh
+function pjson {
+    if [ $# -gt 0 ];
+        then
+        for arg in $@
+        do
+            if [ -f $arg ];
+                then
+                less $arg | python -m json.tool
+            else
+                echo "$arg" | python -m json.tool
+            fi
+        done
+    fi
+}
+
 # Make extending easier
 if [ -f ~/.zsh_functions.local ]; then
   source .zsh_functions.local
