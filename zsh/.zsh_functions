@@ -6,6 +6,10 @@
 #
 # BSD licensed, see LICENSE.txt
 
+function exists() {
+  which $1 &> /dev/null
+}
+
 # from cads
 function ff() {
   find . -type f -iname '*'$@'*' -ls
