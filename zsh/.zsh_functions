@@ -62,7 +62,7 @@ function fix_airplay {
 }
 
 function procs_for_path() {
-  for pid in $(lsof "$*" | cut -d' ' -f 3 | sort | uniq)
+  for pid in $(lsof "$@" | cut -d' ' -f 3 | sort | uniq)
   do
     ps -f -p $pid
   done
@@ -72,9 +72,9 @@ function pledit() { # plist editor.
   if [ $# -ne 1 ]; then
     echo -e "pledit: Edit Apple plist file\nusage: pledit plist_filename"
   else
-    sudo plutil -convert xml1 ${1}; # convert the binary file to xml 
-    sudo ${EDITOR} ${1}; # use the default editor
-    sudo plutil -convert binary1 ${1} # convert it back to binary
+    sudo plutil -convert xml1 "${1}"; # convert the binary file to xml 
+    sudo ${EDITOR} "${1}"; # use the default editor
+    sudo plutil -convert binary1 "${1}" # convert it back to binary
   fi
 }
 
@@ -196,18 +196,23 @@ nj() {
 # Pretty JSON
 # from: https://coderwall.com/p/hwu5uq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=zsh
 function pjson {
-    if [ $# -gt 0 ];
+  if [ $# -gt 0 ];
+    then
+    for arg in $@
+    do
+      if [ -f $arg ];
         then
-        for arg in $@
-        do
-            if [ -f $arg ];
-                then
-                less $arg | python -m json.tool
-            else
-                echo "$arg" | python -m json.tool
-            fi
-        done
-    fi
+        less $arg | python -m json.tool
+      else
+        echo "$arg" | python -m json.tool
+      fi
+    done
+  fi
+}
+
+# lists zombie processes
+function zombie() {
+  ps aux | awk '{if ($8=="Z") { print $2 }}'
 }
 
 # Make extending easier
