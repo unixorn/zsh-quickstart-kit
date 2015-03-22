@@ -215,6 +215,17 @@ function zombie() {
   ps aux | awk '{if ($8=="Z") { print $2 }}'
 }
 
+# get the content type of an http resource
+# from https://github.com/jleclanche/dotfiles/blob/master/.zshrc
+function htmime {
+  if [[ -z $1 ]]; then
+    print "USAGE: htmime <URL>"
+    return 1
+  fi
+  mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
+  print $mime
+}
+
 # Make extending easier
 if [ -f ~/.zsh_functions.local ]; then
   source .zsh_functions.local
