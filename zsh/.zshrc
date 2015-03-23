@@ -130,9 +130,9 @@ fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # We're on osx
-  [ -f .osx_aliases ] && source .osx_aliases
-  if [ -d $HOME/.osx_aliases.d ]; then
-    for alias_file in $HOME/.osx_aliases.d/*
+  [ -f ~/.osx_aliases ] && source ~/.osx_aliases
+  if [ -d ~/.osx_aliases.d ]; then
+    for alias_file in ~/.osx_aliases.d/*
     do
       source $alias_file
     done
@@ -173,6 +173,11 @@ if [ $AM_I_REMOTE -gt 0 ]; then
     fi
   fi
 fi
+unset AM_I_REMOTE
+unset CANDIDATE_SCREEN
+unset DETACHED_SCREENCOUNT
+unset SCREENCOUNT
+unset SCREENS
 
 if [ -f /usr/local/etc/grc.bashrc ]; then
   source "$(brew --prefix)/etc/grc.bashrc"
