@@ -9,7 +9,7 @@
 # Clone zgen if you haven't already
 if [ ! -f ~/zgen/zgen.zsh ]; then
   pushd ~
-  git clone git@github.com:unixorn/zgen.git
+  git clone git@github.com:tarjoilija/zgen.git
   popd
 fi
 source ~/zgen/zgen.zsh
