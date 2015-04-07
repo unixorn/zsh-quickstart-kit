@@ -1,4 +1,16 @@
-# On OS X
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Installation](#installation)
+  - [OS X](#os-x)
+  - [Linux](#linux)
+  - [Set up Zgen](#set-up-zgen)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Installation
+## OS X
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). Seriously, never use Terminal again.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
@@ -16,14 +28,16 @@
     3. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
     4.  Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled.
 
-# On Linux
+## Linux
 
 1. Switch your shell to zsh with chsh `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 
 I don't use a GUI on Linux, so you'll have to track down how to install the [powerline-fonts](https://github.com/Lokaltog/powerline-fonts) and specify one for your terminal application.
 
-# Now that your fonts are taken care of, set up Zgen
+## Set up Zgen
+
+Now that your fonts are taken care of, set up Zgen
 
 1. Install [Zgen](https://github.com/tarjoilija/zgen)
     1. `cd ~`

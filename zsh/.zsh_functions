@@ -44,10 +44,6 @@ man() {
 # From commandlinefu.com
 function watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
 
-function cleanxmlclip {
-  pbpaste | tidy -xml -wrap 0 | pbcopy
-}
-
 # scp file to machine you're sshing into this machine from
 function mecp () {
   scp "$@" ${SSH_CLIENT%% *}:~/Downloads/;
@@ -57,25 +53,11 @@ function calc() {
   awk "BEGIN{ print $* }" ;
 }
 
-function fix_airplay {
-  sudo kill $(ps -ax | grep '/usr/sbin/coreaudiod' | awk '{print $1}')
-}
-
 function procs_for_path() {
   for pid in $(lsof "$@" | cut -d' ' -f 3 | sort | uniq)
   do
     ps -f -p $pid
   done
-}
-
-function pledit() { # plist editor.
-  if [ $# -ne 1 ]; then
-    echo -e "pledit: Edit Apple plist file\nusage: pledit plist_filename"
-  else
-    sudo plutil -convert xml1 "${1}"; # convert the binary file to xml 
-    sudo ${EDITOR} "${1}"; # use the default editor
-    sudo plutil -convert binary1 "${1}" # convert it back to binary
-  fi
 }
 
 # Begin sysadvent2011 functions

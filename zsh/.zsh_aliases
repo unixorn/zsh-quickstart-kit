@@ -51,10 +51,30 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     done
   }
 
+  function cleanxmlclip {
+    pbpaste | tidy -xml -wrap 0 | pbcopy
+  }
+
+  function pledit() { # plist editor.
+    if [ $# -ne 1 ]; then
+      echo -e "pledit: Edit Apple plist file\nusage: pledit plist_filename"
+    else
+      sudo plutil -convert xml1 "${1}"; # convert the binary file to xml 
+      sudo ${EDITOR} "${1}"; # use the default editor
+      sudo plutil -convert binary1 "${1}" # convert it back to binary
+    fi
+  }
+
   # Sound.
   alias stfu="osascript -e 'set volume output muted true'"
   alias mute="osascript -e 'set volume output muted true'"
   alias unmute="osascript -e 'set volume output muted false'"
+
+  # Airplay sometimes craps out, add helper to kick it
+  function fix_airplay {
+    sudo kill $(ps -ax | grep '/usr/sbin/coreaudiod' | awk '{print $1}')
+  }
+
 else
   alias cputop="top -o cpu"
   alias l-d="ls -lad"
