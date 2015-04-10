@@ -59,7 +59,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     if [ $# -ne 1 ]; then
       echo -e "pledit: Edit Apple plist file\nusage: pledit plist_filename"
     else
-      sudo plutil -convert xml1 "${1}"; # convert the binary file to xml 
+      sudo plutil -convert xml1 "${1}"; # convert the binary file to xml
       sudo ${EDITOR} "${1}"; # use the default editor
       sudo plutil -convert binary1 "${1}" # convert it back to binary
     fi
@@ -84,8 +84,8 @@ fi
 
 if [[ "$(uname -s)" == "Linux" ]]; then
   # we're on linux
-  alias l-d="ls -lFaGd"
-  alias l="ls -laFG"
+  alias l-d="ls -lFad"
+  alias l="ls -laF"
   alias ll="ls -lFa | TERM=vt100 less"
 fi
 
