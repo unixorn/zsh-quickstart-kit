@@ -15,7 +15,7 @@
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). Seriously, never use Terminal again.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. `brew install stow`
-4. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to get it.
+4. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to install it.
 5. Switch your shell to zsh
     1. System Preferences -> Users & Groups.
     2. Unlock the preferences
@@ -47,11 +47,11 @@ Now that your fonts are taken care of, set up Zgen
 The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 
 * Appending your own customizations (stick them in `~/.zshrc.local`, `~/.zsh_aliases.local` or `~/.zsh_functions.local`)
-* Automatic periodic update of zgen and your plugins
+* Automatic periodic install and update of zgen and your plugins
 * Cross-session shared history
 * Deduping your command history
 * oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
 * Proper command history search
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
-* Various helper functions for interacting with OS X's clipboard, audio volume,  and quicklook.
+* Various helper functions for interacting with OS X's clipboard, audio volume, and quicklook.
