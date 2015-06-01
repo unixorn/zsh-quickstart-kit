@@ -55,3 +55,5 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
 * Various helper functions for interacting with OS X's clipboard, audio volume, and quicklook.
+
+For a list of other ZSH plugins and themes you can use, check out the [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
