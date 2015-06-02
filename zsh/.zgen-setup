@@ -84,7 +84,7 @@ setup-zgen-repos() {
   zgen load chrissicool/zsh-256color
 
   # Load more completion files for zsh from the zsh-lovers github repo
-  zgen completions zsh-users/zsh-completions src
+  zgen load zsh-users/zsh-completions src
 
   # Docker completion
   zgen load srijanshetty/docker-zsh
@@ -103,7 +103,35 @@ setup-zgen-repos() {
   zgen save
 }
 
+# This comes from https://stackoverflow.com/questions/17878684/best-way-to-get-file-modified-time-in-seconds
+# This works on both Linux with GNU fileutils and OS X with BSD stat.
+get_file_modification_time() {
+  modified_time=$(stat -c %Y "$1" 2> /dev/null)
+  if [ "$?" -ne 0 ]; then
+    modified_time=$(stat -f %m "$1" 2> /dev/null)
+    if [ "$?" -ne 0 ]; then
+      modified_time=$(date -r "$1" +%s 2> /dev/null)
+      [ "$?" -ne 0 ] && modified_time=0
+    fi
+  fi
+  echo "$modified_time"
+}
+
 # check if there's no init script
 if ! zgen saved; then
   setup-zgen-repos
 fi
+
+# Our installation instructions get the user to make a symlink
+# from ~/.zgen-setup to wherever they checked out the zsh-quickstart-kit
+# repository. Unfortunately, stat will return the modification time of the
+# symlink instead of the target file, so construct a full path to hand off
+# to stat so it returns the modification time of the actual .zgen-setup file.
+REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-setup)"
+
+# If .zgen-setup is newer than init.zsh, regenerate init.zsh
+if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
+  echo ".zgen-setup updated; creating a new init.zsh"
+  setup-zgen-repos
+fi
+unset REAL_ZGEN_SETUP
