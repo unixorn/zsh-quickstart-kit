@@ -6,6 +6,9 @@
   - [OS X](#os-x)
   - [Linux](#linux)
   - [Set up Zgen](#set-up-zgen)
+- [Other Resources](#other-resources)
+  - [ZSH](#zsh)
+  - [Vim](#vim)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -56,4 +59,12 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * Tab completion of Rakefile targets
 * Various helper functions for interacting with OS X's clipboard, audio volume, and quicklook.
 
+# Other Resources
+
+## ZSH
+
 For a list of other ZSH plugins and themes you can use, check out the [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+
+## Vim
+
+If you're using vim, [spf13](http://vim.spf13.com/) is an excellent starter configuration and plugin collection.
