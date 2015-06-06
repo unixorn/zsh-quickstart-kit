@@ -24,7 +24,6 @@ unsetopt correctall
 PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin
 
 # Conditional PATH additions
-
 for path_candidate in /opt/local/sbin \
   /Applications/Xcode.app/Contents/Developer/usr/bin \
   /opt/local/bin \
