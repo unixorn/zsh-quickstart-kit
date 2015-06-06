@@ -10,7 +10,7 @@ function exists() {
   which $1 &> /dev/null
 }
 
-# from cads
+# from cads@ooyala.com
 function ff() {
   find . -type f -iname '*'$@'*' -ls
 }
@@ -26,6 +26,10 @@ function hgrep {
 
 function hgrep_full {
   history | egrep --color -i "$@"
+}
+
+function envgrep() {
+  printenv | grep -i "$@"
 }
 
 # From Dan Ryan's blog - http://danryan.co/using-antigen-for-zsh.html
