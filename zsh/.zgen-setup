@@ -107,7 +107,7 @@ setup-zgen-repos() {
   if [ -f ~/.zgen-local-plugins ]; then
     source ~/.zgen-local-plugins
   else
-    load-starter-plugin-list()
+    load-starter-plugin-list
   fi
 }
 
