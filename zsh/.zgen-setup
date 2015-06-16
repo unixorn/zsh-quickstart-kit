@@ -14,7 +14,7 @@ if [ ! -f ~/zgen/zgen.zsh ]; then
 fi
 source ~/zgen/zgen.zsh
 
-setup-zgen-repos() {
+load-starter-plugin-list() {
   echo "creating a zgen save"
   ZGEN_LOADED=()
   ZGEN_COMPLETIONS=()
@@ -103,6 +103,14 @@ setup-zgen-repos() {
   zgen save
 }
 
+setup-zgen-repos() {
+  if [ -f ~/.zgen-local-plugins ]; then
+    source ~/.zgen-local-plugins
+  else
+    load-starter-plugin-list()
+  fi
+}
+
 # This comes from https://stackoverflow.com/questions/17878684/best-way-to-get-file-modified-time-in-seconds
 # This works on both Linux with GNU fileutils and OS X with BSD stat.
 get_file_modification_time() {
@@ -128,6 +136,15 @@ fi
 # symlink instead of the target file, so construct a full path to hand off
 # to stat so it returns the modification time of the actual .zgen-setup file.
 REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-setup)"
+
+# If you don't want my standard starter set of plugins, create .zgen-local-plugins
+# and add your zgen load commands there. Don't forget to zgen save at the end,
+# .zgen-local-plugins replaces the starter list setup, it doesn't add to it.
+#
+# Use readlink in case the user is symlinking from another repo checkout
+if [ -f ~/.zgen-local-plugins ]; then
+  REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-local-plugins)"
+fi
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
