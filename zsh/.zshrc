@@ -196,7 +196,7 @@ echo
 
 # Make it easy to append your own customizations that override the above
 if [ -f ~/.zshrc.local ]; then
-  source .zshrc.local
+  source ~/.zshrc.local
 fi
 
 # load all files from .zshrc.d directory
