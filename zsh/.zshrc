@@ -194,12 +194,14 @@ echo "Current SSH Keys:"
 ssh-add -l
 echo
 
-# Make it easy to append your own customizations that override the above
+# Honor old .zshrc.local customizations, but print depecation warning.
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
+  echo ".zshrc.local is deprecated - use files in ~/.zshrc.d instead"
 fi
 
-# load all files from .zshrc.d directory
+# Make it easy to append your own customizations that override the above by
+# loading all files from .zshrc.d directory
 mkdir -p ~/.zshrc.d
 if [ -n "$(ls ~/.zshrc.d)" ]; then
   for dotfile in ~/.zshrc.d/*

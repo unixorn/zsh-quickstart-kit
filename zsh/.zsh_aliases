@@ -194,7 +194,8 @@ fi
 alias ..="cd .."
 alias ...="cd ../.."
 
-# Make extending easier
+# Honor old .zsh_aliases.local customizations, but print depecation warning.
 if [ -f ~/.zsh_aliases.local ]; then
   source ~/.zsh_aliases.local
+  echo ".zsh_aliases.local is deprecated. Make entries in ~/.zshrc.d instead."
 fi

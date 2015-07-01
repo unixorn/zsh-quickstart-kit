@@ -221,7 +221,8 @@ function httpserver() {
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port";
 }
 
-# Make extending easier
+# Honor old .zsh_functions.local customizations, but print depecation warning.
 if [ -f ~/.zsh_functions.local ]; then
   source .zsh_functions.local
+  echo ".zsh_functions.local is deprecated. Make entries in ~/.zshrc.d instead."
 fi
