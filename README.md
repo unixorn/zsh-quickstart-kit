@@ -65,6 +65,16 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * Tab completion of Rakefile targets
 * Various helper functions for interacting with OS X's clipboard, audio volume, and quicklook.
 
+## Customizations
+
+### Functions and Aliases
+
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate branch of this repo. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` to ensure they're loaded in the order you expect.
+
+### zgen plugin list
+
+I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running `load-starter-plugin-list` as defined in `.zgen-setup`. I`~/.zgen-local-plugins` is not additive, it completely replaces the kit-provided list.
+
 # Other Resources
 
 ## ZSH
