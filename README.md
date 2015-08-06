@@ -1,3 +1,4 @@
+# ZSH Quickstart Kit
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -47,7 +48,7 @@ I don't use a GUI on Linux, so you'll have to track down how to install the [pow
 
 ## Set up Zgen and the starter kit
 
-Now that your fonts are taken care of, set up Zgen and the starter kit.
+Now that your fonts and default shell have been set up, install [zgen](https://github.com/tarjoilija/zgen) and the starter kit dotfiles.
 
 1. Install [Zgen](https://github.com/tarjoilija/zgen)
     1. `cd ~`
@@ -62,11 +63,12 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * Automatic periodic install and update of zgen and your plugins
 * Cross-session shared history
 * Deduping your command history
-* oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
+* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository
 * Proper command history search
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
-* Various helper functions for interacting with OS X's clipboard, audio volume, and quicklook.
+* Various helper functions for interacting with OS X's clipboard, audio volume, and Quicklook.
+* oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
 
 ## Customizations
 
@@ -82,7 +84,7 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 
 ## ZSH
 
-For a list of other ZSH plugins and themes you can use, check out the [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+For a list of other ZSH plugins and themes you can use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
 
 ## Vim
 
