@@ -69,8 +69,6 @@ load-starter-plugin-list() {
   zgen oh-my-zsh plugins/colored-man
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/github
-  zgen oh-my-zsh plugins/knife
-  zgen oh-my-zsh plugins/knife_ssh
   zgen oh-my-zsh plugins/osx
   zgen oh-my-zsh plugins/python
   zgen oh-my-zsh plugins/rsync
@@ -95,6 +93,10 @@ load-starter-plugin-list() {
   # Very cool plugin that generates zsh completion functions for commands
   # if they have getopt-style help text.
   zgen load RobSis/zsh-completion-generator
+
+  # k is a zsh script / plugin to make directory listings more readable,
+  # adding a bit of color and some git status information on files and directories
+  zgen load rimraf/k
 
   # Bullet train prompt setup
   zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
