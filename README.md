@@ -81,21 +81,21 @@ The `.zshrc` included in this kit will automatically source any files it finds i
 I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running `load-starter-plugin-list` as defined in `.zgen-setup`. Note: `~/.zgen-local-plugins` is not additive, it completely replaces the kit-provided list.
 
 Included plugins:
-* RobSis/zsh-completion-generator - Adds tool to generate zsh completion functions for programs missing them
-* chrissicool/zsh-256color - sets your terminal to 256 colors if available
-* djui/alias-tips - Warns you when you have an alias for the command you just typed
-* peterhurford/git-it-on.zsh - Opens your current repo on github, in your current branch
-* rimraf/k - k is a directory lister that also shows git status on files & directories
-* sharat87/pip-app - A set of shell functions to make it easy to install small apps and utilities distributed with pip
-* skx/sysadmin-util - Collected scripts useful for sysadmins
-* srijanshetty/docker-zsh - Docker completions
-* stackexchange/blackbox - Tom Limoncelli's tool for storing secret information in a repository with gnupg encryption, automatically decrypting as needed
-* unixorn/autoupdate-zgen - Adds autoupdate (for both zgen itself, and your plugins) to zgen
-* unixorn/git-extra-commands - Collected extra git helper scripts
-* unixorn/jpb.zshplugin - Some of my standard aliases & functions
-* unixorn/rake-completion.zshplugin - Tab completion for Rakefile targets
-* zsh-users/zsh-history-substring-search - Better history search
-* zsh-users/zsh-syntax-highlighting - Syntax highlighting as you type
+* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them
+* [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - sets your terminal to 256 colors if available
+* [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed
+* [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch
+* [rimraf/k](https://github.com/rimraf/k) - k is a directory lister that also shows git status on files & directories
+* [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with pip
+* [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - Collected scripts useful for sysadmins
+* [srijanshetty/docker-zsh](https://github.com/srijanshetty/docker-zsh) - Docker completions
+* [stackexchange/blackbox](https://github.com/stackexchange/blackbox) - Tom Limoncelli's tool for storing secret information in a repository with gnupg encryption, automatically decrypting as needed
+* [unixorn/autoupdate-zgen](https://github.com/unixorn/autoupdate-zgen) - Adds autoupdate (for both zgen itself, and your plugins) to zgen
+* [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts
+* [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions
+* [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Tab completion for Rakefile targets
+* [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search
+* [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type
 
 We also have zgen load oh-my-zsh and these plugins:
 * oh-my-zsh
