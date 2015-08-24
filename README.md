@@ -55,8 +55,11 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
     2. `git clone git@github.com:tarjoilija/zgen.git`
 2. Install the starter kit
     1. `cd ~`
-    2. `git clone git@github.com:unixorn/zsh-starter-kit.git`
-2. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`. You can do this with stow by running `stow --target=/Users/YourUsername zsh` in the top level of this repository. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
+    2. `git clone git@github.com:unixorn/zsh-quickstart-kit.git`
+3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`. 
+    1. You can do this with stow by:
+        1. `cd zsh-quickstart-kit`
+        2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
 
 The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 
