@@ -21,6 +21,14 @@
 
 ## Prerequisites
 
+### Fonts
+
+This setup includes a prompt theme that requires a powerline-compatible font. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good ones I've found:
+* [fantasque-sans](https://github.com/belluzj/fantasque-sans) - Another powerline font
+* [hack](http://sourcefoundry.org/hack/) - Designed for devs by devs, and happens to be pretty as well.
+* [Input Mono](http://input.fontbureau.com/) - A nice font designed for coding
+* [powerline-fonts collection](https://github.com/Lokaltog/powerline-fonts) - A collection of fonts patched to include powerline glyphs
+
 ### OS X
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). Seriously, never use Terminal again.
@@ -32,19 +40,19 @@
     2. Unlock the preferences
     3. Select your user
     4. Select advanced options
-    5. Set your login shell to `/bin/zsh` (`/usr/local/bin/zsh` if you decided to use a newer version from brew)
-6. Install some powerline compatible fonts from [https://github.com/Lokaltog/powerline-fonts](https://github.com/Lokaltog/powerline-fonts) or [Input Mono](http://input.fontbureau.com/). Fonts that are Powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses.
+    5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use a newer version from brew)
+6. Install some powerline compatible fonts from one of the links in the Fonts section above.
     1. Clone the [powerline-fonts](https://github.com/Lokaltog/powerline-fonts) repository, or download [Input Mono](http://input.fontbureau.com/).
     2. Copy the fonts into `~/Library/Fonts`.
     3. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
-    4.  Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled.
+    4. **Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
 ### Linux
 
 1. Switch your shell to zsh with chsh `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 
-I don't use a GUI on Linux, so you'll have to track down how to install the [powerline-fonts](https://github.com/Lokaltog/powerline-fonts) and specify one for your terminal application.
+I don't use a GUI on Linux, so you'll have to track down how to install new fonts, install one and specify it for your terminal application.
 
 ## Set up Zgen and the starter kit
 
@@ -81,7 +89,7 @@ The `.zshrc` included in this kit will automatically source any files it finds i
 
 ### zgen plugin list
 
-I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running `load-starter-plugin-list` as defined in `.zgen-setup`. Note: `~/.zgen-local-plugins` is not additive, it completely replaces the kit-provided list.
+I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running `load-starter-plugin-list` as defined in `.zgen-setup`. Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.
 
 Included plugins:
 * [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them
@@ -90,13 +98,13 @@ Included plugins:
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch
 * [rimraf/k](https://github.com/rimraf/k) - k is a directory lister that also shows git status on files & directories
 * [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with pip
-* [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - Collected scripts useful for sysadmins
+* [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - A collection of scripts useful for sysadmins
 * [srijanshetty/docker-zsh](https://github.com/srijanshetty/docker-zsh) - Docker completions
 * [stackexchange/blackbox](https://github.com/stackexchange/blackbox) - Tom Limoncelli's tool for storing secret information in a repository with gnupg encryption, automatically decrypting as needed
 * [unixorn/autoupdate-zgen](https://github.com/unixorn/autoupdate-zgen) - Adds autoupdate (for both zgen itself, and your plugins) to zgen
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions
-* [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Tab completion for Rakefile targets
+* [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type
 
@@ -121,6 +129,10 @@ We also have zgen load oh-my-zsh and these plugins:
 ## ZSH
 
 For a list of other ZSH plugins and themes you can use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+
+## Dotfiles in general
+
+[dotfiles.github.io/](https://dotfiles.github.io/) has a lot of great resources for dotfiles - frameworks for managing them, configurations for editors and bootstraps with initial configurations to start from.
 
 ## Vim
 
