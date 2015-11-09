@@ -23,24 +23,25 @@
 
 ### Fonts
 
-This setup includes a prompt theme that requires a powerline-compatible font. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good ones I've found:
+This setup includes a prompt theme that requires a powerline-compatible font in your terminal. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good powerline fonts I've found:
+
 * [fantasque-sans](https://github.com/belluzj/fantasque-sans) - Another powerline font
 * [hack](http://sourcefoundry.org/hack/) - Designed for devs by devs, and happens to be pretty as well.
 * [Input Mono](http://input.fontbureau.com/) - A nice font designed for coding
-* [powerline-fonts collection](https://github.com/Lokaltog/powerline-fonts) - A collection of fonts patched to include powerline glyphs
+* [powerline-fonts collection](https://github.com/Lokaltog/powerline-fonts) - A collection of fonts that are pre-patched to include powerline glyphs.
 
 ### OS X
 
-1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). Seriously, never use Terminal again.
+1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with OS X. Seriously, never use Terminal again.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
-3. `brew install stow`
+3. Install GNU Stow with `brew install stow`
 4. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to install it.
 5. Switch your shell to zsh
     1. System Preferences -> Users & Groups.
     2. Unlock the preferences
     3. Select your user
     4. Select advanced options
-    5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use a newer version from brew)
+    5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use the newer version packaged by brew)
 6. Install some powerline compatible fonts from one of the links in the Fonts section above.
     1. Clone the [powerline-fonts](https://github.com/Lokaltog/powerline-fonts) repository, or download [Input Mono](http://input.fontbureau.com/).
     2. Copy the fonts into `~/Library/Fonts`.
@@ -52,11 +53,11 @@ This setup includes a prompt theme that requires a powerline-compatible font. Fo
 1. Switch your shell to zsh with chsh `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 
-I don't use a GUI on Linux, so you'll have to track down how to install new fonts, install one and specify it for your terminal application.
+I don't use a GUI on Linux, so you'll have to track down how to install new fonts, then install one of the powerline fonts and specify it for your terminal application. If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters that you need to also set to your powerline font.
 
 ## Set up Zgen and the starter kit
 
-Now that your fonts and default shell have been set up, install [zgen](https://github.com/tarjoilija/zgen) and the starter kit dotfiles.
+Now that your fonts and default shell have been set up, install [zgen](https://github.com/tarjoilija/zgen) and the dotfiles from this starter kit repository.
 
 1. Install [Zgen](https://github.com/tarjoilija/zgen)
     1. `cd ~`
@@ -64,7 +65,7 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
 2. Install the starter kit
     1. `cd ~`
     2. `git clone git@github.com:unixorn/zsh-quickstart-kit.git`
-3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`. 
+3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`.
     1. You can do this with stow by:
         1. `cd zsh-quickstart-kit`
         2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
@@ -78,23 +79,23 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 * Proper command history search
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
-* Various helper functions for interacting with OS X's clipboard, audio volume, and Quicklook.
-* oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
+* Using oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
+* Various helper functions for interacting with OS X's clipboard, audio volume, Spotlight and Quicklook.
 
 ## Customizations
 
 ### Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate branch of this repo. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate branch of this repository. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` to ensure they're loaded in the order you expect.
 
 ### zgen plugin list
 
-I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running `load-starter-plugin-list` as defined in `.zgen-setup`. Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.
+I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `.zgen-setup`. Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.
 
 Included plugins:
 * [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - sets your terminal to 256 colors if available
-* [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed
+* [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch
 * [rimraf/k](https://github.com/rimraf/k) - k is a directory lister that also shows git status on files & directories
 * [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with pip
