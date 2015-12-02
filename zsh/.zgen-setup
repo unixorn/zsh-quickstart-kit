@@ -66,7 +66,7 @@ load-starter-plugin-list() {
   zgen oh-my-zsh plugins/aws
   zgen oh-my-zsh plugins/brew
   zgen oh-my-zsh plugins/chruby
-  zgen oh-my-zsh plugins/colored-man
+  zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/github
   zgen oh-my-zsh plugins/osx
