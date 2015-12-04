@@ -5,6 +5,7 @@
 
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
+    - [Fonts](#fonts)
     - [OS X](#os-x)
     - [Linux](#linux)
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
@@ -13,6 +14,7 @@
     - [zgen plugin list](#zgen-plugin-list)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
+  - [Dotfiles in general](#dotfiles-in-general)
   - [Vim](#vim)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
