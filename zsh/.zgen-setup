@@ -21,10 +21,10 @@ load-starter-plugin-list() {
 
   zgen oh-my-zsh
 
-  # Here's where you update your plugins. You'll want to:
-  # 1. Update the zgen load statements here
-  # 2. source ~/.zgen-setup
-  # 3. run setup-zgen-repos
+  # If you want to customize your plugin list, create a file named
+  # .zgen-local-plugins in your home directory. That file will be sourced
+  # during startup *instead* of running this load-starter-plugin-list function,
+  # so make sure to include everything from this function that you want to keep.
 
   # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
   # they break, so get the order right.
@@ -91,7 +91,8 @@ load-starter-plugin-list() {
   GENCOMPL_FPATH=$HOME/.zsh/complete
 
   # Very cool plugin that generates zsh completion functions for commands
-  # if they have getopt-style help text.
+  # if they have getopt-style help text. It doesn't generate them on the fly,
+  # you'll have to explicitly generate a completion, but it's still quite cool.
   zgen load RobSis/zsh-completion-generator
 
   # k is a zsh script / plugin to make directory listings more readable,
@@ -127,7 +128,7 @@ get_file_modification_time() {
   echo "$modified_time"
 }
 
-# check if there's no init script
+# check if there's an init.zsh file for zgen and generate one if not.
 if ! zgen saved; then
   setup-zgen-repos
 fi
