@@ -25,14 +25,14 @@
 
 ### Fonts
 
-This setup includes a prompt theme that requires a powerline-compatible font in your terminal. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good powerline fonts I've found:
+This quickstart includes a prompt theme that requires a powerline-compatible font in your terminal. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good powerline fonts I've found:
 
 * [Awesome Terminal Fonts ![GitHub stars](https://img.shields.io/github/stars/gabrielelana/awesome-terminal-fonts.svg)](https://github.com/gabrielelana/awesome-terminal-fonts) - A family of fonts that includes some nice monospaced Icons.
 * [Fantasque Awesome Font ![GitHub stars](https://img.shields.io/github/stars/ztomer/fantasque_awesome_powerline.svg)](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons and Powerline-Glyphs.
 * [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed specifically for source code and terminal usage.
 * [Input Mono](http://input.fontbureau.com/) - A family of fonts designed specifically for code. It offers both monospaced and proportional fonts and includes powerline glyphs.
 * [Monoid](http://larsenwork.com/monoid/) - Monoid is customizable and optimized for coding with bitmap-like sharpness at 15px line-height even on low res displays.
-* [nerd fonts ![GitHub stars](https://img.shields.io/github/stars/ryanoasis/nerd-fonts.svg)](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & fontforge font patcher python script for powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
+* [Nerd fonts ![GitHub stars](https://img.shields.io/github/stars/ryanoasis/nerd-fonts.svg)](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & fontforge font patcher python script for powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
 * [Powerline patched font collection ![GitHub stars](https://img.shields.io/github/stars/powerline/fonts.svg)](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include powerline gylphs.
 
 ### OS X
@@ -55,7 +55,7 @@ This setup includes a prompt theme that requires a powerline-compatible font in 
 
 ### Linux
 
-1. Switch your shell to zsh with chsh `chsh -s /bin/zsh`
+1. Switch your shell to zsh with `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 
 I don't use a GUI on Linux, so you'll have to track down how to install new fonts, then install one of the powerline fonts and specify it for your terminal application. If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters that you need to also set to your powerline font.
@@ -75,12 +75,12 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
         1. `cd zsh-quickstart-kit`
         2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
 
-The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
+The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable:
 
-* Automatic periodic install and update of zgen and your plugins
+* Automatic periodic updates to zgen and your plugins
 * Cross-session shared history
 * Deduping your command history
-* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository
+* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository.
 * Proper command history search
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
@@ -91,13 +91,14 @@ The included `.zshrc`, `.zsh_aliases` & `.zsh_functions` files enable:
 
 ### Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate branch of this repository. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
 ### zgen plugin list
 
-I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize, if you create a file named `~/.zgen-local-plugins`, the starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `.zgen-setup`. Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.
+I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`. **Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
 
-Included plugins:
+### Included plugins:
+
 * [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - sets your terminal to 256 colors if available
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is
