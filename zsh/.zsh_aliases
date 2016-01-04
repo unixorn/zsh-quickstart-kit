@@ -42,6 +42,9 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias spotlighter="mdfind -onlyin `pwd`"
   alias top="TERM=vt100 top"
 
+  # Sublime
+  alias s="subl"
+
   # Manually remove a downloaded app or file from the quarantine
   function unquarantine() {
     for attribute in com.apple.metadata:kMDItemDownloadedDate \
