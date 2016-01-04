@@ -232,3 +232,5 @@ dedupe_path() {
 }
 
 dedupe_path
+# Hook for desk activation
+[ -n "$DESK_ENV" ] && source "$DESK_ENV"
