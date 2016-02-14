@@ -44,6 +44,8 @@ load-starter-plugin-list() {
 
   zgen load unixorn/jpb.zshplugin
 
+  zgen load unixorn/tumult.plugin.zsh
+
   # Warn you when you run a command that you've got an alias for
   zgen load djui/alias-tips
 
