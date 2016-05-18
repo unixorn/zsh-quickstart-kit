@@ -57,8 +57,16 @@ This quickstart includes a prompt theme that requires a powerline-compatible fon
 
 1. Switch your shell to zsh with `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
+3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
+4. Update the font cache for the path the font was installed in (root privileges may be needed for updating font cache for some paths): `fc-cache -vf ~/.fonts/`
 
-I don't use a GUI on Linux, so you'll have to track down how to install new fonts, then install one of the powerline fonts and specify it for your terminal application. If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters that you need to also set to your chosen powerline font.
+After installing the powerline font, you will need to configure your terminal emulator to use the patched font. The name of the correct font usually ends with *for Powerline*.
+
+If the powerline symbols cannot be seen then try closing all instances of the terminal emulator. The X server may also need to be restarted for the new font to correctly load.
+
+If you still can’t see the powerline fonts then double-check that the font have been installed to a valid X font path.
+
+If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters that you need to also set to your chosen powerline font.
 
 ## Set up Zgen and the starter kit
 
