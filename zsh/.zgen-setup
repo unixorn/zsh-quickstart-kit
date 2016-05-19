@@ -66,16 +66,20 @@ load-starter-plugin-list() {
   zgen oh-my-zsh plugins/pip
   zgen oh-my-zsh plugins/sudo
   zgen oh-my-zsh plugins/aws
-  zgen oh-my-zsh plugins/brew
   zgen oh-my-zsh plugins/chruby
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/github
-  zgen oh-my-zsh plugins/osx
   zgen oh-my-zsh plugins/python
   zgen oh-my-zsh plugins/rsync
   zgen oh-my-zsh plugins/screen
   zgen oh-my-zsh plugins/vagrant
+
+  if [ $(uname -a | grep -ci Darwin) = 1 ]; then
+    # Load OSX-specific plugins
+    zgen oh-my-zsh plugins/brew
+    zgen oh-my-zsh plugins/osx
+  fi
 
   # A set of shell functions to make it easy to install small apps and
   # utilities distributed with pip.
