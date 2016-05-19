@@ -56,7 +56,7 @@ This quickstart includes the bullet-train zsh theme, which requires a powerline-
 ## Linux
 
 1. Switch your shell to zsh with `chsh -s /bin/zsh`
-2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
+2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install` stow on Debian / Ubuntu.
 3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 4. Update the font cache for the path the font was installed in (root privileges may be needed for updating font cache for some paths): `fc-cache -vf ~/.fonts/`
 
@@ -86,7 +86,7 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable:
 
 * Automatic periodic updates to zgen and your plugins
-* Cross-session shared history
+* Cross-session shared history so commands typed in one terminal window can be seen and searched in all other windows on the same machine.
 * Deduping your command history
 * Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get new completions and updates of old ones.
 * Proper command history search
@@ -120,26 +120,25 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets
-* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts.
+* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts. This only loads if you're on OS X.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type
 * [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh
 
 We also have zgen load oh-my-zsh and these plugins:
-* oh-my-zsh
-    * aws
-    * brew
-    * chruby
-    * colored-man
-    * git
-    * github
-    * osx
-    * pip
-    * python
-    * rsync
-    * screen
-    * sudo
-    * vagrant
+  * aws
+  * brew - only loaded on OS X
+  * chruby
+  * colored-man
+  * git
+  * github
+  * osx - only loaded on OS X
+  * pip
+  * python
+  * rsync
+  * screen
+  * sudo
+  * vagrant
 
 # Other Resources
 
