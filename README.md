@@ -6,8 +6,8 @@
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
     - [Fonts](#fonts)
-    - [OS X](#os-x)
-    - [Linux](#linux)
+  - [OS X](#os-x)
+  - [Linux](#linux)
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
   - [Customizations](#customizations)
     - [Functions and Aliases](#functions-and-aliases)
@@ -26,7 +26,7 @@
 
 ### Fonts
 
-This quickstart includes a prompt theme that requires a powerline-compatible font in your terminal. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good powerline fonts I've found:
+This quickstart includes the bullet-train zsh theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good powerline fonts I've found:
 
 * [Awesome Terminal Fonts](https://github.com/gabrielelana/awesome-terminal-fonts) - A family of fonts that includes some nice monospaced Icons.
 * [Fantasque Awesome Font](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons and Powerline-Glyphs.
@@ -36,7 +36,7 @@ This quickstart includes a prompt theme that requires a powerline-compatible fon
 * [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & fontforge font patcher python script for powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
 * [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include powerline gylphs.
 
-### OS X
+## OS X
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with OS X.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
@@ -53,20 +53,20 @@ This quickstart includes a prompt theme that requires a powerline-compatible fon
     2. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
     3. **Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
-### Linux
+## Linux
 
 1. Switch your shell to zsh with `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems
 3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 4. Update the font cache for the path the font was installed in (root privileges may be needed for updating font cache for some paths): `fc-cache -vf ~/.fonts/`
 
-After installing the powerline font, you will need to configure your terminal emulator to use the patched font. The name of the correct font usually ends with *for Powerline*.
+After installing the powerline font, you will also need to configure your terminal emulator to use the powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
-If the powerline symbols cannot be seen then try closing all instances of the terminal emulator. The X server may also need to be restarted for the new font to correctly load.
+If the powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X server may also need to be restarted for the new font to correctly load.
 
-If you still can’t see the powerline fonts then double-check that the font have been installed to a valid X font path.
+If you still can’t see the powerline fonts then double-check that the font has been installed to a valid X font path.
 
-If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters that you need to also set to your chosen powerline font.
+If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you need to also set to your chosen powerline font.
 
 ## Set up Zgen and the starter kit
 
@@ -88,7 +88,7 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 * Automatic periodic updates to zgen and your plugins
 * Cross-session shared history
 * Deduping your command history
-* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository.
+* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get new completions and updates of old ones.
 * Proper command history search
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
@@ -107,7 +107,7 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 
 ### Included plugins:
 
-* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them
+* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - sets your terminal to 256 colors if available
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch
