@@ -7,7 +7,7 @@
 # BSD licensed, see LICENSE.txt
 
 # Clone zgen if you haven't already
-if [ ! -f ~/zgen/zgen.zsh ]; then
+if [[ ! -f ~/zgen/zgen.zsh ]]; then
   pushd ~
   git clone git@github.com:tarjoilija/zgen.git
   popd
@@ -113,7 +113,7 @@ load-starter-plugin-list() {
 }
 
 setup-zgen-repos() {
-  if [ -f ~/.zgen-local-plugins ]; then
+  if [[ -f ~/.zgen-local-plugins ]]; then
     source ~/.zgen-local-plugins
   else
     load-starter-plugin-list
@@ -122,17 +122,24 @@ setup-zgen-repos() {
 
 # This comes from https://stackoverflow.com/questions/17878684/best-way-to-get-file-modified-time-in-seconds
 # This works on both Linux with GNU fileutils and OS X with BSD stat.
-get_file_modification_time() {
-  modified_time=$(stat -c %Y "$1" 2> /dev/null)
-  if [ "$?" -ne 0 ]; then
-    modified_time=$(stat -f %m "$1" 2> /dev/null)
-    if [ "$?" -ne 0 ]; then
-      modified_time=$(date -r "$1" +%s 2> /dev/null)
-      [ "$?" -ne 0 ] && modified_time=0
-    fi
-  fi
-  echo "$modified_time"
-}
+
+# Naturally BSD/OS X and Linux can't share the same options to stat.
+if [[ $(uname | grep -ci -e Darwin -e BSD) = 1 ]]; then
+
+  # OS X version
+  get_file_modification_time() {
+    modified_time=$(stat -f %m "$1" 2> /dev/null) || modified_time=0
+    echo "${modified_time}"
+  }
+
+elif [[ $(uname | grep -ci Linux) = 1 ]]; then
+
+  # Linux version
+  get_file_modification_time() {
+    modified_time=$(stat -c %Y "$1" 2> /dev/null) || modified_time=0
+    echo "${modified_time}"
+  }
+fi
 
 # check if there's an init.zsh file for zgen and generate one if not.
 if ! zgen saved; then
@@ -144,20 +151,33 @@ fi
 # repository. Unfortunately, stat will return the modification time of the
 # symlink instead of the target file, so construct a full path to hand off
 # to stat so it returns the modification time of the actual .zgen-setup file.
-REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-setup)"
+if [[ -f ~/.zgen-setup ]]; then
+  REAL_ZGEN_SETUP=~/.zgen-setup
+fi
+if [[ -L ~/.zgen-setup ]]; then
+  REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-setup)"
+fi
 
-# If you don't want my standard starter set of plugins, create .zgen-local-plugins
-# and add your zgen load commands there. Don't forget to zgen save at the end,
-# .zgen-local-plugins replaces the starter list setup, it doesn't add to it.
+# If you don't want my standard starter set of plugins, create a file named
+# .zgen-local-plugins and add your zgen load commands there. Don't forget to
+# run `zgen save` at the end of your .zgen-local-plugins file.
 #
-# Use readlink in case the user is symlinking from another repo checkout
-if [ -f ~/.zgen-local-plugins ]; then
+# Warning: .zgen-local-plugins REPLACES the starter list setup, it doesn't add
+# to it.
+#
+# Use readlink in case the user is symlinking from another repo checkout, so
+# they can use a personal dotfiles repository cleanly.
+if [[ -f ~/.zgen-local-plugins ]]; then
+  REAL_ZGEN_SETUP=~/.zgen-local-plugins
+fi
+if [[ -L ~/.zgen-local-plugins ]]; then
   REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-local-plugins)"
 fi
 
+echo "REAL_ZGEN_SETUP: $REAL_ZGEN_SETUP"
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
-  echo ".zgen-setup updated; creating a new init.zsh"
+  echo "$(basename ${REAL_ZGEN_SETUP}) updated; creating a new init.zsh"
   setup-zgen-repos
 fi
 unset REAL_ZGEN_SETUP

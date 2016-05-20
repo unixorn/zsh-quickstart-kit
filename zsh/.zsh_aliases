@@ -6,7 +6,9 @@
 #
 # BSD licensed, see LICENSE.txt
 
-export GOPATH=~/gocode
+if [[ -d ~/gocode ]]; then
+  export GOPATH=~/gocode
+fi
 
 # yes, these tests are ugly. They do however, work.
 if [[ "$(uname -s)" == "Darwin" ]]; then
