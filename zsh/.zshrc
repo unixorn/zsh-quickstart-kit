@@ -233,5 +233,58 @@ dedupe_path() {
 
 dedupe_path
 
-# Hook for desk activation
+# If desk is installed, load the Hook for desk activation
 [[ -n "$DESK_ENV" ]] && source "$DESK_ENV"
+
+# Do selfupdate checking. We do this after processing ~/.zshrc.d to make the
+# refresh check interval easier to customize.
+#
+# If they unset QUICKSTART_KIT_REFRESH_IN_DAYS in one of the fragments
+# in ~/.zshrc.d, then we don't do any selfupdate checking at all.
+
+_load-lastupdate-from-file() {
+  local now=$(date +%s)
+  if [[ -f "${1}" ]]; then
+    local last_update=$(cat "${1}")
+  else
+    local last_update=0
+  fi
+  local interval="$(expr ${now} - ${last_update})"
+  echo "${interval}"
+}
+
+_update-zsh-quickstart() {
+  if [[ ! -L ~/.zshrc ]]; then
+    echo ".zshrc is not a symlink, skipping zsh-quickstart-kit update"
+  else
+    pushd $(dirname "${HOME}/$(readlink ~/.zshrc)")
+      local gitroot=$(git rev-parse --show-toplevel)
+      if [[ -f "${gitroot}/.gitignore" ]]; then
+        if [[ $(grep -c zsh-quickstart-kit "${gitroot}/.gitignore") -ne 0 ]]; then
+          echo "---- updating ----"
+          git pull
+          date +%s >! ~/.zsh-quickstart-last-update
+        fi
+      else
+        echo 'No quickstart marker found, is your quickstart a valid git checkout?'
+      fi
+    popd
+  fi
+}
+
+_check-for-zsh-quickstart-update() {
+  local day_seconds=$(expr 24 \* 60 \* 60)
+  local refresh_seconds=$(expr "${day_seconds}" \* "${QUICKSTART_KIT_REFRESH_IN_DAYS}")
+  local last_quickstart_update=$(_load-lastupdate-from-file ~/.zsh-quickstart-last-update)
+
+  if [ ${last_quickstart_update} -gt ${refresh_seconds} ]; then
+    echo "It has been $(expr ${last_quickstart_update} / ${day_seconds}) days since your zsh quickstart kit was updated"
+    echo "Checking for zsh-quickstart-kit updates..."
+    _update-zsh-quickstart
+  fi
+}
+
+if [[ ! -z "$QUICKSTART_KIT_REFRESH_IN_DAYS" ]]; then
+  _check-for-zsh-quickstart-update
+  unset QUICKSTART_KIT_REFRESH_IN_DAYS
+fi
