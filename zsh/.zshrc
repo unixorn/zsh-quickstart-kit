@@ -100,6 +100,11 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 REPORTTIME=2
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
+# How often to check for an update. If you want to override this, the
+# easiest way is to add a script fragment in ~/.zshrc.d that unsets
+# QUICKSTART_KIT_REFRESH_IN_DAYS.
+QUICKSTART_KIT_REFRESH_IN_DAYS=7
+
 # Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
 globalias() {
    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
