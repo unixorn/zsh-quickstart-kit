@@ -11,6 +11,7 @@
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
   - [Customizations](#customizations)
     - [Functions and Aliases](#functions-and-aliases)
+    - [Self-updating](#self-updating)
     - [zgen plugin list](#zgen-plugin-list)
     - [Included plugins:](#included-plugins)
 - [Other Resources](#other-resources)
@@ -100,6 +101,10 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 ### Functions and Aliases
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+
+### Self-updating
+
+The quickstart kit will now check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
 ### zgen plugin list
 
