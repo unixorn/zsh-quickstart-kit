@@ -11,6 +11,7 @@
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
   - [Customizations](#customizations)
     - [Functions and Aliases](#functions-and-aliases)
+    - [Self-updating](#self-updating)
     - [zgen plugin list](#zgen-plugin-list)
     - [Included plugins:](#included-plugins)
 - [Other Resources](#other-resources)
