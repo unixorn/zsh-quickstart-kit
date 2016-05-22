@@ -174,7 +174,6 @@ if [[ -L ~/.zgen-local-plugins ]]; then
   REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-local-plugins)"
 fi
 
-echo "REAL_ZGEN_SETUP: $REAL_ZGEN_SETUP"
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
   echo "$(basename ${REAL_ZGEN_SETUP}) updated; creating a new init.zsh"
