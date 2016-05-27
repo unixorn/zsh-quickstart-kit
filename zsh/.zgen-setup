@@ -52,6 +52,9 @@ load-starter-plugin-list() {
   # Add my collection of git helper scripts
   zgen load unixorn/git-extra-commands
 
+  # Add my bitbucket git helpers plugin
+  zgen load unixorn/bitbucket-git-helpers.plugin.zsh
+
   # A collection of scripts that might be useful to sysadmins
   zgen load skx/sysadmin-util
 
