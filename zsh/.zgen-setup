@@ -44,6 +44,11 @@ load-starter-plugin-list() {
 
   zgen load unixorn/jpb.zshplugin
 
+  # Colorize all the things if you have grc installed. Well, some of the
+  # things, anyway.
+  zgen load unixorn/warhol.plugin.zsh
+
+  # OS X helpers
   zgen load unixorn/tumult.plugin.zsh
 
   # Warn you when you run a command that you've got an alias for
