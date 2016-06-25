@@ -44,7 +44,7 @@ load-starter-plugin-list() {
 
   zgen load unixorn/jpb.zshplugin
 
-  # Colorize all the things if you have grc installed. Well, some of the
+  # Colorize the things if you have grc installed. Well, some of the
   # things, anyway.
   zgen load unixorn/warhol.plugin.zsh
 
@@ -108,6 +108,9 @@ load-starter-plugin-list() {
   # if they have getopt-style help text. It doesn't generate them on the fly,
   # you'll have to explicitly generate a completion, but it's still quite cool.
   zgen load RobSis/zsh-completion-generator
+
+  # Add Fish-like autosuggestions to your ZSH
+  zgen load zsh-users/zsh-autosuggestions
 
   # k is a zsh script / plugin to make directory listings more readable,
   # adding a bit of color and some git status information on files and directories

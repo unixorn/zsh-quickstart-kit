@@ -113,11 +113,11 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 
 ### Included plugins:
 
-* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch.
 * [rimraf/k](https://github.com/rimraf/k) - k is a directory lister that also shows git status on files & directories.
+* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
 * [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with pip.
 * [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - A collection of scripts useful for sysadmins.
 * [srijanshetty/docker-zsh](https://github.com/srijanshetty/docker-zsh) - Docker completions.
@@ -128,9 +128,10 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets.
 * [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts. This only loads if you're on OS X..
+* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions
+* [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search.
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
-* [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
 
 We also have zgen load oh-my-zsh and these plugins:
   * aws
