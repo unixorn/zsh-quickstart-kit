@@ -8,3 +8,6 @@
 * Added font installation instructions for Linux
 * We now de-duplicate your $PATH after loading everything
 * Added self-update capability
+
+0.5.2
+* Added zsh-autosuggestions plugin
