@@ -128,7 +128,7 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets.
-* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts. This only loads if you're on OS X..
+* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts. This only loads if you're on OS X.
 * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions
 * [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search.
