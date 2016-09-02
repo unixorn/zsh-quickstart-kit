@@ -7,7 +7,7 @@
 # BSD licensed, see LICENSE.txt
 
 function exists() {
-  which $1 &> /dev/null
+  if (( $+commands[$1] )); then return 0; else return 1; fi
 }
 
 # from cads@ooyala.com
