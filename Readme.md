@@ -27,11 +27,13 @@
 
 ### Fonts
 
-This quickstart includes the bullet-train zsh theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs. Here are a few good powerline fonts I've found:
+This quickstart includes the bullet-train zsh theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs.
+
+Here are a few good powerline-compatible fonts I've found:
 
 * [Awesome Terminal Fonts](https://github.com/gabrielelana/awesome-terminal-fonts) - A family of fonts that includes some nice monospaced Icons.
 * [Fantasque Awesome Font](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons and Powerline-Glyphs.
-* [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family
+* [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family.
 * [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed specifically for source code and terminal usage.
 * [Input Mono](http://input.fontbureau.com/) - A family of fonts designed specifically for code. It offers both monospaced and proportional fonts and includes powerline glyphs.
 * [Monoid](http://larsenwork.com/monoid/) - Monoid is customizable and optimized for coding with bitmap-like sharpness at 15px line-height even on low res displays.
@@ -39,13 +41,15 @@ This quickstart includes the bullet-train zsh theme, which requires a powerline-
 * [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include powerline gylphs.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
-## OS X
+## OS Setup
+
+### OS X
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with OS X.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. Install GNU Stow with `brew install stow`
 4. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to install it.
-5. Switch your shell to zsh
+5. Switch your shell to zsh:
     1. System Preferences -> Users & Groups.
     2. Unlock the preferences
     3. Select your user
@@ -56,20 +60,20 @@ This quickstart includes the bullet-train zsh theme, which requires a powerline-
     2. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
     3. **Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
-## Linux
+### Linux
 
 1. Switch your shell to zsh with `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install` stow on Debian / Ubuntu.
 3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 4. Update the font cache for the path the font was installed in (root privileges may be needed for updating font cache for some paths): `fc-cache -vf ~/.fonts/`
 
-After installing the powerline font, you will also need to configure your terminal emulator to use the powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
+After installing the powerline-compatible font, you will also need to configure your terminal emulator to use the powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
 If the powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X server may also need to be restarted for the new font to correctly load.
 
 If you still can’t see the powerline fonts then double-check that the font has been installed to a valid X font path.
 
-If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you need to also set to your chosen powerline font.
+If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you need to also set to a powerline-compatible font.
 
 ## Set up Zgen and the starter kit
 
@@ -102,13 +106,13 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 
 ### Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
 ### Self-updating
 
-The quickstart kit will now check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
+The quickstart kit will check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
-### zgen plugin list
+### Changing the zgen plugin list
 
 I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`. **Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
 
