@@ -166,7 +166,7 @@ if [[ -f ~/.zgen-setup ]]; then
   REAL_ZGEN_SETUP=~/.zgen-setup
 fi
 if [[ -L ~/.zgen-setup ]]; then
-  REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-setup)"
+  REAL_ZGEN_SETUP="$(readlink ~/.zgen-setup)"
 fi
 
 # If you don't want my standard starter set of plugins, create a file named
