@@ -206,7 +206,7 @@ echo "Current SSH Keys:"
 ssh-add -l
 echo
 
-# Honor old .zshrc.local customizations, but print depecation warning.
+# Honor old .zshrc.local customizations, but print deprecation warning.
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
   echo ".zshrc.local is deprecated - use files in ~/.zshrc.d instead"
