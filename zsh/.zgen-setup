@@ -7,12 +7,14 @@
 # BSD licensed, see LICENSE.txt
 
 # Clone zgen if you haven't already
-if [[ ! -f ~/zgen/zgen.zsh ]]; then
-  pushd ~
+ZGEN_PARENT_DIR=$HOME/github
+if [[ ! -f $ZGEN_PARENT_DIR/zgen/zgen.zsh ]]; then
+  pushd $ZGEN_PARENT_DIR
   git clone git@github.com:tarjoilija/zgen.git
   popd
 fi
-source ~/zgen/zgen.zsh
+source $ZGEN_PARENT_DIR/zgen/zgen.zsh
+unset ZGEN_PARENT_DIR
 
 load-starter-plugin-list() {
   echo "creating a zgen save"
