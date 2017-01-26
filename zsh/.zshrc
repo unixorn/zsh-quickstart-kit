@@ -57,17 +57,12 @@ if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
   fi
 fi
 
-if [ -f ~/.ssh/id_rsa ]; then
-  if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_rsa
+for key_candidate in rsa dsa ecdsa
+do
+  if [ -f ~/.ssh/id_${key_candidate} -a $(ssh-add -l | grep -c ".ssh/id_${key_candidate}" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_${key_candidate}
   fi
-fi
-
-if [ -f ~/.ssh/id_dsa ]; then
-  if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_dsa
-  fi
-fi
+done
 
 # Now that we have $PATH set up and ssh keys loaded, configure zgen.
 
