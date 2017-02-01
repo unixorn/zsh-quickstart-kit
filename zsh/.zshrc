@@ -264,7 +264,12 @@ _update-zsh-quickstart() {
   if [[ ! -L ~/.zshrc ]]; then
     echo ".zshrc is not a symlink, skipping zsh-quickstart-kit update"
   else
-    pushd $(dirname "${HOME}/$(readlink ~/.zshrc)")
+    local _link_loc=$(readlink ~/.zshrc);
+    if [[ "${_link_loc/${HOME}}" == "${_link_loc}" ]] then
+      pushd $(dirname "${HOME}/$(readlink ~/.zshrc)");
+    else
+      pushd $(dirname ${_link_loc});
+    fi;
       local gitroot=$(git rev-parse --show-toplevel)
       if [[ -f "${gitroot}/.gitignore" ]]; then
         if [[ $(grep -c zsh-quickstart-kit "${gitroot}/.gitignore") -ne 0 ]]; then
@@ -278,6 +283,7 @@ _update-zsh-quickstart() {
     popd
   fi
 }
+
 
 _check-for-zsh-quickstart-update() {
   local day_seconds=$(expr 24 \* 60 \* 60)
