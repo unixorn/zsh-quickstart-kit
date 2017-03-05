@@ -43,9 +43,9 @@ Here are a few good powerline-compatible fonts I've found:
 
 ## OS Setup
 
-### OS X
+### macOS
 
-1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with OS X.
+1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. Install GNU Stow with `brew install stow`
 4. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to install it.
@@ -100,7 +100,7 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
 * Using oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
-* Various helper functions for interacting with OS X's clipboard, audio volume, Spotlight and Quicklook.
+* Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook.
 
 ## Customizations
 
@@ -132,7 +132,7 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets.
-* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts. This only loads if you're on OS X.
+* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - macOS specific functions and scripts. This only adds itself to your `$PATH` if you're on macOS.
 * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions
 * [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search.
@@ -140,12 +140,12 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 
 We also have zgen load oh-my-zsh and these plugins:
   * aws
-  * brew - only loaded on OS X
+  * brew - only loaded on macOS
   * chruby
   * colored-man
   * git
   * github
-  * osx - only loaded on OS X
+  * osx - only loaded on macOS
   * pip
   * python
   * rsync
@@ -157,7 +157,7 @@ We also have zgen load oh-my-zsh and these plugins:
 
 ## ZSH
 
-For a list of other ZSH plugins and themes you can use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+For a list of other ZSH plugins and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
 
 ## Dotfiles in general
 
