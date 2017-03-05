@@ -6,13 +6,14 @@
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
     - [Fonts](#fonts)
-  - [OS X](#os-x)
-  - [Linux](#linux)
+  - [OS Setup](#os-setup)
+    - [macOS](#macos)
+    - [Linux](#linux)
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
   - [Customizations](#customizations)
     - [Functions and Aliases](#functions-and-aliases)
-    - [Self-updating](#self-updating)
-    - [zgen plugin list](#zgen-plugin-list)
+    - [Self-update Settings](#self-update-settings)
+    - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
     - [Included plugins:](#included-plugins)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
@@ -43,9 +44,9 @@ Here are a few good powerline-compatible fonts I've found:
 
 ## OS Setup
 
-### OS X
+### macOS
 
-1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with OS X.
+1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. Install GNU Stow with `brew install stow`
 4. Homebrew has a newer version of zsh than the one Apple ships, so `brew install zsh` to install it.
@@ -67,7 +68,7 @@ Here are a few good powerline-compatible fonts I've found:
 3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 4. Update the font cache for the path the font was installed in (root privileges may be needed for updating font cache for some paths): `fc-cache -vf ~/.fonts/`
 
-After installing the powerline-compatible font, you will also need to configure your terminal emulator to use the powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
+After installing a powerline-compatible font, you will also need to configure your terminal emulator to use your selected powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
 If the powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X server may also need to be restarted for the new font to correctly load.
 
@@ -100,7 +101,7 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
 * Using oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
-* Various helper functions for interacting with OS X's clipboard, audio volume, Spotlight and Quicklook.
+* Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook.
 
 ## Customizations
 
@@ -108,17 +109,19 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
-### Self-updating
+### Self-update Settings
 
 The quickstart kit will check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
 ### Changing the zgen plugin list
 
-I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`. **Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
+I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
+
+**Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
 
 ### Included plugins:
 
-* [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - sets your terminal to 256 colors if available.
+* [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - Sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch.
 * [rimraf/k](https://github.com/rimraf/k) - k is a directory lister that also shows git status on files & directories.
@@ -132,20 +135,20 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets.
-* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - OSX specific functions and scripts. This only loads if you're on OS X.
+* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - Adds macOS-specific functions and scripts. This plugin only adds itself to your `$PATH` if you're on macOS.
 * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions
 * [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search.
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
 
-We also have zgen load oh-my-zsh and these plugins:
+The quickstart kit uses zgen to load oh-my-zsh and these plugins:
   * aws
-  * brew - only loaded on OS X
+  * brew - only loaded on macOS
   * chruby
   * colored-man
   * git
   * github
-  * osx - only loaded on OS X
+  * osx - only loaded on macOS
   * pip
   * python
   * rsync
@@ -157,7 +160,7 @@ We also have zgen load oh-my-zsh and these plugins:
 
 ## ZSH
 
-For a list of other ZSH plugins and themes you can use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+For a list of other ZSH plugins and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
 
 ## Dotfiles in general
 
