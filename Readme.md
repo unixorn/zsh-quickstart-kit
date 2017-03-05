@@ -6,13 +6,14 @@
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
     - [Fonts](#fonts)
-  - [OS X](#os-x)
-  - [Linux](#linux)
+  - [OS Setup](#os-setup)
+    - [macOS](#macos)
+    - [Linux](#linux)
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
   - [Customizations](#customizations)
     - [Functions and Aliases](#functions-and-aliases)
-    - [Self-updating](#self-updating)
-    - [zgen plugin list](#zgen-plugin-list)
+    - [Self-update Settings](#self-update-settings)
+    - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
     - [Included plugins:](#included-plugins)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
@@ -108,7 +109,7 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
-### Self-updating
+### Self-update Settings
 
 The quickstart kit will check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
