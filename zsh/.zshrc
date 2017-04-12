@@ -29,6 +29,7 @@ for path_candidate in /opt/local/sbin \
   /opt/local/bin \
   /usr/local/share/npm/bin \
   ~/.cabal/bin \
+  ~/.cargo/bin \
   ~/.rbenv/bin \
   ~/bin \
   ~/src/gocode/bin
