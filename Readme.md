@@ -117,9 +117,13 @@ The quickstart kit will check for updates every seven days. If you want to chang
 
 ### Changing the zgen plugin list
 
-I've included what I think is a good starter set of zsh plugins in this repository. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
+I've included what I think is a good starter set of zsh plugins in this repository. However, everyone has their own preferences for their environment, so to make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
 **Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
+
+I'm told it's a pain to have to create `.zgen-local-plugins` from scratch, so to make customizing the plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugins that the kit does by default for you to use as a starting point for your own customizations.
+
+Copy that to your `$HOME`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
 ### Included plugins:
 

@@ -1,8 +1,9 @@
 #!/bin/zsh
 #
-# Only including a shebang to trigger Sublime Text to use shell syntax highlighting
+# Only including a shebang to trigger Sublime Text to use shell
+# syntax highlighting.
 #
-# Copyright 2006-2016 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2017 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 
@@ -49,16 +50,19 @@ load-starter-plugin-list() {
   # Automatically run zgen update and zgen selfupdate every 7 days
   zgen load unixorn/autoupdate-zgen
 
+  # Add my collection of miscellaneous utility functions.
   zgen load unixorn/jpb.zshplugin
 
   # Colorize the things if you have grc installed. Well, some of the
   # things, anyway.
   zgen load unixorn/warhol.plugin.zsh
 
-  # OS X helpers
+  # OS X helpers. This plugin is smart enough to detect when it isn't running
+  # on OS X and not load itself, so you can safely share the same plugin list
+  # across OS X and Linux/BSD
   zgen load unixorn/tumult.plugin.zsh
 
-  # Warn you when you run a command that you've got an alias for
+  # Warn you when you run a command that you've set an alias for
   zgen load djui/alias-tips
 
   # Add my collection of git helper scripts
