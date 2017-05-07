@@ -28,7 +28,7 @@
 
 ### Fonts
 
-This quickstart includes the bullet-train zsh theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs.
+This quickstart includes the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) zsh theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs.
 
 Here are a few good powerline-compatible fonts I've found:
 
@@ -44,7 +44,7 @@ Here are a few good powerline-compatible fonts I've found:
 * [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include powerline gylphs.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
-## OS Setup
+## OS-specific setup
 
 ### macOS
 
@@ -59,9 +59,8 @@ Here are a few good powerline-compatible fonts I've found:
     4. Select advanced options
     5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use the newer version packaged by brew)
 6. Install some powerline compatible fonts from one of the links in the Fonts section above.
-    1. Install a powerline-compatible font from the Fonts section above.
-    2. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
-    3. **Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
+    1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
+    2. **Make sure you also specify a powerline compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
 ### Linux
 
@@ -76,7 +75,7 @@ If the powerline symbols cannot be seen, try closing all instances of the termin
 
 If you still can’t see the powerline fonts then double-check that the font has been installed to a valid X font path.
 
-If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you need to also set to a powerline-compatible font.
+If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to  set to use a powerline-compatible font.
 
 ## Set up Zgen and the starter kit
 
@@ -131,7 +130,7 @@ Copy that to your `$HOME`, change the list and the next time you start a termina
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch.
 * [rimraf/k](https://github.com/rimraf/k) - k is a directory lister that also shows git status on files & directories.
-* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds tool to generate zsh completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
+* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds a tool to generate zsh completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
 * [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with pip.
 * [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - A collection of scripts useful for sysadmins.
 * [srijanshetty/docker-zsh](https://github.com/srijanshetty/docker-zsh) - Docker completions.
@@ -142,7 +141,7 @@ Copy that to your `$HOME`, change the list and the next time you start a termina
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets.
 * [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - Adds macOS-specific functions and scripts. This plugin only adds itself to your `$PATH` if you're on macOS.
-* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions
+* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions.
 * [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search.
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
