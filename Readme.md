@@ -75,7 +75,7 @@ If the powerline symbols cannot be seen, try closing all instances of the termin
 
 If you still can’t see the powerline fonts then double-check that the font has been installed to a valid X font path.
 
-If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to  set to use a powerline-compatible font.
+If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
 ## Set up Zgen and the starter kit
 
