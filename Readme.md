@@ -1,6 +1,10 @@
 # ZSH Quickstart Kit
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.org/unixorn/zsh-quickstart-kit.svg?branch=master)](https://travis-ci.org/unixorn/zsh-quickstart-kit)
+[![Code Climate](https://codeclimate.com/github/unixorn/zsh-quickstart-kit/badges/gpa.svg)](https://codeclimate.com/github/unixorn/zsh-quickstart-kit)
+[![GitHub stars](https://img.shields.io/github/stars/unixorn/zsh-quickstart-kit.svg)](https://github.com/unixorn/zsh-quickstart-kit/stargazers)
+[![Issue Count](https://codeclimate.com/github/unixorn/zsh-quickstart-kit/badges/issue_count.svg)](https://codeclimate.com/github/unixorn/zsh-quickstart-kit)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
