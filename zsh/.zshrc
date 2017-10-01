@@ -303,3 +303,5 @@ if [[ ! -z "$QUICKSTART_KIT_REFRESH_IN_DAYS" ]]; then
   _check-for-zsh-quickstart-update
   unset QUICKSTART_KIT_REFRESH_IN_DAYS
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
