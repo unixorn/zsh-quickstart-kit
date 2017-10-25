@@ -72,7 +72,7 @@ Here are a few good powerline-compatible fonts I've found:
 ### Linux
 
 1. Switch your shell to zsh with `chsh -s /bin/zsh`
-2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install` stow on Debian / Ubuntu.
+2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install stow` on Debian / Ubuntu.
 3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 4. Update the font cache for the path the font was installed in (root privileges may be needed for updating font cache for some paths): `fc-cache -vf ~/.fonts/`
 
