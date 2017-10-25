@@ -125,7 +125,7 @@ load-starter-plugin-list() {
 
   # k is a zsh script / plugin to make directory listings more readable,
   # adding a bit of color and some git status information on files and directories
-  zgen load rimraf/k
+  zgen load supercrabtree/k
 
   # Bullet train prompt setup
   zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
