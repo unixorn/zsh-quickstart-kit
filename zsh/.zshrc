@@ -11,6 +11,12 @@
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
+# Valid font modes:
+# flat, awesome-patched, awesome-fontconfig, nerdfont-complete, nerdfont-fontconfig
+if [[ -r ~/.powerlevel9k_font_mode ]]; then
+  POWERLEVEL9K_MODE=$(head -1 ~/.powerlevel9k_font_mode)
+fi
+
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 export COMPLETION_WAITING_DOTS="true"
 
