@@ -8,12 +8,12 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+## Table of Contents
 
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
     - [Fonts](#fonts)
-  - [OS Setup](#os-setup)
+  - [OS-specific setup](#os-specific-setup)
     - [macOS](#macos)
     - [Linux](#linux)
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
@@ -35,7 +35,7 @@
 
 ### Fonts
 
-This quickstart includes the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) zsh theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs.
+This quickstart includes the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) ZSH theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include glyphs used to display the nice branch icon that the theme in this `.zshrc` uses, among other useful glyphs.
 
 Here are a few good powerline-compatible fonts I've found:
 
@@ -78,7 +78,7 @@ Here are a few good powerline-compatible fonts I've found:
 
 After installing a powerline-compatible font, you will also need to configure your terminal emulator to use your selected powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
-If the powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X server may also need to be restarted for the new font to correctly load.
+If the powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X Server may also need to be restarted for the new font to correctly load.
 
 If you still can’t see the powerline fonts then double-check that the font has been installed to a valid X font path.
 
@@ -95,13 +95,13 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
     1. `cd ~`
     2. `git clone git@github.com:unixorn/zsh-quickstart-kit.git`
 3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`.
-    1. You can do this with stow by:
+    1. You can do this with `stow` by:
         1. `cd zsh-quickstart-kit`
         2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
 
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable:
 
-* Automatic periodic updates to zgen and your plugins
+* Automatic periodic updates to **zgen** and your plugins
 * Cross-session shared history so commands typed in one terminal window can be seen and searched in all other windows on the same machine.
 * Deduping your command history
 * Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get new completions and updates of old ones.
@@ -115,7 +115,7 @@ The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enabl
 
 ### Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order, I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
 ### Self-update Settings
 
@@ -123,37 +123,37 @@ The quickstart kit will check for updates every seven days. If you want to chang
 
 ### Changing the zgen plugin list
 
-I've included what I think is a good starter set of zsh plugins in this repository. However, everyone has their own preferences for their environment, so to make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
+I've included what I think is a good starter set of zsh plugins in this repository. However, everyone has their own preferences for their environment. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
 **Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
 
 I'm told it's a pain to have to create `.zgen-local-plugins` from scratch, so to make customizing the plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugins that the kit does by default for you to use as a starting point for your own customizations.
 
-Copy that to your `$HOME`, change the list and the next time you start a terminal session you'll get your list instead of mine.
+Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
 ### Included plugins:
 
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - Sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
 * [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch.
-* [supercrabtree/k](https://github.com/supercrabtree/k) - k is a directory lister that also shows git status on files & directories.
-* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds a tool to generate zsh completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
+* [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds a tool to generate ZSH completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly create a completion for each command you need one for.
 * [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with pip.
 * [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - A collection of scripts useful for sysadmins.
 * [srijanshetty/docker-zsh](https://github.com/srijanshetty/docker-zsh) - Docker completions.
 * [stackexchange/blackbox](https://github.com/stackexchange/blackbox) - Tom Limoncelli's tool for storing secret information in a repository with gnupg encryption, automatically decrypting as needed.
+* [supercrabtree/k](https://github.com/supercrabtree/k) - k is a directory lister that also shows git status on files & directories.
 * [unixorn/autoupdate-zgen](https://github.com/unixorn/autoupdate-zgen) - Adds autoupdate (for both zgen itself, and your plugins) to zgen.
 * [unixorn/bitbucket-git-helpers](https://github.com/unixorn/bitbucket-git-helpers.plugin.zsh) - Adds git helper scripts for bitbucket.
-* [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected extra git helper scripts.
+* [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected helper scripts for `git`.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
-* [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads your Rakefile to tab complete the Rakefile targets.
-* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - Adds macOS-specific functions and scripts. This plugin only adds itself to your `$PATH` if you're on macOS.
-* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your zsh sessions.
-* [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with zsh.
+* [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads the Rakefile in the current directory so you can tab complete the Rakefile targets.
+* [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - Adds macOS-specific functions and scripts. This plugin only adds itself to your `$PATH` if you're on macOS so you can use the same plugin list on macOS and other systems.
+* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your ZSH sessions.
+* [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completions for many more applications than come standard with ZSH.
 * [zsh-users/zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - Better history search.
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
 
-The quickstart kit uses zgen to load oh-my-zsh and these plugins:
+The quickstart kit also uses zgen to load oh-my-zsh and these plugins:
   * aws
   * brew - only loaded on macOS
   * chruby

@@ -57,9 +57,9 @@ load-starter-plugin-list() {
   # things, anyway.
   zgen load unixorn/warhol.plugin.zsh
 
-  # OS X helpers. This plugin is smart enough to detect when it isn't running
-  # on OS X and not load itself, so you can safely share the same plugin list
-  # across OS X and Linux/BSD
+  # macOS helpers. This plugin is smart enough to detect when it isn't running
+  # on macOS and not load itself, so you can safely share the same plugin list
+  # across macOS and Linux/BSD
   zgen load unixorn/tumult.plugin.zsh
 
   # Warn you when you run a command that you've set an alias for
