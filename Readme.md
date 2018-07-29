@@ -101,21 +101,25 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
 
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable:
 
-* Automatic periodic updates to **zgen** and your plugins
+* Automatic periodic updates of both zgen and your plugins
 * Cross-session shared history so commands typed in one terminal window can be seen and searched in all other windows on the same machine.
 * Deduping your command history
-* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get new completions and updates of old ones.
+* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get updates to the extra tab completions.
 * Proper command history search
 * Syntax highlighting at the command line
 * Tab completion of Rakefile targets
-* Using oh-my-zsh compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
-* Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook.
+* Using [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)-compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework)
+* Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. These will only load if you are on a macOS machine.
 
 ## Customizations
 
 ### Functions and Aliases
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+
+### ZSH options.
+
+The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems. However, `~/.zshrc.d` is processed after the quickstart sets its aliases, functions and ZSH options, so if you don't care for something set up in the quickstart, you can override the offending item in a shell fragment file there.
 
 ### Self-update Settings
 
@@ -125,9 +129,9 @@ The quickstart kit will check for updates every seven days. If you want to chang
 
 I've included what I think is a good starter set of zsh plugins in this repository. However, everyone has their own preferences for their environment. To make the list easier to customize without having to maintain a separate fork of this kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
-**Note: using `~/.zgen-local-plugins` is not additive, it will completely replace the kit-provided list.**
+**Note: using `~/.zgen-local-plugins` is not additive, it will _completely replace_ the kit-provided list of plugins.**
 
-I'm told it's a pain to have to create `.zgen-local-plugins` from scratch, so to make customizing the plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugins that the kit does by default for you to use as a starting point for your own customizations.
+It's a pain to have to create `.zgen-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
 
 Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
@@ -142,7 +146,7 @@ Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time
 * [srijanshetty/docker-zsh](https://github.com/srijanshetty/docker-zsh) - Docker completions.
 * [stackexchange/blackbox](https://github.com/stackexchange/blackbox) - Tom Limoncelli's tool for storing secret information in a repository with gnupg encryption, automatically decrypting as needed.
 * [supercrabtree/k](https://github.com/supercrabtree/k) - k is a directory lister that also shows git status on files & directories.
-* [unixorn/autoupdate-zgen](https://github.com/unixorn/autoupdate-zgen) - Adds autoupdate (for both zgen itself, and your plugins) to zgen.
+* [unixorn/autoupdate-zgen](https://github.com/unixorn/autoupdate-zgen) - Adds autoupdate (for both `zgen` itself, and your plugins) to `zgen`.
 * [unixorn/bitbucket-git-helpers](https://github.com/unixorn/bitbucket-git-helpers.plugin.zsh) - Adds git helper scripts for bitbucket.
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - Collected helper scripts for `git`.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
@@ -172,7 +176,7 @@ The quickstart kit also uses zgen to load oh-my-zsh and these plugins:
 
 ## ZSH
 
-For a list of other ZSH plugins and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
 
 ## Dotfiles in general
 
