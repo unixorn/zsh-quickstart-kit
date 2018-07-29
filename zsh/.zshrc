@@ -211,13 +211,12 @@ echo
 # Honor old .zshrc.local customizations, but print deprecation warning.
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
-  echo ".zshrc.local is deprecated - use files in ~/.zshrc.d instead"
+  echo '~/.zshrc.local is deprecated - use files in ~/.zshrc.d instead. Future versions of zsh-quickstart-kits will no longer load it'
 fi
 
 # Make it easy to append your own customizations that override the above by
-# loading all files from .zshrc.d directory
+# loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
-
 if [ -n "$(/bin/ls ~/.zshrc.d)" ]; then
   for dotfile in ~/.zshrc.d/*
   do
@@ -232,7 +231,6 @@ fi
 #
 # This snippet is from Mislav Marohnić <mislav.marohnic@gmail.com>'s
 # dotfiles repo at https://github.com/mislav/dotfiles
-
 dedupe_path() {
   typeset -a paths result
   paths=($path)
@@ -291,7 +289,6 @@ _update-zsh-quickstart() {
     popd
   fi
 }
-
 
 _check-for-zsh-quickstart-update() {
   local day_seconds=$(expr 24 \* 60 \* 60)
