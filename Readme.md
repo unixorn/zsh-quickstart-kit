@@ -19,6 +19,7 @@
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
   - [Customizations](#customizations)
     - [Functions and Aliases](#functions-and-aliases)
+    - [ZSH options.](#zsh-options)
     - [Self-update Settings](#self-update-settings)
     - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
     - [Included plugins:](#included-plugins)
