@@ -64,10 +64,10 @@ if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
   fi
 fi
 
-for key_candidate in rsa dsa ecdsa
+for key in $(find ~/.ssh -type f -a \( -name id_rsa -o -name id_dsa -name id_ecdsa \))
 do
-  if [ -f ~/.ssh/id_${key_candidate} -a $(ssh-add -l | grep -c ".ssh/id_${key_candidate}" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_${key_candidate}
+  if [ -f ${key} -a $(ssh-add -l | grep -c "${key//$HOME\//}" ) -eq 0 ]; then
+    ssh-add ${key}
   fi
 done
 
