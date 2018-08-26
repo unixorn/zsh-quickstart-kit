@@ -4,7 +4,7 @@
 #
 # Copyright 2006-2018 Joseph Block <jpb@unixorn.net>
 #
-# BSD licensed, see LICENSE.txt
+# BSD licensed, see LICENSE.txt in this repository.
 
 if [[ -d ~/gocode ]]; then
   export GOPATH=~/gocode
@@ -82,23 +82,30 @@ alias reattach="screen -r"
 
 # SSH stuff
 # Pass our credentials by default
-alias ssh="ssh -A"
-alias sshA="ssh -A"
-alias ssh_unkeyed="/usr/bin/ssh"
+alias ssh='ssh -A'
+alias sshA='ssh -A'
+alias ssh-A='ssh -A'
+alias ssh_unkeyed='/usr/bin/ssh'
 
-alias scp_no_hostchecks="scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-alias ssh_no_hostchecks="ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias scp_no_hostchecks='scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias ssh_no_hostchecks='ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
+# Set up even more shortcuts because I am that lazy a typist.
+alias nh_scp=scp_no_hostchecks
+alias nh_ssh=ssh_no_hostchecks
+alias nhscp=scp_no_hostchecks
+alias nhssh=ssh_no_hostchecks
 
 # Strip color codes from commands that insist on spewing them so we can
-# pipe them into files cleanly
+# pipe them into files cleanly.
 alias stripcolors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
 
-# On the rare occasions I don't want to continue a download I can always
-# delete the incomplete fragment explicitly. I usually just want to
-# complete it.
+# On the rare occasions I don't want to continue an interrupted download
+# I can always delete the incomplete fragment explicitly. I usually just
+# want to complete it.
 alias wget="wget -c"
 
-# Dump the last 20 history entries
+# Dump the last 20 history entries to make !number more convenient to use.
 alias zh="fc -l -d -D"
 
 # My typical tyops.
@@ -116,10 +123,11 @@ alias tartvf="tar tvf"
 alias tartvzf="tar tvzf"
 alias tarxvf="tar xvf"
 
-# Deal with various stupidities
+# Deal with various stupidities.
 
 # Thanks so much for breaking ldapsearch, fink
 if [ -x /sw/bin/ldapsearch ];then
+  # At least the stale version Apple ships actually works.
   alias ldapsearch=/usr/bin/ldapsearch
 fi
 
@@ -136,11 +144,12 @@ if [ -x /usr/local/bin/mysql/bin/mysqladmin ]; then
   alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
 fi
 
+# Help the lazy typists again.
 alias ..="cd .."
 alias ...="cd ../.."
 
 # Honor old .zsh_aliases.local customizations, but print depecation warning.
 if [ -f ~/.zsh_aliases.local ]; then
   source ~/.zsh_aliases.local
-  echo ".zsh_aliases.local is deprecated. Make entries in ~/.zshrc.d instead."
+  echo ".zsh_aliases.local is deprecated. Make entries in files in ~/.zshrc.d instead."
 fi
