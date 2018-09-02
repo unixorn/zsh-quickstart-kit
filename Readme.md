@@ -37,7 +37,7 @@
 
 ### Fonts
 
-This quickstart includes the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) ZSH theme, which requires a powerline-compatible font in your terminal to display certain status glyphs. Fonts that are powerline-compatible include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
+This quickstart includes the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) ZSH theme, which requires a Powerline-compatible font in your terminal to display certain status glyphs. Fonts that are Powerline-compatible include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
 
 Here are a few good Powerline-compatible fonts I've found:
 
@@ -45,12 +45,12 @@ Here are a few good Powerline-compatible fonts I've found:
 * [Fantasque Awesome Font](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons and Powerline-Glyphs.
 * [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family.
 * [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed specifically for source code and terminal usage.
-* [Input Mono](http://input.fontbureau.com/) - A family of fonts designed specifically for code. It offers both monospaced and proportional fonts and includes powerline glyphs.
+* [Input Mono](http://input.fontbureau.com/) - A family of fonts designed specifically for code. It offers both monospaced and proportional fonts and includes Powerline glyphs.
 * [Iosevka](https://be5invis.github.io/Iosevka/) - Iosevka is an open source slender monospace sans-serif and slab-serif typeface inspired by [Pragmata Pro](http://www.fsd.it/fonts/pragmatapro.htm), [M+](http://mplus-fonts.osdn.jp/) and [PF DIN Mono](http://www.parachute.gr/typefaces/allfonts/din-mono-pro), designed to be the ideal font for programming.
 * [Monoid](http://larsenwork.com/monoid/) - Monoid is customizable and optimized for coding with bitmap-like sharpness at 15px line-height even on low res displays.
 * [Mononoki](https://madmalik.github.io/mononoki/) - Mononoki is a typeface by Matthias Tellen, created to enhance code formatting.
-* [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & fontforge font patcher python script for powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
-* [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include powerline gylphs.
+* [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & fontforge font patcher python script for Powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
+* [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include Powerline gylphs.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
 ## OS-specific setup
@@ -67,8 +67,8 @@ Here are a few good Powerline-compatible fonts I've found:
     3. Select your user
     4. Select advanced options
     5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use the newer version packaged by `brew`)
-6. Install some powerline-compatible fonts from one of the links in the Fonts section above.
-    1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the powerline compatible fonts you just installed.
+6. Install some Powerline-compatible fonts from one of the links in the Fonts section above.
+    1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
 ### Linux
