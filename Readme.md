@@ -24,6 +24,8 @@
   - [ZSH options.](#zsh-options)
   - [Self-update Settings](#self-update-settings)
   - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
+- [FAQ](#faq)
+  - [Stow complains with a Warning! that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
   - [Dotfiles in general](#dotfiles-in-general)
@@ -177,6 +179,20 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 It's a pain to create `.zgen-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
 
 Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
+
+# FAQ
+
+## Stow complains with a Warning! that stowing zsh would cause conflicts
+
+You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
+
+```
+WARNING! stowing zsh would cause conflicts:
+  * existing target is neither a link nor a directory: .zshrc
+All operations aborted.
+```
+
+Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
 
 # Other Resources
 
