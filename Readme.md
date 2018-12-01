@@ -5,6 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/unixorn/zsh-quickstart-kit/badges/gpa.svg)](https://codeclimate.com/github/unixorn/zsh-quickstart-kit)
 [![GitHub stars](https://img.shields.io/github/stars/unixorn/zsh-quickstart-kit.svg)](https://github.com/unixorn/zsh-quickstart-kit/stargazers)
 [![Issue Count](https://codeclimate.com/github/unixorn/zsh-quickstart-kit/badges/issue_count.svg)](https://codeclimate.com/github/unixorn/zsh-quickstart-kit)
+[![GitHub last commit (branch)](https://img.shields.io/github/last-commit/unixorn/zsh-quickstart-kit/master.svg)](https://github.com/unixorn/zsh-quickstart-kit)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
