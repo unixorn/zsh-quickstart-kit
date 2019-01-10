@@ -202,7 +202,7 @@ fi
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
-  echo "$(basename ${REAL_ZGEN_SETUP}) updated; creating a new init.zsh"
+  echo "$(basename ${REAL_ZGEN_SETUP}) updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP}"
   setup-zgen-repos
 fi
 unset REAL_ZGEN_SETUP
