@@ -85,16 +85,21 @@ alias reattach="screen -r"
 alias ssh='ssh -A'
 alias sshA='ssh -A'
 alias ssh-A='ssh -A'
+alias ssh-unkeyed='/usr/bin/ssh'
 alias ssh_unkeyed='/usr/bin/ssh'
 
+alias scp-no-hostchecks='scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias ssh-no-hostchecks='ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 alias scp_no_hostchecks='scp -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 alias ssh_no_hostchecks='ssh -A -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
 # Set up even more shortcuts because I am that lazy a typist.
-alias nh_scp=scp_no_hostchecks
-alias nh_ssh=ssh_no_hostchecks
-alias nhscp=scp_no_hostchecks
-alias nhssh=ssh_no_hostchecks
+alias nh-scp=scp-no-hostchecks
+alias nh-ssh=ssh-no-hostchecks
+alias nh_scp=scp-no-hostchecks
+alias nh_ssh=ssh-no-hostchecks
+alias nhscp=scp-no-hostchecks
+alias nhssh=ssh-no-hostchecks
 
 # Strip color codes from commands that insist on spewing them so we can
 # pipe them into files cleanly.
@@ -109,19 +114,19 @@ alias wget="wget -c"
 alias zh="fc -l -d -D"
 
 # My typical tyops.
-alias gerp="grep"
-alias grep-i="grep -i"
+alias gerp='grep'
+alias grep-i='grep -i'
 alias grep='GREP_COLOR="1;37;41" LANG=C grep --color=auto'
-alias grepi="grep -i"
-alias knfie="knife"
-alias maek="make"
-alias psax="ps ax"
-alias pswax="ps wax"
-alias psxa="ps ax"
-alias raek="rake"
-alias tartvf="tar tvf"
-alias tartvzf="tar tvzf"
-alias tarxvf="tar xvf"
+alias grepi='grep -i'
+alias knfie='knife'
+alias maek='make'
+alias psax='ps ax'
+alias pswax='ps wax'
+alias psxa='ps ax'
+alias raek='rake'
+alias tartvf='tar tvf'
+alias tartvzf='tar tvzf'
+alias tarxvf='tar xvf'
 
 # Deal with various stupidities.
 
