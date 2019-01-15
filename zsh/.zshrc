@@ -1,4 +1,4 @@
-# Copyright 2006-2018 Joseph Block <jpb@apesseekingknowledge.net>
+# Copyright 2006-2019 Joseph Block <jpb@apesseekingknowledge.net>
 #
 # BSD licensed, see LICENSE.txt
 
