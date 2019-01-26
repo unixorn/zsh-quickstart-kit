@@ -157,14 +157,6 @@ show_terminal_colors() {
   done
 }
 
-# Batch change extension from $1 to $2
-chgext() {
-  for file in *.$1
-  do
-    mv $file $(echo $file | sed "s/\(.*\.\)$1/\1$2/")
-  done
-}
-
 # Probe a /24 for hosts
 scan24() {
   nmap -sP ${1}/24
