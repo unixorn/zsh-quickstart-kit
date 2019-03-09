@@ -1,11 +1,13 @@
-# 0.6
+# Changelog
+
+## 0.6
 
 * Stop stepping on OS-provided `$PATH`.
 
-# 0.5.2
+## 0.5.2
 * Added zsh-autosuggestions plugin
 
-# 0.5
+## 0.5
 
 * Added Changes file
 * Switched to using `~/.zshrc.d` files instead of a single `.zshrc.local` file
