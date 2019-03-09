@@ -55,11 +55,11 @@ export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;
 # Fun with SSH
 if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
   if [[ "$(uname -s)" == "Darwin" ]]; then
-    # We're on OS X. Try to load ssh keys using pass phrases stored in
-    # the OSX keychain.
+    # macOS allows us to store ssh key pass phrases in the keychain, so try
+    # to load ssh keys using pass phrases stored in the macOS keychain.
     #
     # You can use ssh-add -K /path/to/key to store pass phrases into
-    # the OSX keychain
+    # the macOS keychain
     ssh-add -k
   fi
 fi
@@ -157,10 +157,18 @@ if [ -d /Library/Java/Home ];then
 fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # We're on osx
+  # Load macOS-specific aliases
   [ -f ~/.osx_aliases ] && source ~/.osx_aliases
   if [ -d ~/.osx_aliases.d ]; then
     for alias_file in ~/.osx_aliases.d/*
+    do
+      source $alias_file
+    done
+  fi
+  # Apple renamed the OS, so...
+  [ -f ~/.macos_aliases ] && source ~/.macos_aliases
+  if [ -d ~/.macos_aliases.d ]; then
+    for alias_file in ~/.macos_aliases.d/*
     do
       source $alias_file
     done
