@@ -41,7 +41,7 @@ for path_candidate in /opt/local/sbin \
   ~/src/gocode/bin
 do
   if [ -d ${path_candidate} ]; then
-    export PATH=${PATH}:${path_candidate}
+    export PATH="${PATH}:${path_candidate}"
   fi
 done
 
@@ -162,7 +162,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   if [ -d ~/.osx_aliases.d ]; then
     for alias_file in ~/.osx_aliases.d/*
     do
-      source $alias_file
+      source "$alias_file"
     done
   fi
   # Apple renamed the OS, so...
@@ -170,7 +170,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   if [ -d ~/.macos_aliases.d ]; then
     for alias_file in ~/.macos_aliases.d/*
     do
-      source $alias_file
+      source "$alias_file"
     done
   fi
 fi
