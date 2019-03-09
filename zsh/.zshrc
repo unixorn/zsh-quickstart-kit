@@ -27,7 +27,7 @@ setopt correct
 unsetopt correctall
 
 # Base PATH
-PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin
+PATH="$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin"
 
 # Conditional PATH additions
 for path_candidate in /opt/local/sbin \
