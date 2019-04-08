@@ -67,7 +67,7 @@ fi
 for key in $(find ~/.ssh -type f -a \( -name id_rsa -o -name id_dsa -name id_ecdsa \))
 do
   if [ -f ${key} -a $(ssh-add -l | grep -c "${key//$HOME\//}" ) -eq 0 ]; then
-    ssh-add ${key}
+    # ssh-add ${key}
   fi
 done
 
