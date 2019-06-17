@@ -234,25 +234,9 @@ if [ -n "$(/bin/ls ~/.zshrc.d)" ]; then
   done
 fi
 
-# In case a plugin adds a redundant path entry, remove duplicate entries
-# from PATH
-#
-# This snippet is from Mislav Marohnić <mislav.marohnic@gmail.com>'s
-# dotfiles repo at https://github.com/mislav/dotfiles
-dedupe_path() {
-  typeset -a paths result
-  paths=($path)
-
-  while [[ ${#paths} -gt 0 ]]; do
-    p="${paths[1]}"
-    shift paths
-    [[ -z ${paths[(r)$p]} ]] && result+="$p"
-  done
-
-  export PATH=${(j+:+)result}
-}
-
-dedupe_path
+# remove dupes from $PATH using a zsh builtin
+# https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
+typeset -aU path;
 
 # If desk is installed, load the Hook for desk activation
 [[ -n "$DESK_ENV" ]] && source "$DESK_ENV"
