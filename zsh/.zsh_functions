@@ -2,33 +2,33 @@
 #
 # Only including a shebang to trigger Sublime Text to use shell syntax highlighting
 #
-# Copyright 2006-2016 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2019 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 
-function exists() {
+exists() {
   if (( $+commands[$1] )); then return 0; else return 1; fi
 }
 
 # from cads@ooyala.com
-function ff() {
+ff() {
   find . -type f -iname '*'$@'*' -ls
 }
 
 # Find things in that enormous command history file
-function hgrep40 {
+hgrep40() {
   history | egrep --color -i "$@" | tail -40
 }
 
-function hgrep {
+hgrep() {
   history | grep -i "$@" | tail -20
 }
 
-function hgrep_full {
+hgrep_full() {
   history | egrep --color -i "$@"
 }
 
-function envgrep() {
+envgrep() {
   printenv | grep -i "$@"
 }
 
@@ -46,18 +46,18 @@ man() {
 }
 
 # From commandlinefu.com
-function watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
+watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
 
 # scp file to machine you're sshing into this machine from
-function mecp () {
+mecp() {
   scp "$@" ${SSH_CLIENT%% *}:~/Downloads/;
 }
 
-function calc() {
+calc() {
   awk "BEGIN{ print $* }" ;
 }
 
-function procs_for_path() {
+procs_for_path() {
   for pid in $(lsof "$@" | cut -d' ' -f 3 | sort | uniq)
   do
     ps -f -p $pid
@@ -65,18 +65,18 @@ function procs_for_path() {
 }
 
 # Begin sysadvent2011 functions
-function _awk_col() {
+_awk_col() {
   echo "$1" | egrep -v '^[0-9]+$' || echo "\$$1"
 }
 
-function sum() {
+sum() {
   [ "${1#-F}" != "$1" ] && SP=${1} && shift
   [ "$#" -eq 0 ] && set -- 0
   key="$(_awk_col "$1")"
   awk $SP "{ x+=$key } END { printf(\"%d\n\", x) }"
 }
 
-function sumby() {
+sumby() {
   [ "${1#-F}" != "$1" ] && SP=${1} && shift
   [ "$#" -lt 0 ] && set -- 0 1
   key="$(_awk_col "$1")"
@@ -84,7 +84,7 @@ function sumby() {
   awk $SP "{ a[$key] += $val } END { for (i in a) { printf(\"%d %s\\n\", a[i], i) } }"
 }
 
-function countby() {
+countby() {
   [ "${1#-F}" != "$1" ] && SP=${1} && shift
   [ "$#" -eq 0 ] && set -- 0
   key="$(_awk_col "$1")"
@@ -93,7 +93,7 @@ function countby() {
 # end sysadvent
 
 # ssh helper
-function rmhost () {
+rmhost () {
   perl -i -ne "print unless $1 .. $1" ~/.ssh/known_hosts;
 }
 
@@ -105,7 +105,7 @@ get_load() {
   uptime | awk '{print $11}' | tr ',' ' '
 }
 
-function bash_repeat() {
+bash_repeat() {
   n=$1
   shift
   while [ $(( n -= 1 )) -ge 0 ]
@@ -114,16 +114,16 @@ function bash_repeat() {
   done
 }
 
-function authme {
+authme() {
   ssh "$1" 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
 }
 
-function mtr_url {
+mtr_url() {
   host=$(ruby -ruri -e "puts (URI.parse('$1').host or '$1')")
   sudo mtr -t $host
 }
 
-function jsoncurl() {
+jsoncurl() {
   curl "$@" | python -m json.tool
 }
 
@@ -157,14 +157,6 @@ show_terminal_colors() {
   done
 }
 
-# Batch change extension from $1 to $2
-function chgext {
-  for file in *.$1
-  do
-    mv $file $(echo $file | sed "s/\(.*\.\)$1/\1$2/")
-  done
-}
-
 # Probe a /24 for hosts
 scan24() {
   nmap -sP ${1}/24
@@ -181,7 +173,7 @@ nj() {
 
 # Pretty JSON
 # from: https://coderwall.com/p/hwu5uq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=zsh
-function pjson {
+pjson() {
   if [ $# -gt 0 ];
     then
     for arg in $@
@@ -197,13 +189,13 @@ function pjson {
 }
 
 # lists zombie processes
-function zombie() {
+zombie() {
   ps aux | awk '{if ($8=="Z") { print $2 }}'
 }
 
 # get the content type of an http resource
 # from https://github.com/jleclanche/dotfiles/blob/master/.zshrc
-function htmime {
+htmime() {
   if [[ -z $1 ]]; then
     print "USAGE: htmime <URL>"
     return 1
@@ -213,7 +205,7 @@ function htmime {
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
-function httpserver() {
+httpserver() {
   local port="${1:-8000}";
   sleep 1 && open "http://localhost:${port}/" &
   # Set the default Content-Type to `text/plain` instead of `application/octet-stream`

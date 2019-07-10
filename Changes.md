@@ -1,4 +1,13 @@
-# v0.5
+# Changelog
+
+## 0.6
+
+* Stop stepping on OS-provided `$PATH`.
+
+## 0.5.2
+* Added zsh-autosuggestions plugin
+
+## 0.5
 
 * Added Changes file
 * Switched to using `~/.zshrc.d` files instead of a single `.zshrc.local` file
@@ -8,6 +17,3 @@
 * Added font installation instructions for Linux
 * We now de-duplicate your $PATH after loading everything
 * Added self-update capability
-
-0.5.2
-* Added zsh-autosuggestions plugin
