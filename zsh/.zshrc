@@ -98,7 +98,8 @@ setopt share_history
 setopt pushd_ignore_dups
 #setopt pushd_silent
 
-# Keep a ton of history.
+# Keep a ton of history. You can reset these without editing .zshrc by
+# adding a file to ~/.zshrc.d.
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
@@ -165,6 +166,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
       source "$alias_file"
     done
   fi
+
   # Apple renamed the OS, so...
   [ -f ~/.macos_aliases ] && source ~/.macos_aliases
   if [ -d ~/.macos_aliases.d ]; then
@@ -219,7 +221,8 @@ echo
 # Honor old .zshrc.local customizations, but print deprecation warning.
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
-  echo '~/.zshrc.local is deprecated - use files in ~/.zshrc.d instead. Future versions of zsh-quickstart-kits will no longer load it'
+  echo '~/.zshrc.local is deprecated - use files in ~/.zshrc.d instead.'
+  echo 'Future versions of zsh-quickstart-kits will no longer load ~/.zshrc.local'
 fi
 
 # Make it easy to append your own customizations that override the above by
@@ -299,4 +302,5 @@ if [[ ! -z "$QUICKSTART_KIT_REFRESH_IN_DAYS" ]]; then
   unset QUICKSTART_KIT_REFRESH_IN_DAYS
 fi
 
+# Load iTerm shell integrations if found.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
