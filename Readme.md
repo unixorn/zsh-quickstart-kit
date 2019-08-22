@@ -181,7 +181,7 @@ I've included what I think is a good starter set of zsh plugins in this reposito
 
 **Using `~/.zgen-local-plugins` is not additive, it will _completely replace_ the kit-provided list of plugins.**
 
-It's a pain to create `.zgen-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
+I know that it's a pain to create `.zgen-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
 
 Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
@@ -203,7 +203,7 @@ Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file.
 
 ## ZSH
 
-For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list.
+For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of [ZSH tutorials](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh). 
 
 ## Dotfiles in general
 
