@@ -203,7 +203,8 @@ Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file.
 
 ## ZSH
 
-For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of [ZSH tutorials](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh). 
+* For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of [ZSH tutorials](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh).
+* Justin Garrison has a good repo that details [Mastering ZSH](https://github.com/rothgar/mastering-zsh).
 
 ## Dotfiles in general
 
