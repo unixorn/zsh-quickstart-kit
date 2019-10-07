@@ -192,6 +192,7 @@ pjson() {
 zombie() {
   ps aux | awk '{if ($8=="Z") { print $2 }}'
 }
+alias zombies=zombie
 
 # get the content type of an http resource
 # from https://github.com/jleclanche/dotfiles/blob/master/.zshrc
