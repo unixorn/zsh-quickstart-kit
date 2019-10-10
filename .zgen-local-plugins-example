@@ -16,7 +16,9 @@
 ZGEN_LOADED=()
 ZGEN_COMPLETIONS=()
 
-zgen oh-my-zsh
+if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
+  zgen oh-my-zsh
+fi
 
 # If you want to customize your plugin list, create a file named
 # .zgen-local-plugins in your home directory. That file will be sourced
@@ -70,18 +72,20 @@ zgen load peterhurford/git-it-on.zsh
 # in a repository securely by encrypting them with gnupg
 zgen load StackExchange/blackbox
 
-# Load some oh-my-zsh plugins
-zgen oh-my-zsh plugins/pip
-zgen oh-my-zsh plugins/sudo
-zgen oh-my-zsh plugins/aws
-zgen oh-my-zsh plugins/chruby
-zgen oh-my-zsh plugins/colored-man-pages
-zgen oh-my-zsh plugins/git
-zgen oh-my-zsh plugins/github
-zgen oh-my-zsh plugins/python
-zgen oh-my-zsh plugins/rsync
-zgen oh-my-zsh plugins/screen
-zgen oh-my-zsh plugins/vagrant
+if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
+  # Load some oh-my-zsh plugins
+  zgen oh-my-zsh plugins/pip
+  zgen oh-my-zsh plugins/sudo
+  zgen oh-my-zsh plugins/aws
+  zgen oh-my-zsh plugins/chruby
+  zgen oh-my-zsh plugins/colored-man-pages
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/github
+  zgen oh-my-zsh plugins/python
+  zgen oh-my-zsh plugins/rsync
+  zgen oh-my-zsh plugins/screen
+  zgen oh-my-zsh plugins/vagrant
+fi
 
 if [ $(uname -a | grep -ci Darwin) = 1 ]; then
   # Load OSX-specific plugins

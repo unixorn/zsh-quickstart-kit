@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7
+
+* autoload zmv by default
+* Allow disabling oh-my-zsh inclusion by creating `~/.zsh-quickstart-no-omz`
+
 ## 0.6
 
 * Stop stepping on OS-provided `$PATH`.
