@@ -245,6 +245,11 @@ if [ -f ~/.zshrc.local ]; then
   echo 'Future versions of zsh-quickstart-kits will no longer load ~/.zshrc.local'
 fi
 
+# Load zmv
+if [[ ! -f ~/.zsh-quickstart-no-zmv ]]; then
+  autoload -U zmv
+fi
+
 # Make it easy to append your own customizations that override the above by
 # loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
