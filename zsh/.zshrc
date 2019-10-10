@@ -1,15 +1,17 @@
 # Copyright 2006-2019 Joseph Block <jpb@apesseekingknowledge.net>
 #
 # BSD licensed, see LICENSE.txt
-
+#
 # Set this to use case-sensitive completion
 # CASE_SENSITIVE="true"
-
+#
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
-
+#
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
+#
+# Version 0.7
 
 # Valid font modes:
 # flat, awesome-patched, awesome-fontconfig, nerdfont-complete, nerdfont-fontconfig
