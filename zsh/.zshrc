@@ -1,15 +1,17 @@
 # Copyright 2006-2019 Joseph Block <jpb@apesseekingknowledge.net>
 #
 # BSD licensed, see LICENSE.txt
-
+#
 # Set this to use case-sensitive completion
 # CASE_SENSITIVE="true"
-
+#
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
-
+#
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
+#
+# Version 0.7
 
 # Valid font modes:
 # flat, awesome-patched, awesome-fontconfig, nerdfont-complete, nerdfont-fontconfig
@@ -243,6 +245,11 @@ if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
   echo '~/.zshrc.local is deprecated - use files in ~/.zshrc.d instead.'
   echo 'Future versions of zsh-quickstart-kits will no longer load ~/.zshrc.local'
+fi
+
+# Load zmv
+if [[ ! -f ~/.zsh-quickstart-no-zmv ]]; then
+  autoload -U zmv
 fi
 
 # Make it easy to append your own customizations that override the above by

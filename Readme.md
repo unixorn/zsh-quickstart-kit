@@ -169,11 +169,11 @@ Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since thos
 
 ## ZSH options.
 
-The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems. However, `~/.zshrc.d` is processed after the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
+The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems. However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
 
 ## Self-update Settings
 
-The quickstart kit will check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
+The quickstart kit will automatically check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
 ## Changing the zgen plugin list
 
@@ -185,9 +185,17 @@ I know that it's a pain to create `.zgen-local-plugins` from scratch, so to make
 
 Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
+## Disabling zmv
+
+The quickstart automatically autoloads zmv. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
+
+## Disabling oh-my-zsh
+
+If you don't want zgen to load the oh-my-zsh defaults, create `.zsh-quickstart-no-omz` in your home directory.
+
 # FAQ
 
-## Stow complains with a Warning! that stowing zsh would cause conflicts
+## Stow complains with a warning that stowing zsh would cause conflicts
 
 You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
 
