@@ -60,7 +60,7 @@ Here are a few good Powerline-compatible fonts:
 
 ### macOS
 
-1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS.
+1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. Install GNU Stow with `brew install stow`
 4. Homebrew has a newer version of `zsh` than the one Apple ships, so `brew install zsh` to install it.
