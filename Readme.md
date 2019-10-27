@@ -119,6 +119,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Tab completion of Rakefile targets.
 * Enabling [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)-compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework).
 * Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
+* If you've installed iTerm2's shell integration, automatically load it during startup
 
 ## Included plugins:
 
