@@ -57,6 +57,7 @@ Here are a few good Powerline-compatible fonts:
 * [Mononoki](https://madmalik.github.io/mononoki/) - Mononoki is a typeface by Matthias Tellen, created to enhance code formatting.
 * [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & the fontforge font patcher python script for Powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
 * [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include Powerline gylphs.
+* [Victor Mono](https://rubjo.github.io/victor-mono/) - Victor Mono is a free programming font with semi-connected cursive italics, symbol ligatures (!=, ->>, =>, ===, <=, >=, ++) and Latin, Cyrillic and Greek characters.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
 ## OS-specific setup
@@ -122,6 +123,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Tab completion of Rakefile targets.
 * Enabling [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)-compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework).
 * Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
+* If you've installed iTerm2's shell integration, automatically load it during startup
 
 ## Included plugins:
 
