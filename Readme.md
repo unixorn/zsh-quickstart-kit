@@ -212,6 +212,15 @@ All operations aborted.
 
 Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
 
+## I added a new completion plugin and it isn't working
+
+I've had reports that sometimes you need to reset your completions after adding a new plugin.
+
+```
+rm ~/.zcompdump*
+compinit
+```
+
 # Other Resources
 
 ## ZSH
