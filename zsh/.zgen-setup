@@ -157,7 +157,7 @@ load-starter-plugin-list() {
 
   if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
     # Bullet train prompt setup.
-    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+    zgen load https://github.com/caiogondim/bullet-train.zsh
   else
     # p10k is faster and what I'm using now, so it is the new default
     zgen load romkatv/powerlevel10k powerlevel10k
