@@ -164,6 +164,14 @@ The quickstart kit also uses `zgen` to load oh-my-zsh and these plugins:
 
 # Customizing the kit
 
+## Behavior toggles
+
+Running the following commands will toggle behavior the next time you start a shell session:
+
+* `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them with `zsh-quickstart-enable-omz-plugins`.
+* `zsh-quickstart-select-powerlevel10k` - I've switched to using the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt since I first wrote this quickstart. I feel like I shouldn't change the prompt out from under people without a way for them to get the old behavior, so I'm providing toggle commands to switch between it and the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt I originally used in the kit.
+* `zsh-quickstart-select-bullettrain` - Switch back to the old bullet-train prompt.
+
 ## Functions and Aliases
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
@@ -225,7 +233,7 @@ compinit
 
 ## ZSH
 
-* For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of [ZSH tutorials](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh).
+* For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of other ZSH [tutorials and starter kits](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh).
 * Justin Garrison has a good repo that details [Mastering ZSH](https://github.com/rothgar/mastering-zsh).
 
 ## Dotfiles in general
