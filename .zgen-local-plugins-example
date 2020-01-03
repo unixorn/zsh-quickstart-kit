@@ -30,7 +30,7 @@ warn-about-prompt-change() {
     echo
     echo "Run zsh-quickstart-select-powerlevel10k to switch to the new prompt"
     echo
-    echo "Sorry for any inconvenience."
+    echo "If you do nothing, you will be switched to powerlevel10k"
     echo
     touch ~/.zsh-quickstart-kit-prompt-switch-warning
   fi
