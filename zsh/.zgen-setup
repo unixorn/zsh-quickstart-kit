@@ -22,6 +22,22 @@ fi
 source $ZGEN_PARENT_DIR/zgen/zgen.zsh
 unset ZGEN_PARENT_DIR
 
+warn-about-prompt-change() {
+  if [[ ! -f ~/.zsh-quickstart-kit-prompt-switch-warning ]]; then
+    echo
+    echo "The default ZSH prompt in the quickstart kit has changed from"
+    echo "bullet-train to powerlevel10k."
+    echo
+    echo "If you want to use the old prompt, run zsh-quickstart-select-bullet-train"
+    echo
+    echo "Run zsh-quickstart-select-powerlevel10k to switch to the new prompt"
+    echo
+    echo "If you do nothing, you will be switched to powerlevel10k"
+    echo
+    touch ~/.zsh-quickstart-kit-prompt-switch-warning
+  fi
+}
+
 load-starter-plugin-list() {
   echo "Creating a zgen save"
   ZGEN_LOADED=()
@@ -34,7 +50,13 @@ load-starter-plugin-list() {
   # If you want to customize your plugin list, create a file named
   # .zgen-local-plugins in your home directory. That file will be sourced
   # during startup *instead* of running this load-starter-plugin-list function,
-  # so make sure to include everything from this function that you want to keep.
+  # so make sure to include everything from this function that you want to
+  # keep.
+  #
+  # To make customizing easier, there's a .zgen-local-plugins-example file
+  # at the top level of the zsh-quickstart-kit repository that you can copy
+  # as a starting point. This keeps you from having to maintain a fork of
+  # the quickstart kit.
 
   # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
   # they break, so get the order right.
@@ -133,8 +155,14 @@ load-starter-plugin-list() {
   # directories.
   zgen load supercrabtree/k
 
-  # Bullet train prompt setup.
-  zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+  if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+    # Bullet train prompt setup.
+    zgen load https://github.com/caiogondim/bullet-train.zsh
+  else
+    # p10k is faster and what I'm using now, so it is the new default
+    zgen load romkatv/powerlevel10k powerlevel10k
+    warn-about-prompt-change
+  fi
 
   # Save it all to init script.
   zgen save
