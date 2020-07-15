@@ -70,7 +70,7 @@ load-our-ssh-keys() {
       #
       # You can use ssh-add -K /path/to/key to store pass phrases into
       # the macOS keychain
-      ssh-add -k
+      ssh-add -A # load all ssh keys that have pass phrases stored in macOS keychain
     fi
 
     for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -name '*id_ecdsa' \))
