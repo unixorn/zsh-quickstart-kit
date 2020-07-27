@@ -170,7 +170,7 @@ Running the following commands will toggle behavior the next time you start a sh
 
 * `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them with `zsh-quickstart-enable-omz-plugins`.
 * `zsh-quickstart-select-powerlevel10k` - I've switched to using the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt since I first wrote this quickstart. I feel like I shouldn't change the prompt out from under people without a way for them to get the old behavior, so I'm providing toggle commands to switch between it and the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt I originally used in the kit.
-* `zsh-quickstart-select-bullettrain` - Switch back to the old bullet-train prompt.
+* `zsh-quickstart-select-bullet-train` - Switch back to the old bullet-train prompt.
 
 ## Functions and Aliases
 
