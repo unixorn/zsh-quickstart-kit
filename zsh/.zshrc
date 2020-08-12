@@ -242,11 +242,6 @@ if [ -d ~/.zsh-completions ]; then
   done
 fi
 
-echo
-echo "Current SSH Keys:"
-ssh-add -l
-echo
-
 # Honor old .zshrc.local customizations, but print deprecation warning.
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
@@ -350,4 +345,11 @@ if [[ ! -f ~/.p10k.zsh ]]; then
   echo "Run p10k configure or edit ~/.p10k.zsh to configure your prompt"
 else
   source ~/.p10k.zsh
+fi
+
+if [[ -z "$DONT_PRINT_SSH_KEY_LIST" ]]; then
+  echo
+  echo "Current SSH Keys:"
+  ssh-add -l
+  echo
 fi
