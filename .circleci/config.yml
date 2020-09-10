@@ -13,4 +13,4 @@ jobs:
 
       - run:
           name: Check README.md
-          command: awesome_bot Readme.md --allow-dupe --allow-redirect
+          command: awesome_bot Readme.md --allow-dupe --allow-redirect  --request-delay 1
