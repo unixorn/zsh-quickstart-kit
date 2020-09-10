@@ -43,7 +43,7 @@
 
 ### Fonts
 
-This quickstart includes the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) ZSH theme, which requires a Powerline-compatible font in your terminal to display certain status glyphs. Fonts that are Powerline-compatible include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
+This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlevel10k) ZSH theme, which requires a Powerline-compatible font in your terminal to display certain status glyphs. Fonts that are Powerline-compatible include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
 
 Here are a few good Powerline-compatible fonts:
 
