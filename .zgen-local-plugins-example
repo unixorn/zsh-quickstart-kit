@@ -82,6 +82,9 @@ zgen load djui/alias-tips
 # Add my collection of git helper scripts.
 zgen load unixorn/git-extra-commands
 
+# Supercharge your history search with fzf
+zgen load unixorn/fzf-zsh-plugin
+
 # Add my bitbucket git helpers plugin.
 zgen load unixorn/bitbucket-git-helpers.plugin.zsh
 

@@ -67,14 +67,14 @@ Here are a few good Powerline-compatible fonts:
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. Install GNU Stow with `brew install stow`
-4. Homebrew has a newer version of `zsh` than the one Apple ships, so `brew install zsh` to install it.
+4. Homebrew inevitably has a newer version of `zsh` than the one Apple ships with the OS, so `brew install zsh` to install it.
 5. Switch your shell to `zsh`:
     1. System Preferences -> Users & Groups.
     2. Unlock the preferences
     3. Select your user
     4. Select advanced options
     5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use the newer version packaged by `brew`)
-6. Install some Powerline-compatible fonts from one of the links in the Fonts section above.
+6. Install some Powerline-compatible or NerdFont fonts from one of the links in the Fonts section above.
     1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
@@ -85,11 +85,11 @@ Here are a few good Powerline-compatible fonts:
 3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 4. Update the font cache for the path the font was installed in (root privileges may be needed for updating the font cache for some paths): `fc-cache -vf ~/.fonts/`
 
-After installing a Powerline-compatible font, you will also need to configure your terminal emulator to use your selected Powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
+After installing a Nerdfont or Powerline-compatible font, you will also need to configure your terminal emulator to use your selected Powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
 If the Powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X Server may also need to be restarted for the new font to correctly load.
 
-If you still can’t see the new Powerline fonts then double-check that the font has been installed to a valid X font path.
+If you still can’t see the new fonts then double-check that the font has been installed to a valid X font path.
 
 If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
@@ -116,14 +116,14 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 
 * Automatic periodic updates of both zgen and your plugins
 * Cross-session shared history so commands typed in one terminal window can be seen and searched in all your other `zsh` sessions on the same machine.
-* Deduplicating your command history.
+* Automatic deduplication of your command history.
 * Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get updates to the extra tab completions.
-* Proper command history search.
+* Supercharged command history search with [fzf](https://github.com/junegunn/fzf).
 * Syntax highlighting at the command line.
 * Tab completion of Rakefile targets.
 * Enabling [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)-compatible plugins and themes (via the [zgen](https://github.com/tarjoilija/zgen) framework).
 * Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
-* If you've installed iTerm2's shell integration, automatically load it during startup
+* If you've installed iTerm2's shell integration, it will automatically be loaded during shell startup.
 
 ## Included plugins:
 
@@ -138,6 +138,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * [supercrabtree/k](https://github.com/supercrabtree/k) - `k` is a directory lister that also shows git status on files & directories.
 * [unixorn/autoupdate-zgen](https://github.com/unixorn/autoupdate-zgen) - Adds autoupdate (for both `zgen` itself, and your plugins) to `zgen`.
 * [unixorn/bitbucket-git-helpers](https://github.com/unixorn/bitbucket-git-helpers.plugin.zsh) - Adds `git` helper scripts for bitbucket.
+* [unixorn/fzf-zsh-plugin](https://github.com/unixorn/fzf-zsh-plugin) - This enables `fzf`-powered history search.
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - A collection of extra helper scripts for `git`.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads the Rakefile in the current directory so you can tab complete the Rakefile targets.
@@ -168,14 +169,14 @@ The quickstart kit also uses `zgen` to load oh-my-zsh and these plugins:
 
 Running the following commands will toggle behavior the next time you start a shell session:
 
-* `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them with `zsh-quickstart-enable-omz-plugins`.
+* `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them for new shell sessions with `zsh-quickstart-enable-omz-plugins`.
 * `zsh-quickstart-select-powerlevel10k` - I've switched to using the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt since I first wrote this quickstart. I feel like I shouldn't change the prompt out from under people without a way for them to get the old behavior, so I'm providing toggle commands to switch between it and the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt I originally used in the kit.
 * `zsh-quickstart-select-bullet-train` - Switch back to the old bullet-train prompt.
 * You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
 
 ## Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository. The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables. The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
 ## I like a plugin, but the aliases it installs overwrite other commands or aliases
 
