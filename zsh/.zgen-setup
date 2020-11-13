@@ -1,26 +1,43 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 #
-# Only including a shebang to trigger Sublime Text to use shell
+# Only including a shebang to trigger editors to use shell
 # syntax highlighting.
 #
-# Copyright 2006-2019 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2020 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 
-# Clone zgen if you haven't already
-if [[ -z "$ZGEN_PARENT_DIR" ]]; then
-  ZGEN_PARENT_DIR=$HOME
+# Clone zgenom if you haven't already
+if [[ -z "$ZGENOM_PARENT_DIR" ]]; then
+  ZGENOM_PARENT_DIR=$HOME
 fi
-if [[ ! -f $ZGEN_PARENT_DIR/zgen/zgen.zsh ]]; then
-  if [[ ! -d "$ZGEN_PARENT_DIR" ]]; then
-    mkdir -p "$ZGEN_PARENT_DIR"
+
+# zgenom stores the clones plugins & themes in $ZGEN_DIR when it
+# is set. Otherwise it stuffs everything in the source tree, which
+# is unclean.
+ZGEN_DIR=${ZGEN_DIR:-$HOME/.zgenom}
+
+# echo "ZGEN_DIR: $ZGEN_DIR"
+
+if [[ ! -f $ZGENOM_PARENT_DIR/zgenom/zgenom.zsh ]]; then
+  if [[ ! -d "$ZGENOM_PARENT_DIR" ]]; then
+    mkdir -p "$ZGENOM_PARENT_DIR"
   fi
-  pushd $ZGEN_PARENT_DIR
-  git clone git@github.com:tarjoilija/zgen.git
+  pushd $ZGENOM_PARENT_DIR
+  git clone https://github.com/jandamm/zgenom.git
   popd
 fi
-source $ZGEN_PARENT_DIR/zgen/zgen.zsh
-unset ZGEN_PARENT_DIR
+
+# echo "zgenom path - $ZGENOM_PARENT_DIR/zgenom/zgenom.zsh"
+
+if [[ ! -f "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh" ]]; then
+  echo "Can't find zgenom.zsh"
+else
+  # echo "Loading zgenom"
+  source "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh"
+fi
+
+unset ZGENOM_PARENT_DIR
 
 warn-about-prompt-change() {
   if [[ ! -f ~/.zsh-quickstart-kit-prompt-switch-warning ]]; then
@@ -234,6 +251,8 @@ fi
 if [[ -L ~/.zgen-local-plugins ]]; then
   REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-local-plugins)"
 fi
+
+# echo "REAL_ZGEN_ZETUP: $REAL_ZGEN_SETUP"
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
