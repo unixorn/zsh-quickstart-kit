@@ -235,6 +235,10 @@ rm ~/.zcompdump*
 compinit
 ```
 
+## The separators in the prompt are garbled
+
+If you get garbled prompt separators or branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application. If there is, you also need to set that to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
+
 # Other Resources
 
 ## ZSH
