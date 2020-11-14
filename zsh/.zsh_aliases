@@ -36,6 +36,7 @@ fi
 
 export CVS_RSH=ssh
 
+# shellcheck disable=SC2142
 alias historysummary="history | awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}' | sort -rn | head"
 
 if [ -x /bin/vim ]; then
@@ -76,6 +77,7 @@ alias external_ip="curl -s icanhazip.com"
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Show laptop's IP addresses
+# shellcheck disable=2139
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
 alias reattach="screen -r"
@@ -151,6 +153,7 @@ alias ...="cd ../.."
 
 # Honor old .zsh_aliases.local customizations, but print depecation warning.
 if [ -f ~/.zsh_aliases.local ]; then
+  # shellcheck disable=SC1090
   source ~/.zsh_aliases.local
   echo ".zsh_aliases.local is deprecated. Make entries in files in ~/.zshrc.d instead."
 fi
