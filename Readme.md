@@ -39,11 +39,11 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Installation
+## Installation
 
-## Prerequisites
+### Prerequisites
 
-### Fonts
+#### Fonts
 
 This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlevel10k) ZSH theme, which requires a Powerline-compatible font in your terminal to display certain status glyphs. Fonts that are Powerline-compatible include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
 
@@ -62,9 +62,9 @@ Here are a few good Powerline-compatible fonts:
 * [Victor Mono](https://rubjo.github.io/victor-mono/) - Victor Mono is a free programming font with semi-connected cursive italics, symbol ligatures (!=, ->>, =>, ===, <=, >=, ++) and Latin, Cyrillic and Greek characters.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
-## OS-specific setup
+### OS-specific setup
 
-### macOS
+#### macOS
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
@@ -80,7 +80,7 @@ Here are a few good Powerline-compatible fonts:
     1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
-### Linux
+#### Linux
 
 1. Switch your shell to `zsh` with `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install stow` on Debian / Ubuntu.
@@ -95,7 +95,7 @@ If you still can’t see the new fonts then double-check that the font has been 
 
 If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
-## Set up Zgen and the starter kit
+### Set up Zgen and the starter kit
 
 Now that your fonts and default shell have been set up, install [zgenom](https://github.com/jandamm/zgenom.git) and the dotfiles from this starter kit repository.
 
@@ -112,7 +112,7 @@ Now that your fonts and default shell have been set up, install [zgenom](https:/
 
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable the plugins listed below.
 
-# Contents of the kit
+## Contents of the kit
 
 The zsh-quickstart-kit configures your ZSH environment so that it includes:
 
@@ -127,7 +127,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
 * If you've installed iTerm2's shell integration, it will automatically be loaded during shell startup.
 
-## Included plugins:
+### Included plugins
 
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - Sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
@@ -151,48 +151,52 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
 
 The quickstart kit also uses `zgenom` to load oh-my-zsh and these plugins:
-  * aws
-  * brew - only loaded on macOS
-  * chruby
-  * colored-man
-  * git
-  * github
-  * osx - this will only be loaded on macOS
-  * pip
-  * python
-  * rsync
-  * screen
-  * sudo
-  * vagrant
+* aws
+* brew - only loaded on macOS
+* chruby
+* colored-man
+* git
+* github
+* osx - this will only be loaded on macOS
+* pip
+* python
+* rsync
+* screen
+* sudo
+* vagrant
 
-# Customizing the kit
+## Customizing the kit
 
-## Behavior toggles
+### Behavior toggles
 
 Running the following commands will toggle behavior the next time you start a shell session:
 
 * `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them for new shell sessions with `zsh-quickstart-enable-omz-plugins`.
-* `zsh-quickstart-select-powerlevel10k` - I've switched to using the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt since I first wrote this quickstart. I feel like I shouldn't change the prompt out from under people without a way for them to get the old behavior, so I'm providing toggle commands to switch between it and the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt I originally used in the kit.
+* `zsh-quickstart-select-powerlevel10k` - I've switched to using the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt since I first wrote this quickstart. I'm providing toggle commands to switch between it and the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt I originally used in the kit.
 * `zsh-quickstart-select-bullet-train` - Switch back to the old bullet-train prompt.
 * You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
 
-## Functions and Aliases
+### Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables. The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`.
 
-## I like a plugin, but the aliases it installs overwrite other commands or aliases
+This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables.
+
+The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+
+### I like a plugin, but the aliases it installs overwrite other commands or aliases
 
 Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since those are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`. Once you've cleared all the aliases you don't want, you can add new ones with the names you prefer.
 
-## ZSH options.
+### ZSH options
 
 The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems. However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
 
-## Self-update Settings
+### Self-update Settings
 
 The quickstart kit will automatically check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
-## Changing the plugin list
+### Changing the plugin list
 
 I've included what I think is a good starter set of ZSH plugins in this repository. However, everyone has their own preferences for their environment.
 
@@ -204,21 +208,21 @@ I know that it's a pain to create `.zgen-local-plugins` from scratch, so to make
 
 Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
-## Disabling zmv
+### Disabling zmv
 
 The quickstart automatically autoloads zmv. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
 
-## Disabling oh-my-zsh
+### Disabling oh-my-zsh
 
 If you don't want zgen to load the oh-my-zsh defaults, create `.zsh-quickstart-no-omz` in your home directory.
 
-# FAQ
+## FAQ
 
-## Stow complains with a warning that stowing zsh would cause conflicts
+### Stow complains with a warning that stowing zsh would cause conflicts
 
 You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
 
-```
+```bash
 WARNING! stowing zsh would cause conflicts:
   * existing target is neither a link nor a directory: .zshrc
 All operations aborted.
@@ -226,30 +230,30 @@ All operations aborted.
 
 Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
 
-## I added a new completion plugin and it isn't working
+### I added a new completion plugin and it isn't working
 
 I've had reports that sometimes you need to reset your completions after adding a new plugin.
 
-```
+```bash
 rm ~/.zcompdump*
 compinit
 ```
 
-## The separators in the prompt are garbled
+### The separators in the prompt are garbled
 
 If you get garbled prompt separators or branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application. If there is, you also need to set that to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
-# Other Resources
+## Other Resources
 
-## ZSH
+### ZSH
 
 * For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of other ZSH [tutorials and starter kits](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh).
 * Justin Garrison has a good repo that details [Mastering ZSH](https://github.com/rothgar/mastering-zsh).
 
-## Dotfiles in general
+### Dotfiles in general
 
 [dotfiles.github.io/](https://dotfiles.github.io/) has a lot of great resources for dotfiles - frameworks for managing them, configurations for editors and other bootstraps with initial configurations to start from.
 
-## Vim
+### Vim
 
 If you're using vim, [spf13](http://vim.spf13.com/) is an excellent starter configuration and plugin collection.
