@@ -106,7 +106,7 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
 3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`.
     1. You can do this with `stow` by:
         1. `cd zsh-quickstart-kit`
-        2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux.
+        2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux. If you still have errors, symlink the files in zsh into your home directory.
 
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable the plugins listed below.
 
