@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Only including a shebang to trigger Sublime Text to use shell syntax highlighting
+# Only including a shebang to trigger editors shell syntax highlighting
 #
 # Copyright 2006-2020 Joseph Block <jpb@unixorn.net>
 #
@@ -38,15 +38,6 @@ exists() {
 # from cads@ooyala.com
 ff() {
   find . -type f -iname '*'$@'*' -ls
-}
-
-# Find things in that enormous command history file
-hgrep40() {
-  history | egrep --color -i "$@" | tail -40
-}
-
-hgrep() {
-  history | grep -i "$@" | tail -20
 }
 
 hgrep_full() {
@@ -87,46 +78,6 @@ calc() {
   awk "BEGIN{ print $* }" ;
 }
 
-procs_for_path() {
-  for pid in $(lsof "$@" | cut -d' ' -f 3 | sort | uniq)
-  do
-    ps -f -p $pid
-  done
-}
-
-# Begin sysadvent2011 functions
-_awk_col() {
-  echo "$1" | egrep -v '^[0-9]+$' || echo "\$$1"
-}
-
-sum() {
-  [ "${1#-F}" != "$1" ] && SP=${1} && shift
-  [ "$#" -eq 0 ] && set -- 0
-  key="$(_awk_col "$1")"
-  awk $SP "{ x+=$key } END { printf(\"%d\n\", x) }"
-}
-
-sumby() {
-  [ "${1#-F}" != "$1" ] && SP=${1} && shift
-  [ "$#" -lt 0 ] && set -- 0 1
-  key="$(_awk_col "$1")"
-  val="$(_awk_col "$2")"
-  awk $SP "{ a[$key] += $val } END { for (i in a) { printf(\"%d %s\\n\", a[i], i) } }"
-}
-
-countby() {
-  [ "${1#-F}" != "$1" ] && SP=${1} && shift
-  [ "$#" -eq 0 ] && set -- 0
-  key="$(_awk_col "$1")"
-  awk $SP "{ a[$key]++ } END { for (i in a) { printf(\"%d %s\\n\", a[i], i) } }"
-}
-# end sysadvent
-
-# ssh helper
-rmhost () {
-  perl -i -ne "print unless $1 .. $1" ~/.ssh/known_hosts;
-}
-
 get_nr_jobs() {
   jobs | wc -l
 }
@@ -135,41 +86,9 @@ get_load() {
   uptime | awk '{print $11}' | tr ',' ' '
 }
 
-bash_repeat() {
-  n=$1
-  shift
-  while [ $(( n -= 1 )) -ge 0 ]
-  do
-      "$@"
-  done
-}
-
-authme() {
-  ssh "$1" 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
-}
-
 mtr_url() {
   host=$(ruby -ruri -e "puts (URI.parse('$1').host or '$1')")
   sudo mtr -t $host
-}
-
-jsoncurl() {
-  curl "$@" | python -m json.tool
-}
-
-# Recursively touch, e.g. touch + mkdir -p
-# so files can easily be created at depth
-#
-canhaz() {
-  mkdir -p -- "${1%/*}" && touch -- "$1"
-}
-
-canhaz-script() {
-  canhaz "${1}" && chmod +x "$1"
-}
-
-pong() {
-  ping -c 10 "$@"
 }
 
 fix_tmux_ssh_agent() {
@@ -178,12 +97,6 @@ fix_tmux_ssh_agent() {
       value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
       export ${key}="${value}"
     fi
-  done
-}
-
-show_terminal_colors() {
-  for i in {0..255} ; do
-    printf "\x1b[38;5;${i}mcolour${i}\n"
   done
 }
 
@@ -199,23 +112,6 @@ nj() {
     ping -c 1 8.8.8.8 &> /dev/null && break
     sleep 1
   done
-}
-
-# Pretty JSON
-# from: https://coderwall.com/p/hwu5uq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=zsh
-pjson() {
-  if [ $# -gt 0 ];
-    then
-    for arg in $@
-    do
-      if [ -f $arg ];
-        then
-        less $arg | python -m json.tool
-      else
-        echo "$arg" | python -m json.tool
-      fi
-    done
-  fi
 }
 
 # lists zombie processes
