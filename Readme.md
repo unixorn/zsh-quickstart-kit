@@ -1,7 +1,7 @@
 # ZSH Quickstart Kit
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![CircleCI](https://circleci.com/gh/unixorn/zsh-quickstart-kit.svg?style=shield)](https://circleci.com/gh/unixorn/zsh-quickstart-kit)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Funixorn%2Fzsh-quickstart-kit%2Fbadge&style=plastic)](https://actions-badge.atrox.dev/unixorn/zsh-quickstart-kit/goto)
 [![Code Climate](https://codeclimate.com/github/unixorn/zsh-quickstart-kit/badges/gpa.svg)](https://codeclimate.com/github/unixorn/zsh-quickstart-kit)
 [![GitHub stars](https://img.shields.io/github/stars/unixorn/zsh-quickstart-kit.svg)](https://github.com/unixorn/zsh-quickstart-kit/stargazers)
 [![Issue Count](https://codeclimate.com/github/unixorn/zsh-quickstart-kit/badges/issue_count.svg)](https://codeclimate.com/github/unixorn/zsh-quickstart-kit)
