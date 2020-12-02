@@ -134,6 +134,8 @@ unsetopt MENU_COMPLETE   # Do not autoselect the first completion entry.
 # Miscellaneous settings
 setopt INTERACTIVE_COMMENTS  # Enable comments in interactive shell.
 
+setopt extended_glob # Enable more powerful glob features
+
 # Long running processes should return time after they complete. Specified
 # in seconds.
 REPORTTIME=2
