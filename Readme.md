@@ -233,6 +233,10 @@ rm ~/.zcompdump*
 compinit
 ```
 
+## I want to reconfigure the prompt
+
+You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
+
 # Other Resources
 
 ## ZSH
