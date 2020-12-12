@@ -181,7 +181,9 @@ Running the following commands will toggle behavior the next time you start a sh
 
 ### Functions and Aliases
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables. The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`.  This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables.
+
+The files in `.zshrc.d` will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
 ### I like a plugin, but the aliases it installs overwrite other commands or aliases
 
