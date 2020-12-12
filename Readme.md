@@ -24,7 +24,7 @@
     - [Behavior toggles](#behavior-toggles)
     - [Functions and Aliases](#functions-and-aliases)
     - [I like a plugin, but the aliases it installs overwrite other commands or aliases](#i-like-a-plugin-but-the-aliases-it-installs-overwrite-other-commands-or-aliases)
-    - [ZSH options.](#zsh-options)
+    - [ZSH options](#zsh-options)
     - [Self-update Settings](#self-update-settings)
     - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
     - [Disabling zmv](#disabling-zmv)
