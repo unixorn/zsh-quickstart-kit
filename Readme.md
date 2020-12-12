@@ -30,9 +30,10 @@
     - [Disabling zmv](#disabling-zmv)
     - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
   - [FAQ](#faq)
-    - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
+    - [How do I reconfigure the prompt](#how-do-i-reconfigure-the-prompt)
     - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
-    - [I want to reconfigure the prompt](#i-want-to-reconfigure-the-prompt)
+    - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
+    - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
   - [Other Resources](#other-resources)
     - [ZSH](#zsh)
     - [Dotfiles in general](#dotfiles-in-general)
@@ -215,17 +216,9 @@ If you don't want zgen to load the oh-my-zsh defaults, create `.zsh-quickstart-n
 
 ## FAQ
 
-### Stow complains with a warning that stowing zsh would cause conflicts
+### How do I reconfigure the prompt
 
-You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
-
-```sh
-WARNING! stowing zsh would cause conflicts:
-  * existing target is neither a link nor a directory: .zshrc
-All operations aborted.
-```
-
-Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
+You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
 
 ### I added a new completion plugin and it isn't working
 
@@ -236,9 +229,34 @@ rm ~/.zcompdump*
 compinit
 ```
 
-### I want to reconfigure the prompt
+### I get a git error when I try to update the kit
 
-You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
+You try to update the kit and you get an error similar to this:
+```
+From https://github.com/unixorn/zsh-quickstart-kit
+0c5bad9..2064c6b master -> origin/master
+
+    755f689...e3f8677 switch-to-zgenom -> origin/switch-to-zgenom (forced update)
+    Updating 0c5bad9..2064c6b
+    error: Your local changes to the following files would be overwritten by merge:
+    zsh/.zshrc
+    Please commit your changes or stash them before you merge.
+    Aborting
+
+```
+This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and in order to let you customize your ZSH settings without having to maintain your own fork, the kit-provided `.zshrc` will load any files it finds in `~/.zshrc.d`.
+
+### Stow complains with a warning that stowing zsh would cause conflicts
+
+You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
+
+```
+WARNING! stowing zsh would cause conflicts:
+  * existing target is neither a link nor a directory: .zshrc
+All operations aborted.
+```
+
+Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
 
 ## Other Resources
 
