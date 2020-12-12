@@ -125,7 +125,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
 * If you've installed iTerm2's shell integration, it will automatically be loaded during shell startup.
 
-## Included plugins:
+## Included plugins
 
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - Sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
@@ -163,9 +163,9 @@ The quickstart kit also uses `zgen` to load oh-my-zsh and these plugins:
   * sudo
   * vagrant
 
-# Customizing the kit
+## Customizing the kit
 
-## Behavior toggles
+### Behavior toggles
 
 Running the following commands will toggle behavior the next time you start a shell session:
 
@@ -174,23 +174,23 @@ Running the following commands will toggle behavior the next time you start a sh
 * `zsh-quickstart-select-bullet-train` - Switch back to the old bullet-train prompt.
 * You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
 
-## Functions and Aliases
+### Functions and Aliases
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables. The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
-## I like a plugin, but the aliases it installs overwrite other commands or aliases
+### I like a plugin, but the aliases it installs overwrite other commands or aliases
 
 Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since those are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`. Once you've cleared all the aliases you don't want, you can add new ones with the names you prefer.
 
-## ZSH options.
+### ZSH options
 
 The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems. However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
 
-## Self-update Settings
+### Self-update Settings
 
 The quickstart kit will automatically check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
-## Changing the zgen plugin list
+### Changing the zgen plugin list
 
 I've included what I think is a good starter set of zsh plugins in this repository. However, everyone has their own preferences for their environment.
 
@@ -202,21 +202,21 @@ I know that it's a pain to create `.zgen-local-plugins` from scratch, so to make
 
 Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your list instead of mine.
 
-## Disabling zmv
+### Disabling zmv
 
 The quickstart automatically autoloads zmv. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
 
-## Disabling oh-my-zsh
+### Disabling oh-my-zsh
 
 If you don't want zgen to load the oh-my-zsh defaults, create `.zsh-quickstart-no-omz` in your home directory.
 
-# FAQ
+## FAQ
 
-## Stow complains with a warning that stowing zsh would cause conflicts
+### Stow complains with a warning that stowing zsh would cause conflicts
 
 You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
 
-```
+```sh
 WARNING! stowing zsh would cause conflicts:
   * existing target is neither a link nor a directory: .zshrc
 All operations aborted.
@@ -224,7 +224,7 @@ All operations aborted.
 
 Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
 
-## I added a new completion plugin and it isn't working
+### I added a new completion plugin and it isn't working
 
 I've had reports that sometimes you need to reset your completions after adding a new plugin.
 
@@ -233,21 +233,21 @@ rm ~/.zcompdump*
 compinit
 ```
 
-## I want to reconfigure the prompt
+### I want to reconfigure the prompt
 
 You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
 
-# Other Resources
+## Other Resources
 
-## ZSH
+### ZSH
 
 * For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of other ZSH [tutorials and starter kits](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh).
 * Justin Garrison has a good repo that details [Mastering ZSH](https://github.com/rothgar/mastering-zsh).
 
-## Dotfiles in general
+### Dotfiles in general
 
 [dotfiles.github.io/](https://dotfiles.github.io/) has a lot of great resources for dotfiles - frameworks for managing them, configurations for editors and other bootstraps with initial configurations to start from.
 
-## Vim
+### Vim
 
 If you're using vim, [spf13](http://vim.spf13.com/) is an excellent starter configuration and plugin collection.
