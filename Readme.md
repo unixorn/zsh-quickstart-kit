@@ -153,19 +153,20 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
 
 The quickstart kit also uses `zgen` to load oh-my-zsh and these plugins:
-  * aws
-  * brew - only loaded on macOS
-  * chruby
-  * colored-man
-  * git
-  * github
-  * osx - this will only be loaded on macOS
-  * pip
-  * python
-  * rsync
-  * screen
-  * sudo
-  * vagrant
+
+* aws
+* brew - only loaded on macOS
+* chruby
+* colored-man
+* git
+* github
+* osx - this will only be loaded on macOS
+* pip
+* python
+* rsync
+* screen
+* sudo
+* vagrant
 
 ## Customizing the kit
 
@@ -224,7 +225,7 @@ You may want to reconfigure your prompt after using it. The quickstart uses the 
 
 I've had reports that sometimes you need to reset your completions after adding a new plugin.
 
-```
+```sh
 rm ~/.zcompdump*
 compinit
 ```
@@ -232,7 +233,8 @@ compinit
 ### I get a git error when I try to update the kit
 
 You try to update the kit and you get an error similar to this:
-```
+
+```sh
 From https://github.com/unixorn/zsh-quickstart-kit
 0c5bad9..2064c6b master -> origin/master
 
@@ -250,7 +252,7 @@ This happens when you edit a file provided by the quickstart kit, in this case, 
 
 You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
 
-```
+```sh
 WARNING! stowing zsh would cause conflicts:
   * existing target is neither a link nor a directory: .zshrc
 All operations aborted.
