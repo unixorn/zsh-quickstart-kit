@@ -30,9 +30,10 @@
   - [Disabling zmv](#disabling-zmv)
   - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
 - [FAQ](#faq)
-  - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
+  - [How do I reconfigure the prompt](#how-do-i-reconfigure-the-prompt)
   - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
-  - [The separators in the prompt are garbled](#the-separators-in-the-prompt-are-garbled)
+  - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
+  - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
   - [Dotfiles in general](#dotfiles-in-general)
@@ -152,6 +153,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting as you type.
 
 The quickstart kit also uses `zgenom` to load oh-my-zsh and these plugins:
+
 * aws
 * brew - only loaded on macOS
 * chruby
@@ -173,8 +175,10 @@ The quickstart kit also uses `zgenom` to load oh-my-zsh and these plugins:
 Running the following commands will toggle behavior the next time you start a shell session:
 
 * `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them for new shell sessions with `zsh-quickstart-enable-omz-plugins`.
-* `zsh-quickstart-select-powerlevel10k` - I've switched to using the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt since I first wrote this quickstart. I'm providing toggle commands to switch between it and the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt I originally used in the kit.
-* `zsh-quickstart-select-bullet-train` - Switch back to the old bullet-train prompt.
+
+* Prompt selectors - We now use the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt. I won't change the prompt out from under people without a way for them to get the old behavior, so there are commands to switch back and forth.
+  * `zsh-quickstart-select-powerlevel10k` -  Switch to the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt now used as the kit's default.
+  * `zsh-quickstart-select-bullet-train` - Switch back to the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt originally used in the kit.
 * You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
 
 ### Functions and Aliases
@@ -219,30 +223,48 @@ If you don't want zgen to load the oh-my-zsh defaults, create `.zsh-quickstart-n
 
 ## FAQ
 
+### How do I reconfigure the prompt
+
+You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
+
+### I added a new completion plugin and it isn't working
+
+I've had reports that sometimes you need to reset your completions after adding a new plugin.
+
+```sh
+rm ~/.zcompdump*
+compinit
+```
+
+### I get a git error when I try to update the kit
+
+You try to update the kit and you get an error similar to this:
+
+```sh
+From https://github.com/unixorn/zsh-quickstart-kit
+0c5bad9..2064c6b master -> origin/master
+
+    755f689...e3f8677 switch-to-zgenom -> origin/switch-to-zgenom (forced update)
+    Updating 0c5bad9..2064c6b
+    error: Your local changes to the following files would be overwritten by merge:
+    zsh/.zshrc
+    Please commit your changes or stash them before you merge.
+    Aborting
+
+```
+This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and in order to let you customize your ZSH settings without having to maintain your own fork, the kit-provided `.zshrc` will load any files it finds in `~/.zshrc.d`.
+
 ### Stow complains with a warning that stowing zsh would cause conflicts
 
 You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
 
-```bash
+```sh
 WARNING! stowing zsh would cause conflicts:
   * existing target is neither a link nor a directory: .zshrc
 All operations aborted.
 ```
 
 Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
-
-### I added a new completion plugin and it isn't working
-
-I've had reports that sometimes you need to reset your completions after adding a new plugin.
-
-```bash
-rm ~/.zcompdump*
-compinit
-```
-
-### The separators in the prompt are garbled
-
-If you get garbled prompt separators or branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application. If there is, you also need to set that to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
 ## Other Resources
 
