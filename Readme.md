@@ -20,31 +20,32 @@
   - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
 - [Contents of the kit](#contents-of-the-kit)
   - [Included plugins](#included-plugins)
-  - [Customizing the kit](#customizing-the-kit)
-    - [Behavior toggles](#behavior-toggles)
-    - [Functions and Aliases](#functions-and-aliases)
-    - [I like a plugin, but the aliases it installs overwrite other commands or aliases](#i-like-a-plugin-but-the-aliases-it-installs-overwrite-other-commands-or-aliases)
-    - [ZSH options.](#zsh-options)
-    - [Self-update Settings](#self-update-settings)
-    - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
-    - [Disabling zmv](#disabling-zmv)
-    - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
-  - [FAQ](#faq)
-    - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
-    - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
-    - [I want to reconfigure the prompt](#i-want-to-reconfigure-the-prompt)
-  - [Other Resources](#other-resources)
-    - [ZSH](#zsh)
-    - [Dotfiles in general](#dotfiles-in-general)
-    - [Vim](#vim)
+- [Customizing the kit](#customizing-the-kit)
+  - [Behavior toggles](#behavior-toggles)
+  - [Functions and Aliases](#functions-and-aliases)
+  - [I like a plugin, but the aliases it installs overwrite other commands or aliases](#i-like-a-plugin-but-the-aliases-it-installs-overwrite-other-commands-or-aliases)
+  - [ZSH options](#zsh-options)
+  - [Self-update Settings](#self-update-settings)
+  - [Changing the zgen plugin list](#changing-the-zgen-plugin-list)
+  - [Disabling zmv](#disabling-zmv)
+  - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
+- [FAQ](#faq)
+  - [How do I reconfigure the prompt](#how-do-i-reconfigure-the-prompt)
+  - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
+  - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
+  - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
+- [Other Resources](#other-resources)
+  - [ZSH](#zsh)
+  - [Dotfiles in general](#dotfiles-in-general)
+  - [Vim](#vim)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Installation
+## Installation
 
-## Prerequisites
+### Prerequisites
 
-### Fonts
+#### Fonts
 
 This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlevel10k) ZSH theme, which requires a Powerline-compatible font in your terminal to display certain status glyphs. Fonts that are Powerline-compatible include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
 
@@ -63,9 +64,9 @@ Here are a few good Powerline-compatible fonts:
 * [Victor Mono](https://rubjo.github.io/victor-mono/) - Victor Mono is a free programming font with semi-connected cursive italics, symbol ligatures (!=, ->>, =>, ===, <=, >=, ++) and Latin, Cyrillic and Greek characters.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
-## OS-specific setup
+### OS-specific setup
 
-### macOS
+#### macOS
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
@@ -81,7 +82,7 @@ Here are a few good Powerline-compatible fonts:
     1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 
-### Linux
+#### Linux
 
 1. Switch your shell to `zsh` with `chsh -s /bin/zsh`
 2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install stow` on Debian / Ubuntu.
@@ -96,7 +97,7 @@ If you still can’t see the new fonts then double-check that the font has been 
 
 If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
-## Set up Zgen and the starter kit
+### Set up Zgen and the starter kit
 
 Now that your fonts and default shell have been set up, install [zgen](https://github.com/tarjoilija/zgen) and the dotfiles from this starter kit repository.
 
@@ -113,7 +114,7 @@ Now that your fonts and default shell have been set up, install [zgen](https://g
 
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable the plugins listed below.
 
-# Contents of the kit
+## Contents of the kit
 
 The zsh-quickstart-kit configures your ZSH environment so that it includes:
 
@@ -128,7 +129,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Various helper functions for interacting with macOS's clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
 * If you've installed iTerm2's shell integration, it will automatically be loaded during shell startup.
 
-## Included plugins
+### Included plugins
 
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - Sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
@@ -215,17 +216,9 @@ If you don't want zgen to load the oh-my-zsh defaults, create `.zsh-quickstart-n
 
 ## FAQ
 
-### Stow complains with a warning that stowing zsh would cause conflicts
+### How do I reconfigure the prompt
 
-You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
-
-```sh
-WARNING! stowing zsh would cause conflicts:
-  * existing target is neither a link nor a directory: .zshrc
-All operations aborted.
-```
-
-Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
+You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
 
 ### I added a new completion plugin and it isn't working
 
@@ -236,9 +229,34 @@ rm ~/.zcompdump*
 compinit
 ```
 
-### I want to reconfigure the prompt
+### I get a git error when I try to update the kit
 
-You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
+You try to update the kit and you get an error similar to this:
+```
+From https://github.com/unixorn/zsh-quickstart-kit
+0c5bad9..2064c6b master -> origin/master
+
+    755f689...e3f8677 switch-to-zgenom -> origin/switch-to-zgenom (forced update)
+    Updating 0c5bad9..2064c6b
+    error: Your local changes to the following files would be overwritten by merge:
+    zsh/.zshrc
+    Please commit your changes or stash them before you merge.
+    Aborting
+
+```
+This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and in order to let you customize your ZSH settings without having to maintain your own fork, the kit-provided `.zshrc` will load any files it finds in `~/.zshrc.d`.
+
+### Stow complains with a warning that stowing zsh would cause conflicts
+
+You ran `stow --target=/Users/YourUsername zsh` in the top level of the repo, and stow printed the following error:
+
+```
+WARNING! stowing zsh would cause conflicts:
+  * existing target is neither a link nor a directory: .zshrc
+All operations aborted.
+```
+
+Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
 
 ## Other Resources
 
