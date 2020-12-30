@@ -147,6 +147,10 @@ TIMEFMT="%U user %S system %P cpu %*Es total"
 # QUICKSTART_KIT_REFRESH_IN_DAYS.
 QUICKSTART_KIT_REFRESH_IN_DAYS=7
 
+# Disable Oh-My-ZSH's internal updating. Let it get updated when user
+# does a zgen update. Closes #62.
+DISABLE_AUTO_UPDATE=true
+
 # Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
 globalias() {
    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
