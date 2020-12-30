@@ -62,6 +62,7 @@ export LSCOLORS='Exfxcxdxbxegedabagacad'
 export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 
 load-our-ssh-keys() {
+  eval `ssh-agent -s` &> /dev/null
   # Fun with SSH
   if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
@@ -73,10 +74,10 @@ load-our-ssh-keys() {
       ssh-add -A # load all ssh keys that have pass phrases stored in macOS keychain
     fi
 
-    for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -name '*id_ecdsa' \))
+    for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
     do
       if [ -f ${key} -a $(ssh-add -l | grep -c "${key//$HOME\//}" ) -eq 0 ]; then
-        # ssh-add ${key}
+        ssh-add ${key} &> /dev/null
       fi
     done
   fi
