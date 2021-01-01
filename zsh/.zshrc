@@ -77,9 +77,16 @@ load-our-ssh-keys() {
     for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
     do
       if [ -f ${key} -a $(ssh-add -l | grep -c "${key//$HOME\//}" ) -eq 0 ]; then
-        ssh-add ${key} &> /dev/null
+        if ( which keychain &> /dev/null ); then
+          keychain ${key} &> /dev/null
+        else
+          ssh-add ${key} &> /dev/null
+        fi
       fi
     done
+    if ( which keychain &> /dev/null ); then
+      source ~/.keychain/$(hostname)-sh
+    fi
   fi
 }
 
@@ -264,8 +271,8 @@ fi
 # Make it easy to append your own customizations that override the above by
 # loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
-if [ -n "$(/bin/ls ~/.zshrc.d)" ]; then
-  for dotfile in ~/.zshrc.d/*
+if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
+  for dotfile in $(find ~/.zshrc.d -type f)
   do
     if [ -r "${dotfile}" ]; then
       source "${dotfile}"
