@@ -1,7 +1,5 @@
 ---
 engines:
-  pep8:
-    enabled: true
   duplication:
     enabled: true
     config:
@@ -31,9 +29,9 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "bin/**/*"
-  - "**.py"
-  - "**.md"
+    - "bin/**/*"
+    - "**.py"
+    - "**.md"
 exclude_paths:
   - .bundle/
   - benchmarks/**/*
