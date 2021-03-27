@@ -1,4 +1,4 @@
-# Copyright 2006-2020 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 #
@@ -11,7 +11,7 @@
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
 #
-# Version 0.7
+# Version 1.0.0
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -71,7 +71,9 @@ load-our-ssh-keys() {
       #
       # You can use ssh-add -K /path/to/key to store pass phrases into
       # the macOS keychain
-      ssh-add -A # load all ssh keys that have pass phrases stored in macOS keychain
+      
+      # Load all ssh keys that have pass phrases stored in macOS keychain
+      ssh-add -A
     fi
 
     for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
@@ -88,15 +90,14 @@ if [[ -z "$SSH_CLIENT" ]]; then
   load-our-ssh-keys
 fi
 
-# Now that we have $PATH set up and ssh keys loaded, configure zgen.
+# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 
-# start zgen
+# Start zgenom
 if [ -f ~/.zgen-setup ]; then
   source ~/.zgen-setup
 fi
-# end zgen
 
-# set some history options
+# Set some history options
 setopt append_history
 setopt extended_history
 setopt hist_expire_dups_first
@@ -114,13 +115,13 @@ setopt share_history
 #setopt noclobber
 
 # Keep a ton of history. You can reset these without editing .zshrc by
-# adding a file to ~/.zshrc.d.
+# adding a file to ~/.zshrc.d that changes these variables.
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
-# set some options about directories
+# Set some options about directories
 setopt pushd_ignore_dups
 #setopt pushd_silent
 setopt AUTO_CD  # If a command is issued that can’t be executed as a normal command,
@@ -169,7 +170,9 @@ bindkey " " globalias
 bindkey "^ " magic-space           # control-space to bypass completion
 bindkey -M isearch " " magic-space # normal space during searches
 
-# Customize to your needs...
+# Make it easier to customize the quickstart to your needs without
+# having to maintain your own fork.
+
 # Stuff that works on bash or zsh
 if [ -r ~/.sh_aliases ]; then
   source ~/.sh_aliases
@@ -186,7 +189,7 @@ fi
 
 export LOCATE_PATH=/var/db/locate.database
 
-# Load AWS credentials
+# Load AWS credentials when present
 if [ -f ~/.aws/aws_variables ]; then
   source ~/.aws/aws_variables
 fi
@@ -197,7 +200,7 @@ if [ -d /Library/Java/Home ];then
 fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # Load macOS-specific aliases
+  # Load macOS-specific aliases - keep supporting the old name
   [ -f ~/.osx_aliases ] && source ~/.osx_aliases
   if [ -d ~/.osx_aliases.d ]; then
     for alias_file in ~/.osx_aliases.d/*
@@ -228,6 +231,8 @@ if [ "$TERM" = "screen" -a ! "$SHOWED_SCREEN_MESSAGE" = "true" ]; then
   fi
 fi
 
+# grc colorizes the output of a lot of commands. If the user installed it,
+# use it.
 if [ -f /usr/local/etc/grc.bashrc ]; then
   source "$(brew --prefix)/etc/grc.bashrc"
 
