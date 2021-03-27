@@ -83,7 +83,10 @@ load-our-ssh-keys() {
   fi
 }
 
-load-our-ssh-keys
+if [[ -z "$SSH_CLIENT" ]]; then
+  # We're not on a remote machine, so load keys
+  load-our-ssh-keys
+fi
 
 # Now that we have $PATH set up and ssh keys loaded, configure zgen.
 
