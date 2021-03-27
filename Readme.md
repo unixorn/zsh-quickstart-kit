@@ -11,13 +11,14 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
+- [Announcement](#announcement)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
     - [Fonts](#fonts)
   - [OS-specific setup](#os-specific-setup)
     - [macOS](#macos)
     - [Linux](#linux)
-  - [Set up Zgen and the starter kit](#set-up-zgen-and-the-starter-kit)
+  - [Set up Zgenom and the starter kit](#set-up-zgenom-and-the-starter-kit)
 - [Contents of the kit](#contents-of-the-kit)
   - [Included plugins](#included-plugins)
 - [Customizing the kit](#customizing-the-kit)
@@ -30,10 +31,10 @@
   - [Disabling zmv](#disabling-zmv)
   - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
 - [FAQ](#faq)
-  - [How do I reconfigure the prompt](#how-do-i-reconfigure-the-prompt)
+  - [How do I reconfigure the prompt?](#how-do-i-reconfigure-the-prompt)
   - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
   - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
-  - [Stow complains with a warning that stowing zsh would cause conflicts](#stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
+  - [GNU stow complains with a warning that stowing zsh would cause conflicts](#gnu-stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
   - [Dotfiles in general](#dotfiles-in-general)
