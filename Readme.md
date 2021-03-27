@@ -41,6 +41,9 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Announcement
+
+I've switched the quickstart kit to use [zgenom](https://github.com/jandamm/zgenom.git) instead of zgen. This should be a painless update since zgenom is a superset of zgen.
 ## Installation
 
 ### Prerequisites
@@ -97,7 +100,7 @@ If you still can’t see the new fonts then double-check that the font has been 
 
 If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
-### Set up Zgen and the starter kit
+### Set up Zgenom and the starter kit
 
 Now that your fonts and default shell have been set up, install [zgenom](https://github.com/jandamm/zgenom.git) and the dotfiles from this starter kit repository.
 
