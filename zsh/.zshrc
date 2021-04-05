@@ -280,10 +280,10 @@ fi
 # loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
 if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
-  for dotfile in $(find ~/.zshrc.d -type f)
+  for dotfile in $(/bin/ls -A ~/.zshrc.d)
   do
-    if [ -r "${dotfile}" ]; then
-      source "${dotfile}"
+    if [ -r ~/.zshrc.d/$dotfile ]; then
+      source ~/.zshrc.d/$dotfile
     fi
   done
 fi
