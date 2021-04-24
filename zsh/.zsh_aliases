@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 #
-# Only including a shebang to trigger Sublime Text to use shell syntax highlighting
+# Only including a shebang to trigger editors to use shell syntax highlighting
 #
 # Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
 #
@@ -17,14 +17,13 @@ fi
 
 # Yes, these tests are ugly. They do however, work.
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # do OS X specific things
-
+  # do macOS specific things
   alias top="TERM=vt100 top"
 else
   alias cputop="top -o cpu"
   alias l-d="ls -lad"
-  alias l="ls -la"
-  alias ll="ls -la | less"
+  alias l="ls -lah"
+  alias ll="ls -lah | less"
 fi
 
 if [[ "$(uname -s)" == "Linux" ]]; then
@@ -32,6 +31,15 @@ if [[ "$(uname -s)" == "Linux" ]]; then
   alias l-d="ls -lFad"
   alias l="ls -laF"
   alias ll="ls -lFa | TERM=vt100 less"
+fi
+
+# Set up colorized ls when grc is present
+# shellcheck disable=SC2154
+if (( $+commands[grc] )); then
+  alias ls="gls -F --color"
+  alias l="gls -lAh --color"
+  alias ll="gls -l --color"
+  alias la='gls -A --color'
 fi
 
 export CVS_RSH=ssh

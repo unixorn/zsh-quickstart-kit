@@ -105,6 +105,9 @@ if [ -f ~/.zgen-setup ]; then
 fi
 
 # Set some history options
+#
+# You can customize these by putting a file in ~/.zshrc.d with
+# different settings.
 setopt append_history
 setopt extended_history
 setopt hist_expire_dups_first
@@ -121,7 +124,7 @@ unsetopt HIST_BEEP
 setopt share_history
 #setopt noclobber
 
-# Keep a ton of history. You can reset these without editing .zshrc by
+# Keep a ton of history. You can override these without editing .zshrc by
 # adding a file to ~/.zshrc.d that changes these variables.
 HISTSIZE=100000
 SAVEHIST=100000
@@ -240,9 +243,22 @@ fi
 
 # grc colorizes the output of a lot of commands. If the user installed it,
 # use it.
-if [ -f /usr/local/etc/grc.bashrc ]; then
-  source "$(brew --prefix)/etc/grc.bashrc"
 
+# Try and find the grc setup file
+if (( $+commands[grc] )); then
+  GRC_SETUP='/usr/local/etc/grc.bashrc'
+fi
+if (( $+commands[grc] )) && (( $+commands[brew] ))
+then
+  GRC_SETUP="$(brew --prefix)/etc/grc.bashrc"
+fi
+if [[ -r "$GRC_SETUP" ]]; then
+  source "$GRC_SETUP"
+fi
+unset GRC_SETUP
+
+if (( $+commands[grc] )) 
+then
   function ping5(){
     grc --color=auto ping -c 5 "$@"
   }
