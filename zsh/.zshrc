@@ -53,7 +53,7 @@ for path_candidate in /opt/local/sbin \
   ~/bin \
   ~/src/gocode/bin
 do
-  if [ -d ${path_candidate} ]; then
+  if [[ -d "${path_candidate}" ]]; then
     export PATH="${PATH}:${path_candidate}"
   fi
 done
