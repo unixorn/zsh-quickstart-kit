@@ -12,6 +12,18 @@
 # DISABLE_AUTO_TITLE="true"
 #
 # Version 1.0.0
+#
+# If you want to change settings that are in this file, the easiest way
+# to do it is by adding a file to ~/.zshrc.d that redefines the sttings.
+#
+# All files in there will be sourced, and keeping your customizations
+# there will keep you from having to maintain a separate fork of the
+# quickstart kit.
+
+# Check if a command exists
+has() {
+  which "$@" > /dev/null 2>&1
+}
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -19,10 +31,6 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-function has() {
-  which "$@" > /dev/null 2>&1
-}
 
 # Valid font modes:
 # flat, awesome-patched, awesome-fontconfig, nerdfont-complete, nerdfont-fontconfig
@@ -42,6 +50,10 @@ unsetopt correctall
 # Base PATH
 PATH="$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin"
 
+# If you need to add extra directories to $PATH that are not checked for
+# here, add a file in ~/.zshrc.d - then you won't have to maintain a
+# fork of the kit.
+
 # Conditional PATH additions
 for path_candidate in /opt/local/sbin \
   /Applications/Xcode.app/Contents/Developer/usr/bin \
@@ -51,12 +63,28 @@ for path_candidate in /opt/local/sbin \
   ~/.cargo/bin \
   ~/.rbenv/bin \
   ~/bin \
-  ~/src/gocode/bin
+  ~/src/gocode/bin \
+  ~/gocode
 do
-  if [ -d ${path_candidate} ]; then
+  if [[ -d "${path_candidate}" ]]; then
     export PATH="${PATH}:${path_candidate}"
   fi
 done
+
+# Deal with brew if it's installed. Note - brew can be installed outside
+# of /usr/local, so add its bin and sbin directories.
+if has brew; then
+  BREW_PREFIX=$(brew --prefix)
+  if [[ -d "${BREW_PREFIX}/bin"]]; then
+    export PATH="$PATH:${BREW_PREFIX}/bin"
+  fi
+  if [[ -d "${BREW_PREFIX}/sbin"]]; then
+    export PATH="$PATH:${BREW_PREFIX}/sbin"
+  fi
+fi
+
+# We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
+# added there get deduped too.
 
 # Yes, these are a pain to customize. Fortunately, Geoff Greer made an online
 # tool that makes it easy to customize your color scheme and keep them in sync
@@ -277,10 +305,14 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
 # Load any custom zsh completions we've installed
-if [ -d ~/.zsh-completions ]; then
+if [[ -d ~/.zsh-completions ]]; then
   for completion in ~/.zsh-completions/*
   do
-    source "$completion"
+    if [[ -r "$completion" ]]; then
+      source "$completion"
+    else
+      echo "Can't read $completion"
+    fi
   done
 fi
 
@@ -288,7 +320,7 @@ fi
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
   echo '~/.zshrc.local is deprecated - use files in ~/.zshrc.d instead.'
-  echo 'Future versions of zsh-quickstart-kits will no longer load ~/.zshrc.local'
+  echo 'The zsh-quickstart-kit will no longer load ~/.zshrc.local after 2021-10-31'
 fi
 
 # Load zmv
@@ -296,8 +328,8 @@ if [[ ! -f ~/.zsh-quickstart-no-zmv ]]; then
   autoload -U zmv
 fi
 
-# Make it easy to append your own customizations that override the above by
-# loading all files from the ~/.zshrc.d directory
+# Make it easy to append your own customizations that override the
+# quickstart's defaults by loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
 if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
   for dotfile in $(/bin/ls -A ~/.zshrc.d)
@@ -308,7 +340,14 @@ if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
   done
 fi
 
-# remove dupes from $PATH using a zsh builtin
+# If GOPATH is defined, add it to $PATH
+if [[ -n "$GOPATH" ]]; then
+  if [[ -d "$GOPATH" ]]; then
+    export PATH="$PATH:$GOPATH"
+  fi
+fi
+
+# Now that .zshrc.d has been processed, we dedupe $PATH using a ZSH builtin
 # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
 typeset -aU path;
 
@@ -380,9 +419,7 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
 # Load iTerm shell integrations if found.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
+# To customize your prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [[ ! -f ~/.p10k.zsh ]]; then
   echo "Run p10k configure or edit ~/.p10k.zsh to configure your prompt"
 else

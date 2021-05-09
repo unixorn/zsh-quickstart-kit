@@ -60,8 +60,8 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 # Tab complete rakefile targets.
 zgenom load unixorn/rake-completion.zshplugin
 
-# Automatically run zgen update and zgen selfupdate every 7 days.
-zgenom load unixorn/autoupdate-zgen
+# Automatically run zgenom update and zgenom selfupdate every 7 days.
+zgenom load unixorn/autoupdate-zgenom
 
 # Add my collection of miscellaneous utility functions.
 zgenom load unixorn/jpb.zshplugin
