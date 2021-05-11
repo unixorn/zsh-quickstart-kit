@@ -78,7 +78,7 @@ load-our-ssh-keys() {
 
     for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
     do
-      if [ -f ${key} -a $(ssh-add -l | grep -c "${key//$HOME\//}" ) -eq 0 ]; then
+      if [ -f ${key} -a $(ssh-add -l | grep -F -c "$(ssh-keygen -l -f $key | awk '{print $2}')" ) -eq 0 ]; then
         if ( which keychain &> /dev/null ); then
           keychain ${key} &> /dev/null
         else
