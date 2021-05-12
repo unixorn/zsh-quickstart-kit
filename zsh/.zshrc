@@ -75,10 +75,10 @@ done
 # of /usr/local, so add its bin and sbin directories.
 if has brew; then
   BREW_PREFIX=$(brew --prefix)
-  if [[ -d "${BREW_PREFIX}/bin"]]; then
+  if [[ -d "${BREW_PREFIX}/bin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/bin"
   fi
-  if [[ -d "${BREW_PREFIX}/sbin"]]; then
+  if [[ -d "${BREW_PREFIX}/sbin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/sbin"
   fi
 fi
@@ -376,7 +376,7 @@ _update-zsh-quickstart() {
     echo ".zshrc is not a symlink, skipping zsh-quickstart-kit update"
   else
     local _link_loc=$(readlink ~/.zshrc);
-    if [[ "${_link_loc/${HOME}}" == "${_link_loc}" ]] then
+    if [[ "${_link_loc/${HOME}}" == "${_link_loc}" ]]; then
       pushd $(dirname "${HOME}/$(readlink ~/.zshrc)");
     else
       pushd $(dirname ${_link_loc});
