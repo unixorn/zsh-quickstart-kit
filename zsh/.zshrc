@@ -75,10 +75,10 @@ done
 # of /usr/local, so add its bin and sbin directories.
 if has brew; then
   BREW_PREFIX=$(brew --prefix)
-  if [[ -d "${BREW_PREFIX}/bin"]]; then
+  if [[ -d "${BREW_PREFIX}/bin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/bin"
   fi
-  if [[ -d "${BREW_PREFIX}/sbin"]]; then
+  if [[ -d "${BREW_PREFIX}/sbin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/sbin"
   fi
 fi
