@@ -376,7 +376,7 @@ _update-zsh-quickstart() {
     echo ".zshrc is not a symlink, skipping zsh-quickstart-kit update"
   else
     local _link_loc=$(readlink ~/.zshrc);
-    if [[ "${_link_loc/${HOME}}" == "${_link_loc}" ]] then
+    if [[ "${_link_loc/${HOME}}" == "${_link_loc}" ]]; then
       pushd $(dirname "${HOME}/$(readlink ~/.zshrc)");
     else
       pushd $(dirname ${_link_loc});
