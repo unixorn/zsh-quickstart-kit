@@ -11,50 +11,50 @@
 # your own fork of the quickstart kit
 
 # Add some quickstart toggle functions
-zsh-quickstart-select-bullet-train() {
+function zsh-quickstart-select-bullet-train() {
   touch ~/.zsh-quickstart-use-bullet-train
   rm -f ~/.zgen/init.zsh
 }
 
-zsh-quickstart-select-powerlevel10k() {
+function zsh-quickstart-select-powerlevel10k() {
   rm -f ~/.zsh-quickstart-use-bullet-train
   rm -f ~/.zgen/init.zsh
 }
 
-zsh-quickstart-disable-omz-plugins() {
+function zsh-quickstart-disable-omz-plugins() {
   touch ~/.zsh-quickstart-no-omz
   rm -f ~/.zgen/init.zsh
 }
 
-zsh-quickstart-enable-omz-plugins() {
+function zsh-quickstart-enable-omz-plugins() {
   rm -f ~/.zsh-quickstart-no-omz
   rm -f ~/.zgen/init.zsh
 }
 
-exists() {
+function exists() {
   if (( $+commands[$1] )); then return 0; else return 1; fi
 }
 
 # from cads@ooyala.com
-ff() {
+function ff() {
   find . -type f -iname '*'$@'*' -ls
 }
 
-hgrep_full() {
+function hgrep_full() {
   history | egrep --color -i "$@"
 }
 
 # easier to type, leaving hgrep_full for backwards compatibility
-hgrep-full() {
+function hgrep-full() {
   hgrep_full "$@"
 }
 
-envgrep() {
+function envgrep() {
   printenv | grep -i "$@"
 }
 
 # From Dan Ryan's blog - http://danryan.co/using-antigen-for-zsh.html
-man() {
+function man() {
   env \
     LESS_TERMCAP_mb=$(printf "\e[1;31m") \
     LESS_TERMCAP_md=$(printf "\e[1;31m") \
@@ -67,31 +67,31 @@ man() {
 }
 
 # From commandlinefu.com
-watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
+function watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
 
 # scp file to machine you're sshing into this machine from
-mecp() {
+function mecp() {
   scp "$@" ${SSH_CLIENT%% *}:~/Downloads/;
 }
 
-calc() {
+function calc() {
   awk "BEGIN{ print $* }" ;
 }
 
-get_nr_jobs() {
+function get_nr_jobs() {
   jobs | wc -l
 }
 
-get_load() {
+function get_load() {
   uptime | awk '{print $11}' | tr ',' ' '
 }
 
-mtr_url() {
+function mtr_url() {
   host=$(ruby -ruri -e "puts (URI.parse('$1').host or '$1')")
   sudo mtr -t $host
 }
 
-fix_tmux_ssh_agent() {
+function fix_tmux_ssh_agent() {
   for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
     if (tmux show-environment | grep "^${key}" > /dev/null); then
       value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
@@ -101,13 +101,13 @@ fix_tmux_ssh_agent() {
 }
 
 # Probe a /24 for hosts
-scan24() {
+function scan24() {
   nmap -sP ${1}/24
 }
 
 # Netjoin - Block until a network connection is obtained.
 # Originally from https://github.com/bamos/dotfiles/blob/master/.funcs
-nj() {
+function nj() {
   while true; do
     ping -c 1 8.8.8.8 &> /dev/null && break
     sleep 1
@@ -115,14 +115,14 @@ nj() {
 }
 
 # lists zombie processes
-zombie() {
+function zombie() {
   ps aux | awk '{if ($8=="Z") { print $2 }}'
 }
 alias zombies=zombie
 
 # get the content type of an http resource
 # from https://github.com/jleclanche/dotfiles/blob/master/.zshrc
-htmime() {
+function htmime() {
   if [[ -z $1 ]]; then
     print "USAGE: htmime <URL>"
     return 1
@@ -132,7 +132,7 @@ htmime() {
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
-httpserver() {
+function httpserver() {
   local port="${1:-8000}";
   sleep 1 && open "http://localhost:${port}/" &
   # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
