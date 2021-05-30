@@ -432,3 +432,14 @@ if [[ -z "$DONT_PRINT_SSH_KEY_LIST" ]]; then
   ssh-add -l
   echo
 fi
+
+if [[ -z "ZSH_QUICKSTART_SKIP_TRAPINT" ]]; then
+  # Original source: https://vinipsmaker.wordpress.com/2014/02/23/my-zsh-config/
+  # bash prints ^C when you're typing a command and control-c to cancel, so it
+  # is easy to see it wasn't executed. By default, ZSH doesn't print the ^C.
+  # We trap SIGINT to make it print the ^C.
+  TRAPINT() {
+    print -n -u2 '^C'
+    return $((128+$1))
+  }
+fi
