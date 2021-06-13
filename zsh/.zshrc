@@ -119,7 +119,9 @@ load-our-ssh-keys() {
       fi
     done
     if ( which keychain &> /dev/null ); then
-      source ~/.keychain/$(hostname)-sh
+      if [[ -r ~/.keychain/$(hostname)-sh ]]; then
+        source ~/.keychain/$(hostname)-sh
+      fi
     fi
   fi
 }
