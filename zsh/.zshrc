@@ -119,7 +119,9 @@ load-our-ssh-keys() {
       fi
     done
     if ( which keychain &> /dev/null ); then
-      source ~/.keychain/$(hostname)-sh
+      if [[ -r ~/.keychain/$(hostname)-sh ]]; then
+        source ~/.keychain/$(hostname)-sh
+      fi
     fi
   fi
 }
@@ -139,7 +141,9 @@ fi
 # Set some history options
 #
 # You can customize these by putting a file in ~/.zshrc.d with
-# different settings.
+# different settings - those files are loaded later specifically to
+# make overriding these (and things set by plugins) easy without having
+# to maintain a fork.
 setopt append_history
 setopt extended_history
 setopt hist_expire_dups_first
