@@ -96,12 +96,12 @@ export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;
 load-our-ssh-keys() {
   if [ -z "$SSH_AUTH_SOCK" ]; then
    # Check for a currently running instance of the agent
-   RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
+   RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
    if [ "$RUNNING_AGENT" = "0" ]; then
         # Launch a new instance of the agent
         ssh-agent -s &> .ssh/ssh-agent
    fi
-   eval `cat .ssh/ssh-agent`
+   eval $(cat .ssh/ssh-agent)
   fi
   # Fun with SSH
   if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
