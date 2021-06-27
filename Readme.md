@@ -70,6 +70,10 @@ Here are a few good Powerline-compatible fonts:
 
 ### OS-specific setup
 
+#### fzf
+
+You'll need to install [fzf](https://github.com/junegunn/fzf/) to enable the enhanced history search. Manual install instructions can be found at [fzf](https://github.com/junegunn/fzf), and os-specific instructions below.
+
 #### macOS
 
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
@@ -85,13 +89,15 @@ Here are a few good Powerline-compatible fonts:
 6. Install some Powerline-compatible or NerdFont fonts from one of the links in the Fonts section above.
     1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
+7. Install `fzf` with `brew install fzf`
 
 #### Linux
 
 1. Switch your shell to `zsh` with `chsh -s /bin/zsh`
-2. Install GNU Stow - `yum install -y stow` on Red Hat / CentOS systems, `apt-get -y install stow` on Debian / Ubuntu.
-3. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
-4. Update the font cache for the path the font was installed in (root privileges may be needed for updating the font cache for some paths): `fc-cache -vf ~/.fonts/`
+2. Install GNU Stow - `sudo yum install -y stow` on Red Hat / CentOS systems, `sudo apt-get -y install stow` on Debian / Ubuntu.
+3. Install `fzf` - `sudo apt-get install -y fzf` on Debian / Ubuntu, do a manual install on Red Hat / Centos - instructions are at [fzf](https://github.com/junegunn/fzf).
+4. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
+5. Update the font cache for the path the font was installed in (root privileges may be needed for updating the font cache for some paths): `fc-cache -vf ~/.fonts/`
 
 After installing a Nerdfont or Powerline-compatible font, you will also need to configure your terminal emulator to use your selected Powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 

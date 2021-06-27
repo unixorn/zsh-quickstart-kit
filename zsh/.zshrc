@@ -21,7 +21,11 @@
 # quickstart kit.
 
 # Check if a command exists
-has() {
+function has() {
+  which "$@" > /dev/null 2>&1
+}
+
+function can_haz() {
   which "$@" > /dev/null 2>&1
 }
 
@@ -73,7 +77,7 @@ done
 
 # Deal with brew if it's installed. Note - brew can be installed outside
 # of /usr/local, so add its bin and sbin directories.
-if has brew; then
+if can_haz brew; then
   BREW_PREFIX=$(brew --prefix)
   if [[ -d "${BREW_PREFIX}/bin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/bin"
@@ -454,4 +458,12 @@ if [[ -z "ZSH_QUICKSTART_SKIP_TRAPINT" ]]; then
     print -n -u2 '^C'
     return $((128+$1))
   }
+fi
+
+if ! can_haz fzf; then
+  echo "$?"
+  echo "You'll need to install fzf or your history search will be broken."
+  echo
+  echo
+  echo "Install instructions can be found at https://github.com/junegunn/fzf/"
 fi
