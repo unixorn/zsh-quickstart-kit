@@ -56,6 +56,7 @@ This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlev
 Here are a few good Powerline-compatible fonts:
 
 * [Awesome Terminal Fonts](https://github.com/gabrielelana/awesome-terminal-fonts) - A family of fonts that includes some nice monospaced Icons.
+* [Cascadia Code](https://github.com/microsoft/cascadia-code) - Microsoft's Cascadia Code
 * [Fantasque Awesome Font](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons and Powerline-Glyphs.
 * [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family.
 * [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed specifically for source code and terminal usage.
