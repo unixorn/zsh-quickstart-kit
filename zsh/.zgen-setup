@@ -61,14 +61,14 @@ load-starter-plugin-list() {
   fi
 
   # If you want to customize your plugin list, create a file named
-  # .zgen-local-plugins in your home directory. That file will be sourced
-  # during startup *instead* of running this load-starter-plugin-list function,
-  # so make sure to include everything from this function that you want to
-  # keep.
+  # .zsh-quickstart-local-plugins-example in your home directory. That 
+  # file will be sourced during startup *instead* of running this
+  # load-starter-plugin-list function, so make sure to include everything
+  # from this function that you want to keep.
   #
-  # To make customizing easier, there's a .zgen-local-plugins-example file
-  # at the top level of the zsh-quickstart-kit repository that you can copy
-  # as a starting point. This keeps you from having to maintain a fork of
+  # To make customizing easier, there's a .zsh-quickstart-local-plugins-example
+  # file at the top level of the zsh-quickstart-kit repository that you can
+  # copy as a starting point. This keeps you from having to maintain a fork of
   # the quickstart kit.
 
   # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
@@ -186,8 +186,20 @@ load-starter-plugin-list() {
 }
 
 setup-zgen-repos() {
-  if [[ -f ~/.zgen-local-plugins ]]; then
-    source ~/.zgen-local-plugins
+  ZQS_override_plugin_list=''
+  # Check the old name for backward compatibility
+  if [[ -r $HOME/.zgen-local-plugins ]]; then
+    ZQS_override_plugin_list="$HOME/.zgen-local-plugins"
+  fi
+  # If they have both, the new name takes precedence
+  if [[ -r $HOME/.zsh-quickstart-local-plugins ]]; then
+    ZQS_override_plugin_list="$HOME/.zsh-quickstart-local-plugins"
+  fi
+
+  if [[ -r "$ZQS_override_plugin_list" ]]; then
+    echo "Loading local plugin list from $ZQS_override_plugin_list"
+    source "$ZQS_override_plugin_list"
+    unset ZQS_override_plugin_list
   else
     load-starter-plugin-list
   fi
@@ -234,8 +246,8 @@ if [[ -L ~/.zgen-setup ]]; then
 fi
 
 # If you don't want my standard starter set of plugins, create a file named
-# .zgen-local-plugins and add your zgenom load commands there. Don't forget to
-# run `zgen save` at the end of your .zgen-local-plugins file.
+# .zsh-quickstart-local-plugins and add your zgenom load commands there. Don't forget to
+# run `zgen save` at the end of your .zsh-quickstart-local-plugins file.
 #
 # Warning: .zgen-local-plugins REPLACES the starter list setup, it doesn't
 # add to it.
@@ -248,12 +260,20 @@ fi
 if [[ -L ~/.zgen-local-plugins ]]; then
   REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-local-plugins)"
 fi
+# Old file still works for backward compatibility, but we want the new file
+# to take precedence when both exist.
+if [[ -f ~/.zsh-quickstart-local-plugins ]]; then
+  REAL_ZGEN_SETUP=~/.zsh-quickstart-local-plugins
+fi
+if [[ -L ~/.zsh-quickstart-local-plugins ]]; then
+  REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zsh-quickstart-local-plugins)"
+fi
 
 # echo "REAL_ZGEN_ZETUP: $REAL_ZGEN_SETUP"
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgenom/init.zsh) ]; then
-  echo "$(basename ${REAL_ZGEN_SETUP}) updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP}"
+  echo "$(basename ${REAL_ZGEN_SETUP}) ($REAL_ZGEN_SETUP) updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP}"
   setup-zgen-repos
 fi
 unset REAL_ZGEN_SETUP

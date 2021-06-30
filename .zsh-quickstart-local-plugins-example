@@ -5,7 +5,7 @@
 # Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
 #
 # The ZSH Starter Kit allows you to replace the curated plugins list it
-# ships with with a custom one by creating a file named .zgen-local-plugins.
+# ships with with a custom one by creating a file named .zsh-quickstart-local-plugins.
 #
 # This is to make it easier to customize without having to maintain a separate
 # fork of the starter kit.
@@ -37,13 +37,13 @@ warn-about-prompt-change() {
 }
 
 # If you want to customize your plugin list, create a file named
-# .zgen-local-plugins in your home directory. That file will be sourced
+# .zsh-quickstart-local-plugins in your home directory. That file will be sourced
 # during startup *instead* of running this load-starter-plugin-list function,
 # so make sure to include everything from this function that you want to
 # keep.
 #
-# To make customizing easier, there's a .zgen-local-plugins-example file
-# at the top level of the zsh-quickstart-kit repository that you can copy
+# To make customizing easier, there's a .zsh-quickstart-local-plugins-example
+# file at the top level of the zsh-quickstart-kit repository that you can copy
 # as a starting point. This keeps you from having to maintain a fork of
 # the quickstart kit.
 

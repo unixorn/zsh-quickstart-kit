@@ -56,6 +56,7 @@ This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlev
 Here are a few good Powerline-compatible fonts:
 
 * [Awesome Terminal Fonts](https://github.com/gabrielelana/awesome-terminal-fonts) - A family of fonts that includes some nice monospaced Icons.
+* [Cascadia Code](https://github.com/microsoft/cascadia-code) - Microsoft's Cascadia Code
 * [Fantasque Awesome Font](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons and Powerline-Glyphs.
 * [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family.
 * [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed specifically for source code and terminal usage.
@@ -216,13 +217,13 @@ The quickstart kit will automatically check for updates every seven days. If you
 
 I've included what I think is a good starter set of ZSH plugins in this repository. However, everyone has their own preferences for their own environment.
 
-To make the list easier to customize without having to maintain a separate fork of the quickstart kit, if you create a file named `~/.zgen-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
+To make the list easier to customize without having to maintain a separate fork of the quickstart kit, if you create a file named `~/.zsh-quickstart-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
-**Using `~/.zgen-local-plugins` is not additive, it will _completely replace_ the kit-provided list of plugins.**
+**Using `~/.zsh-quickstart-local-plugins` is not additive, it will _completely replace_ the kit-provided list of plugins.**
 
-I realize that it would be a pain to create `.zgen-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zgen-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
+I realize that it would be a pain to create `.zsh-quickstart-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zsh-quickstart-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
 
-Copy that to your `$HOME/.zgen-local-plugins`, change the list and the next time you start a terminal session you'll get your plugin list loaded instead of the kit's defaults.
+Copy that to your `$HOME/.zsh-quickstart-local-plugins`, change the list and the next time you start a terminal session you'll get your plugin list loaded instead of the kit's defaults.
 
 ### Disabling zmv
 
