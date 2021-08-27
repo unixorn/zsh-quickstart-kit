@@ -21,10 +21,6 @@
 # quickstart kit.
 
 # Check if a command exists
-function has() {
-  which "$@" > /dev/null 2>&1
-}
-
 function can_haz() {
   which "$@" > /dev/null 2>&1
 }
