@@ -16,6 +16,7 @@
   - [Prerequisites](#prerequisites)
     - [Fonts](#fonts)
   - [OS-specific setup](#os-specific-setup)
+    - [fzf](#fzf)
     - [macOS](#macos)
     - [Linux](#linux)
   - [Set up Zgenom and the starter kit](#set-up-zgenom-and-the-starter-kit)
@@ -35,6 +36,7 @@
   - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
   - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
   - [GNU stow complains with a warning that stowing zsh would cause conflicts](#gnu-stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
+  - [_arguments:comparguments:325: can only be called from completion function](#_argumentscomparguments325-can-only-be-called-from-completion-function)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
   - [Dotfiles in general](#dotfiles-in-general)
@@ -278,6 +280,10 @@ All operations aborted.
 ```
 
 Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
+
+### _arguments:comparguments:325: can only be called from completion function
+
+This has been solved by running `zgen update` or switching to [zgenom](https://github.com/jandamm/zgenom). New users of the kit should already be running `zgenom`. Thanks @RonanJackson for reporting the fix.
 
 ## Other Resources
 
