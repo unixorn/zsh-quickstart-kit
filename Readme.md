@@ -79,16 +79,16 @@ You'll need to install [fzf](https://github.com/junegunn/fzf/) to enable the enh
 
 #### macOS
 
-1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com). It is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
+1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com) (optional). In my opinion it is considerably nicer than the stock Terminal application that comes with macOS. Please note - there is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
 2. Install the current version of Homebrew from [http://brew.sh/](http://brew.sh/).
 3. Install GNU Stow with `brew install stow`
-4. Homebrew inevitably has a newer version of `zsh` than the one Apple ships with the OS, so `brew install zsh` to install it.
-5. Switch your shell to `zsh`:
+4. Homebrew has a newer version of `zsh` than the one Apple shipped with the OS before 11.6, so `brew install zsh` to install it.
+5. Switch your shell to `zsh` if necessary - Apple has defaulted the shell for new users to `zsh` since macOS Catalina (10.15):
     1. System Preferences -> Users & Groups.
     2. Unlock the preferences
     3. Select your user
     4. Select advanced options
-    5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use the newer version packaged by `brew`)
+    5. Set your login shell to `/bin/zsh` (or `/usr/local/bin/zsh` if you decided to use the version packaged by `brew`)
 6. Install some Powerline-compatible or NerdFont fonts from one of the links in the Fonts section above.
     1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
