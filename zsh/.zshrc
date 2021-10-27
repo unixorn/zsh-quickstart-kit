@@ -111,9 +111,17 @@ load-our-ssh-keys() {
       #
       # You can use ssh-add -K /path/to/key to store pass phrases into
       # the macOS keychain
-      
-      # Load all ssh keys that have pass phrases stored in macOS keychain
-      ssh-add -qA
+
+      # macOS Monterey deprecates the -K and -A flags. They have been replaced
+      # by the --apple-use-keychain and --apple-load-keychain flags.
+
+      # check if Monterey or higher
+      # https://scriptingosx.com/2020/09/macos-version-big-sur-update/
+      if [[ $(sw_vers -buildVersion) > "21" ]]; then
+        # Load all ssh keys that have pass phrases stored in macOS keychain using new flags
+        ssh-add --apple-load-keychain
+      else ssh-add -qA
+      fi
     fi
 
     for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
@@ -301,7 +309,7 @@ if [[ -r "$GRC_SETUP" ]]; then
 fi
 unset GRC_SETUP
 
-if (( $+commands[grc] )) 
+if (( $+commands[grc] ))
 then
   function ping5(){
     grc --color=auto ping -c 5 "$@"
