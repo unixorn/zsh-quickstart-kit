@@ -37,6 +37,7 @@
   - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
   - [GNU stow complains with a warning that stowing zsh would cause conflicts](#gnu-stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
   - [_arguments:comparguments:325: can only be called from completion function](#_argumentscomparguments325-can-only-be-called-from-completion-function)
+  - [Could not open a connection to your authentication agent](#could-not-open-a-connection-to-your-authentication-agent)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
   - [Dotfiles in general](#dotfiles-in-general)
