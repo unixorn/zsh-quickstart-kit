@@ -33,9 +33,9 @@ if [[ "$(uname -s)" == "Linux" ]]; then
   alias ll="ls -lFa | TERM=vt100 less"
 fi
 
-# Set up colorized ls when grc is present
+# Set up colorized ls when gls is present - it's installed by grc
 # shellcheck disable=SC2154
-if (( $+commands[grc] )); then
+if (( $+commands[gls] )); then
   alias ls="gls -F --color"
   alias l="gls -lAh --color"
   alias ll="gls -l --color"
