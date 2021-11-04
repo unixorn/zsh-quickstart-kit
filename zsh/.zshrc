@@ -99,9 +99,9 @@ load-our-ssh-keys() {
    RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
    if [ "$RUNNING_AGENT" = "0" ]; then
         # Launch a new instance of the agent
-        ssh-agent -s &> .ssh/ssh-agent
+        ssh-agent -s &> ~/.ssh/ssh-agent
    fi
-   eval $(cat .ssh/ssh-agent)
+   eval $(cat ~/.ssh/ssh-agent)
   fi
   # Fun with SSH
   if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
