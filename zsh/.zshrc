@@ -344,13 +344,6 @@ if [[ -d ~/.zsh-completions ]]; then
   done
 fi
 
-# Honor old .zshrc.local customizations, but print deprecation warning.
-if [ -f ~/.zshrc.local ]; then
-  source ~/.zshrc.local
-  echo '~/.zshrc.local is deprecated - use files in ~/.zshrc.d instead.'
-  echo 'The zsh-quickstart-kit will no longer load ~/.zshrc.local after 2021-10-31'
-fi
-
 # Load zmv
 if [[ ! -f ~/.zsh-quickstart-no-zmv ]]; then
   autoload -U zmv
