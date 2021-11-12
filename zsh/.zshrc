@@ -81,6 +81,14 @@ if can_haz brew; then
   if [[ -d "${BREW_PREFIX}/sbin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/sbin"
   fi
+elif [[ -d /opt/homebrew ]]; then
+  BREW_PREFIX=/opt/homebrew
+  if [[ -d "${BREW_PREFIX}/bin" ]]; then
+    export PATH="$PATH:${BREW_PREFIX}/bin"
+  fi
+  if [[ -d "${BREW_PREFIX}/sbin" ]]; then
+    export PATH="$PATH:${BREW_PREFIX}/sbin"
+  fi
 fi
 
 # We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
