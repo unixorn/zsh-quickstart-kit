@@ -430,7 +430,7 @@ _check-for-zsh-quickstart-update() {
 
 if [[ ! -z "$QUICKSTART_KIT_REFRESH_IN_DAYS" ]]; then
   _check-for-zsh-quickstart-update
-  unset QUICKSTART_KIT_REFRESH_IN_DAYS
+  # unset QUICKSTART_KIT_REFRESH_IN_DAYS
 fi
 
 # Fix bracketed paste issue
@@ -472,3 +472,26 @@ if ! can_haz fzf; then
   echo
   echo "Install instructions can be found at https://github.com/junegunn/fzf/"
 fi
+
+function zqs-help() {
+  echo "The zqs command allows you to manipulate your ZSH quickstart."
+  echo
+  echo "options:"
+  echo "zqs check-for-updates - Update the quickstart kit if it has been longer than $QUICKSTART_KIT_REFRESH_IN_DAYS days since the last update."
+  echo "zqs selfupdate - Force an immediate update of the quickstart kit"
+}
+
+function zqs() {
+  case "$1" in
+    'check-for-updates')
+      _check-for-zsh-quickstart-update
+      ;;
+    'selfupdate')
+      _update-zsh-quickstart
+      ;;
+    *)
+      zqs-help
+      ;;
+
+  esac
+}
