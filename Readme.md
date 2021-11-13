@@ -210,7 +210,11 @@ Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since thos
 
 ### ZSH options
 
-The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems. However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
+The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and adds some functions and aliases I like on my systems.
+
+However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
+
+As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way.
 
 ### Self-update Settings
 
