@@ -406,8 +406,20 @@ _update-zsh-quickstart() {
       if [[ -f "${gitroot}/.gitignore" ]]; then
         if [[ $(grep -c zsh-quickstart-kit "${gitroot}/.gitignore") -ne 0 ]]; then
           echo "---- updating ----"
+          # Cope with switch from master to main
+          zqs_current_branch=$(git rev-parse --abbrev-ref HEAD)
+          git fetch
+          # Determine the repo default branch and switch to it
+          zqs_default_branch="$(git remote show origin | grep 'HEAD branch' | awk '{print $3}')"
+          if [[ "$zqs_default_branch" != "$zqs_current_branch" ]]; then
+            echo "The ZSH Quickstart Kit has switched default branches to $zqs_default_branch"
+            echo "Changing branches in your local checkout from $zqs_current_branch to $zqs_default_branch"
+            git checkout "$zqs_default_branch"
+          fi
           git pull
           date +%s >! ~/.zsh-quickstart-last-update
+          unset zqs_default_branch
+          unset zqs_current_branch
         fi
       else
         echo 'No quickstart marker found, is your quickstart a valid git checkout?'
