@@ -17,20 +17,20 @@ fi
 # is unclean.
 ZGEN_DIR=${ZGEN_DIR:-$HOME/.zgenom}
 
-if [[ ! -f $ZGENOM_PARENT_DIR/zgenom/zgenom.zsh ]]; then
+if [[ ! -f $ZGENOM_PARENT_DIR/.zgenom/zgenom.zsh ]]; then
   if [[ ! -d "$ZGENOM_PARENT_DIR" ]]; then
     mkdir -p "$ZGENOM_PARENT_DIR"
   fi
   pushd $ZGENOM_PARENT_DIR
-  git clone https://github.com/jandamm/zgenom.git
+  git clone https://github.com/jandamm/zgenom.git .zgenom
   popd
 fi
 
-if [[ ! -f "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh" ]]; then
+if [[ ! -f "$ZGENOM_PARENT_DIR/.zgenom/zgenom.zsh" ]]; then
   echo "Can't find zgenom.zsh"
 else
   # echo "Loading zgenom"
-  source "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh"
+  source "$ZGENOM_PARENT_DIR/.zgenom/zgenom.zsh"
 fi
 
 unset ZGENOM_PARENT_DIR
