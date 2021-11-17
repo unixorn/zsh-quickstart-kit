@@ -66,8 +66,21 @@ function man() {
       man "$@"
 }
 
-# From commandlinefu.com
-function watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
+if ! can_haz watch; then
+  # From commandlinefu.com
+  function watch () {
+    t="$1"
+    shift
+    while test :
+    do
+      clear
+      date=$(date)
+      echo -e "Every $ts: $@ \t\t\t\t $date"
+      $@
+      sleep "$t"
+    done
+  }
+fi
 
 # scp file to machine you're sshing into this machine from
 function mecp() {
@@ -78,18 +91,20 @@ function calc() {
   awk "BEGIN{ print $* }" ;
 }
 
-function get_nr_jobs() {
+function get-nr-jobs() {
   jobs | wc -l
 }
+alias get_nr_jobs="get-nr-jobs"
 
 function get_load() {
   uptime | awk '{print $11}' | tr ',' ' '
 }
 
-function mtr_url() {
+function mtr-url() {
   host=$(ruby -ruri -e "puts (URI.parse('$1').host or '$1')")
   sudo mtr -t $host
 }
+alias mtr_url="mtr-url"
 
 function fix_tmux_ssh_agent() {
   for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
@@ -105,14 +120,16 @@ function scan24() {
   nmap -sP ${1}/24
 }
 
-# Netjoin - Block until a network connection is obtained.
-# Originally from https://github.com/bamos/dotfiles/blob/master/.funcs
-function nj() {
-  while true; do
-    ping -c 1 8.8.8.8 &> /dev/null && break
-    sleep 1
-  done
-}
+if ! can_haz nj; then
+  # Netjoin - Block until a network connection is obtained.
+  # Originally from https://github.com/bamos/dotfiles/blob/master/.funcs
+  function nj() {
+    while true; do
+      ping -c 1 8.8.8.8 &> /dev/null && break
+      sleep 1
+    done
+  }
+fi
 
 # lists zombie processes
 function zombie() {
