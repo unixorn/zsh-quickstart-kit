@@ -106,6 +106,9 @@ load-our-ssh-keys() {
    # Check for a currently running instance of the agent
    RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
    if [ "$RUNNING_AGENT" = "0" ]; then
+        if [ ! -d ~/.ssh ] ; then
+          mkdir -p ~/.ssh
+        fi
         # Launch a new instance of the agent
         ssh-agent -s &> ~/.ssh/ssh-agent
    fi
