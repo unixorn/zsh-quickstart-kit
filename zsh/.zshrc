@@ -494,6 +494,8 @@ function zqs-help() {
   echo "options:"
   echo "zqs check-for-updates - Update the quickstart kit if it has been longer than $QUICKSTART_KIT_REFRESH_IN_DAYS days since the last update."
   echo "zqs selfupdate - Force an immediate update of the quickstart kit"
+  echo "zqs update - Update the quickstart kit and all your plugins"
+  echo "zqs update-plugins - Update your plugins"
 }
 
 function zqs() {
@@ -503,6 +505,13 @@ function zqs() {
       ;;
     'selfupdate')
       _update-zsh-quickstart
+      ;;
+    'update')
+      _update-zsh-quickstart
+      zgenom update
+      ;;
+    'update-plugins')
+      zgenom update
       ;;
     *)
       zqs-help
