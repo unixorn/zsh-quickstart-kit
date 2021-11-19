@@ -253,7 +253,7 @@ fi
 
 # If you don't want my standard starter set of plugins, create a file named
 # .zsh-quickstart-local-plugins and add your zgenom load commands there. Don't forget to
-# run `zgen save` at the end of your .zsh-quickstart-local-plugins file.
+# run `zgenom save` at the end of your .zsh-quickstart-local-plugins file.
 #
 # Warning: .zgen-local-plugins REPLACES the starter list setup, it doesn't
 # add to it.
