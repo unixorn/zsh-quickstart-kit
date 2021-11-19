@@ -25,6 +25,12 @@
 - [Customizing the kit](#customizing-the-kit)
   - [Behavior toggles](#behavior-toggles)
   - [Functions and Aliases](#functions-and-aliases)
+    - [.zshrc.d](#zshrcd)
+    - [zqs](#zqs)
+      - [zqs check-for-updates](#zqs-check-for-updates)
+      - [zqs selfupdate](#zqs-selfupdate)
+      - [zqs update](#zqs-update)
+      - [zqs update-plugins](#zqs-update-plugins)
   - [I like a plugin, but the aliases it installs overwrite other commands or aliases](#i-like-a-plugin-but-the-aliases-it-installs-overwrite-other-commands-or-aliases)
   - [ZSH options](#zsh-options)
   - [Self-update Settings](#self-update-settings)
@@ -198,12 +204,33 @@ Running the following commands will toggle behavior the next time you start a sh
 
 ### Functions and Aliases
 
+#### .zshrc.d
+
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`.
 
 This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables.
 
 The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
+#### zqs
+
+As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way. The `zqs` command has the following subcommands:
+
+##### zqs check-for-updates
+
+Updates the quickstart kit if it has been longer than 7 days since the last update.
+
+##### zqs selfupdate
+
+Force an immediate update of the quickstart kit
+
+##### zqs update
+
+Update the quickstart kit and all your plugins
+
+##### zqs update-plugins
+
+Updates all your plugins
 ### I like a plugin, but the aliases it installs overwrite other commands or aliases
 
 Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since those are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`. Once you've cleared all the aliases you don't want, you can add new ones with the names you prefer.
@@ -214,7 +241,6 @@ The quickstart kit does an opinionated (i.e. my way) setup of ZSH options and ad
 
 However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
 
-As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way.
 
 ### Self-update Settings
 
