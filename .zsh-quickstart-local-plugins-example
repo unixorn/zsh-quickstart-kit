@@ -114,7 +114,7 @@ if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
   if [[ $(uname -a | grep -ci Darwin) = 1 ]]; then
     # Load macOS-specific plugins
     zgenom oh-my-zsh plugins/brew
-    zgenom oh-my-zsh plugins/osx
+    zgenom oh-my-zsh plugins/macos
   fi
 
 fi
