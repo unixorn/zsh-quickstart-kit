@@ -42,6 +42,12 @@ if (( $+commands[gls] )); then
   alias la='gls -A --color'
 fi
 
+# When present, use exa instead of ls
+if canhaz exa; then
+  alias l='exa -al --git --time-style=long-iso --group-directories-first --color-scale'
+  alias ls='exa --group-directories-first'
+fi
+
 export CVS_RSH=ssh
 
 # shellcheck disable=SC2142
