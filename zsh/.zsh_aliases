@@ -43,7 +43,7 @@ if (( $+commands[gls] )); then
 fi
 
 # When present, use exa instead of ls
-if canhaz exa; then
+if can_haz exa; then
   if [[ -z "$EXA_TREE_IGNORE" ]]; then
     EXA_TREE_IGNORE=".cache|cache|node_modules|vendor"
   fi
@@ -52,7 +52,7 @@ if canhaz exa; then
   alias ls='exa --group-directories-first'
 
   # Don't step on system-installed tree command
-  if ! canhaz tree; then
+  if ! can_haz tree; then
     alias tree='exa --tree'
   fi
 fi
