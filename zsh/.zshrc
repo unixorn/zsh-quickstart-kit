@@ -329,6 +329,33 @@ else
   alias ping5='ping -c 5'
 fi
 
+# These need to be done after $PATH is set up so we can find
+# grc and exa
+
+# Set up colorized ls when gls is present - it's installed by grc
+# shellcheck disable=SC2154
+if (( $+commands[gls] )); then
+  alias ls="gls -F --color"
+  alias l="gls -lAh --color"
+  alias ll="gls -l --color"
+  alias la='gls -A --color'
+fi
+
+# When present, use exa instead of ls
+if can_haz exa; then
+  if [[ -z "$EXA_TREE_IGNORE" ]]; then
+    EXA_TREE_IGNORE=".cache|cache|node_modules|vendor"
+  fi
+
+  alias l='exa -al --git --time-style=long-iso --group-directories-first --color-scale'
+  alias ls='exa --group-directories-first'
+
+  # Don't step on system-installed tree command
+  if ! can_haz tree; then
+    alias tree='exa --tree'
+  fi
+fi
+
 # Speed up autocomplete, force prefix mapping
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
