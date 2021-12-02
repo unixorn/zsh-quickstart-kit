@@ -55,10 +55,13 @@ PATH="$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin"
 # fork of the kit.
 
 # Conditional PATH additions
-for path_candidate in /opt/local/sbin \
-  /Applications/Xcode.app/Contents/Developer/usr/bin \
+for path_candidate in /Applications/Xcode.app/Contents/Developer/usr/bin \
+  /opt/homebrew/bin \
+  /opt/homebrew/sbin \
   /opt/local/bin \
-  /usr/local/share/npm/bin \
+  /opt/local/sbin \
+  /usr/local/bin \
+  /usr/local/sbin \
   ~/.cabal/bin \
   ~/.cargo/bin \
   ~/.rbenv/bin \
@@ -71,8 +74,11 @@ do
   fi
 done
 
+# We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
+# added there get deduped too.
+
 # Deal with brew if it's installed. Note - brew can be installed outside
-# of /usr/local, so add its bin and sbin directories.
+# of /usr/local, so use brew --prefix to find its bin and sbin directories.
 if can_haz brew; then
   BREW_PREFIX=$(brew --prefix)
   if [[ -d "${BREW_PREFIX}/bin" ]]; then
@@ -81,18 +87,7 @@ if can_haz brew; then
   if [[ -d "${BREW_PREFIX}/sbin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/sbin"
   fi
-elif [[ -d /opt/homebrew ]]; then
-  BREW_PREFIX=/opt/homebrew
-  if [[ -d "${BREW_PREFIX}/bin" ]]; then
-    export PATH="$PATH:${BREW_PREFIX}/bin"
-  fi
-  if [[ -d "${BREW_PREFIX}/sbin" ]]; then
-    export PATH="$PATH:${BREW_PREFIX}/sbin"
-  fi
 fi
-
-# We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
-# added there get deduped too.
 
 # Yes, these are a pain to customize. Fortunately, Geoff Greer made an online
 # tool that makes it easy to customize your color scheme and keep them in sync
