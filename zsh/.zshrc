@@ -339,10 +339,10 @@ fi
 # When present, use exa instead of ls
 if can_haz exa; then
   if [[ -z "$EXA_TREE_IGNORE" ]]; then
-    EXA_TREE_IGNORE=".cache|cache|node_modules|vendor"
+    EXA_TREE_IGNORE=".cache|cache|node_modules|vendor|.git"
   fi
 
-  alias l='exa -al --git --time-style=long-iso --group-directories-first --color-scale'
+  alias l='exa -al --icons --git --time-style=long-iso --group-directories-first --color-scale'
   alias ls='exa --group-directories-first'
 
   # Don't step on system-installed tree command
