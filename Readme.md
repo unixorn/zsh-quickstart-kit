@@ -74,7 +74,7 @@ Here are a few good Powerline-compatible fonts:
 * [Monoid](http://larsenwork.com/monoid/) - Monoid is customizable and optimized for coding with bitmap-like sharpness at 15px line-height even on low res displays.
 * [Mononoki](https://madmalik.github.io/mononoki/) - Mononoki is a typeface by Matthias Tellen, created to enhance code formatting.
 * [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & the fontforge font patcher python script for Powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
-* [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include Powerline gylphs.
+* [Powerline patched font collection](https://github.com/powerline/fonts) - A collection of a dozen or so fonts patched to include Powerline glyphs.
 * [Victor Mono](https://rubjo.github.io/victor-mono/) - Victor Mono is a free programming font with semi-connected cursive italics, symbol ligatures (!=, ->>, =>, ===, <=, >=, ++) and Latin, Cyrillic and Greek characters.
 * [spacemono](https://github.com/googlefonts/spacemono) - Google's new original monospace display typeface family.
 
@@ -109,11 +109,11 @@ You'll need to install [fzf](https://github.com/junegunn/fzf/) to enable the enh
 4. Install the patched font in a valid X font path. Valid font paths can be listed with `xset q`: `mv YourChosenPowerlineFont.otf ~/.fonts`
 5. Update the font cache for the path the font was installed in (root privileges may be needed for updating the font cache for some paths): `fc-cache -vf ~/.fonts/`
 
-After installing a Nerdfont or Powerline-compatible font, you will also need to configure your terminal emulator to use your selected Powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
+After installing a Nerdfont or Powerline-compatible font, you will need to configure your terminal emulator to use your selected Powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
-If the Powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X Server may also need to be restarted for the new font to correctly load.
+If the Powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X Server may also need to be restarted for the new font to load correctly.
 
-If you still can’t see the new fonts then double-check that the font has been installed to a valid X font path.
+If you still can’t see the new fonts, double-check that the font has been installed to a valid X font path.
 
 If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
@@ -141,7 +141,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Automatic periodic updates of both `zgenom` and your plugins
 * Cross-session shared history so commands typed in one terminal window can be seen and searched in all your other `zsh` sessions on the same machine.
 * Automatic deduplication of your command history.
-* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get updates to the extra tab completions.
+* Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to the tip of master of that repository, so you get updates to the extra tab completions.
 * Supercharged command history search with [fzf](https://github.com/junegunn/fzf).
 * Syntax highlighting at the command line.
 * Tab completion of Rakefile targets.
@@ -208,7 +208,7 @@ Running the following commands will toggle behavior the next time you start a sh
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`.
 
-This is to make it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository, and also allows you to configure behavior of some of the plugins by setting environment variables.
+This is to make it easy for you to add extra functions and aliases without maintaining a separate fork of this repository. It also allows you to configure the behavior of some of the plugins by setting environment variables.
 
 The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
@@ -310,7 +310,7 @@ WARNING! stowing zsh would cause conflicts:
 All operations aborted.
 ```
 
-Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then deleting it after closing all your Terminal/iTerm 2 windows.
+Per @jefheaton, this is caused when trying to replace an existing `.zshrc` file. He fixed it by closing `~` in Finder so Finder wouldn't create a `.DS_Store` file, deleting the existing `.DS_Store`, and then removing the old `.zshrc`. You may have to rename it first if ZSH is keeping the file open, then delete it after closing all your Terminal/iTerm 2 windows.
 
 ### _arguments:comparguments:325: can only be called from completion function
 
@@ -329,7 +329,7 @@ Confirm that `ssh-agent` is running. If not, Rob Montero has a good [blog post](
 
 ### Dotfiles in general
 
-[dotfiles.github.io/](https://dotfiles.github.io/) has a lot of great resources for dotfiles - frameworks for managing them, configurations for editors and other bootstraps with initial configurations to start from.
+[dotfiles.github.io/](https://dotfiles.github.io/) has a lot of great resources for dotfiles - frameworks for managing them, configurations for editors, and other bootstraps with initial configurations to start from.
 
 ### Vim
 
