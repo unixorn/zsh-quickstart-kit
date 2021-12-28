@@ -194,13 +194,39 @@ The quickstart kit also uses `zgenom` to load oh-my-zsh and these plugins:
 
 Running the following commands will toggle behavior the next time you start a shell session:
 
-* `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them for new shell sessions with `zsh-quickstart-enable-omz-plugins`.
-
 * Prompt selectors - We now use the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt. I won't change the prompt out from under people without a way for them to get the old behavior, so there are commands to switch back and forth.
   * `zsh-quickstart-select-powerlevel10k` -  Switch to the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt now used as the kit's default.
   * `zsh-quickstart-select-bullet-train` - Switch back to the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt originally used in the kit.
 * You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
 * `bash` prints `^C` when you're typing a command and control-c to cancel, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I like seeing the `^C`, so by default the quickstart traps `SIGINT` and prints the `^C`. You can disable this by exporting `ZSH_QUICKSTART_SKIP_TRAPINT='false'` in one of the files in `~/.zshrc.d`.
+
+#### zqs
+
+As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way. The `zqs` command has the following subcommands:
+
+##### zqs check-for-updates
+
+Updates the quickstart kit if it has been longer than 7 days since the last update.
+
+##### zqs disable-omz-plugins
+
+Sets the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
+
+##### zqs enable-omz-plugins
+
+Sets the quickstart to include the oh-my-zsh plugins from the standard plugin list.
+
+##### zqs selfupdate
+
+Force an immediate update of the quickstart kit.
+
+##### zqs update
+
+Update the quickstart kit and all your plugins.
+
+##### zqs update-plugins
+
+Updates all your plugins.
 
 ### Functions and Aliases
 
@@ -212,25 +238,6 @@ This is to make it easy for you to add extra functions and aliases without havin
 
 The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
-#### zqs
-
-As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way. The `zqs` command has the following subcommands:
-
-##### zqs check-for-updates
-
-Updates the quickstart kit if it has been longer than 7 days since the last update.
-
-##### zqs selfupdate
-
-Force an immediate update of the quickstart kit
-
-##### zqs update
-
-Update the quickstart kit and all your plugins
-
-##### zqs update-plugins
-
-Updates all your plugins
 ### I like a plugin, but the aliases it installs overwrite other commands or aliases
 
 Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since those are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`. Once you've cleared all the aliases you don't want, you can add new ones with the names you prefer.
@@ -246,7 +253,7 @@ However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, func
 
 The quickstart kit will automatically check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
-### Changing the plugin list
+### Customizing the plugin list
 
 I've included what I think is a good starter set of ZSH plugins in this repository. However, everyone has their own preferences for their own environment.
 

@@ -515,6 +515,8 @@ function zqs-help() {
   echo
   echo "options:"
   echo "zqs check-for-updates - Update the quickstart kit if it has been longer than $QUICKSTART_KIT_REFRESH_IN_DAYS days since the last update."
+  echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs selfupdate - Force an immediate update of the quickstart kit"
   echo "zqs update - Update the quickstart kit and all your plugins"
   echo "zqs update-plugins - Update your plugins"
@@ -524,6 +526,12 @@ function zqs() {
   case "$1" in
     'check-for-updates')
       _check-for-zsh-quickstart-update
+      ;;
+    'disable-omz-plugins')
+      zsh-quickstart-disable-omz-plugins
+      ;;
+    'enable-omz-plugins')
+      zsh-quickstart-enable-omz-plugins
       ;;
     'selfupdate')
       _update-zsh-quickstart
