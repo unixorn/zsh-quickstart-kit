@@ -24,17 +24,19 @@
   - [Included plugins](#included-plugins)
 - [Customizing the kit](#customizing-the-kit)
   - [Behavior toggles](#behavior-toggles)
-  - [Functions and Aliases](#functions-and-aliases)
-    - [.zshrc.d](#zshrcd)
     - [zqs](#zqs)
       - [zqs check-for-updates](#zqs-check-for-updates)
+      - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
+      - [zqs enable-omz-plugins](#zqs-enable-omz-plugins)
       - [zqs selfupdate](#zqs-selfupdate)
       - [zqs update](#zqs-update)
       - [zqs update-plugins](#zqs-update-plugins)
+  - [Functions and Aliases](#functions-and-aliases)
+    - [.zshrc.d](#zshrcd)
   - [I like a plugin, but the aliases it installs overwrite other commands or aliases](#i-like-a-plugin-but-the-aliases-it-installs-overwrite-other-commands-or-aliases)
   - [ZSH options](#zsh-options)
   - [Self-update Settings](#self-update-settings)
-  - [Changing the plugin list](#changing-the-plugin-list)
+  - [Customizing the plugin list](#customizing-the-plugin-list)
   - [Disabling zmv](#disabling-zmv)
   - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
 - [FAQ](#faq)
@@ -70,7 +72,7 @@ Here are a few good Powerline-compatible fonts:
 * [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family.
 * [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed specifically for source code and terminal usage.
 * [Input Mono](https://input.djr.com/) - A family of fonts designed specifically for code. It offers both monospaced and proportional fonts and includes Powerline glyphs.
-* [Iosevka](https://be5invis.github.io/Iosevka/) - Iosevka is an open source slender monospace sans-serif and slab-serif typeface inspired by [Pragmata Pro](http://www.fsd.it/fonts/pragmatapro.htm), [M+](http://mplus-fonts.osdn.jp/) and [PF DIN Mono](http://www.parachute.gr/typefaces/allfonts/din-mono-pro), designed to be the ideal font for programming.
+* [Iosevka](https://be5invis.github.io/Iosevka/) - Iosevka is an open source slender monospace sans-serif and slab-serif typeface inspired by [Pragmata Pro](http://www.fsd.it/fonts/pragmatapro.htm), [M+](http://mplus-fonts.osdn.jp/) and [PF DIN Mono](https://www.myfonts.com/fonts/parachute/pf-din-mono/), designed to be the ideal font for programming.
 * [Monoid](http://larsenwork.com/monoid/) - Monoid is customizable and optimized for coding with bitmap-like sharpness at 15px line-height even on low res displays.
 * [Mononoki](https://madmalik.github.io/mononoki/) - Mononoki is a typeface by Matthias Tellen, created to enhance code formatting.
 * [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - A collection of over 20 patched fonts (over 1,700 variations) & the fontforge font patcher python script for Powerline, devicons, and vim-devicons: includes Droid Sans, Meslo, AnonymousPro, ProFont, Inconsolta, and many more.
@@ -127,7 +129,7 @@ Now that your fonts and default shell have been set up, install [zgenom](https:/
 2. Install the starter kit
     1. `cd ~`
     2. `git clone git@github.com:unixorn/zsh-quickstart-kit.git`
-3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repo into your `~`.
+3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases` and `.zsh-completions` from this repository into your `~`.
     1. You can do this with `stow` by:
         1. `cd zsh-quickstart-kit`
         2. `stow --target=/Users/YourUsername zsh`. Replace `/Users/YourUsername` with `/home/YourUsername` if you're on Linux. If you still have errors, symlink the files in zsh into your home directory.
@@ -143,7 +145,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * Automatic deduplication of your command history.
 * Many more tab completions, courtesy of the [zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions) repository, and periodic updating to tip of master of that repository so you get updates to the extra tab completions.
 * Supercharged command history search with [fzf](https://github.com/junegunn/fzf).
-* Syntax highlighting at the command line.
+* Syntax highlighting at the command-line.
 * Tab completion of Rakefile targets.
 * Enabling [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)-compatible plugins and themes (via the [zgenom](https://github.com/jandamm/zgenom.git) framework).
 * Various helper functions for interacting with macOS' clipboard, audio volume, Spotlight and Quicklook. For your convenience, these will only load if you are on a macOS machine so you can use the same plugin list on any *NIX system.
@@ -153,7 +155,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 
 * [chrissicool/zsh-256color](https://github.com/chrissicool/zsh-256color) - Sets your terminal to 256 colors if available.
 * [djui/alias-tips](https://github.com/djui/alias-tips) - Warns you when you have an alias for the command you just typed, and tells you what it is.
-* [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repo on github, in your current branch.
+* [peterhurford/git-it-on.zsh](https://github.com/peterhurford/git-it-on.zsh) - Opens your current repository on GitHub, in your current branch.
 * [RobSis/zsh-completion-generator](https://github.com/RobSis/zsh-completion-generator) - Adds a tool to generate ZSH completion functions for programs missing them by parsing their `--help` output. Note that this doesn't happen dynamically, you'll have to explicitly run it to create a completion for each command missing one.
 * [sharat87/pip-app](https://github.com/sharat87/pip-app) - A set of shell functions to make it easy to install small apps and utilities distributed with `pip`.
 * [skx/sysadmin-util](https://github.com/skx/sysadmin-util) - A collection of scripts useful for sysadmins.
@@ -194,13 +196,39 @@ The quickstart kit also uses `zgenom` to load oh-my-zsh and these plugins:
 
 Running the following commands will toggle behavior the next time you start a shell session:
 
-* `zsh-quickstart-disable-omz-plugins` - Makes the stock quickstart not load any of the oh-my-zsh plugins it would normally use. You can re-enable them for new shell sessions with `zsh-quickstart-enable-omz-plugins`.
-
 * Prompt selectors - We now use the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt. I won't change the prompt out from under people without a way for them to get the old behavior, so there are commands to switch back and forth.
   * `zsh-quickstart-select-powerlevel10k` -  Switch to the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt now used as the kit's default.
   * `zsh-quickstart-select-bullet-train` - Switch back to the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt originally used in the kit.
 * You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
 * `bash` prints `^C` when you're typing a command and control-c to cancel, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I like seeing the `^C`, so by default the quickstart traps `SIGINT` and prints the `^C`. You can disable this by exporting `ZSH_QUICKSTART_SKIP_TRAPINT='false'` in one of the files in `~/.zshrc.d`.
+
+#### zqs
+
+As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way. The `zqs` command has the following subcommands:
+
+##### zqs check-for-updates
+
+Updates the quickstart kit if it has been longer than 7 days since the last update.
+
+##### zqs disable-omz-plugins
+
+Sets the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
+
+##### zqs enable-omz-plugins
+
+Sets the quickstart to include the oh-my-zsh plugins from the standard plugin list.
+
+##### zqs selfupdate
+
+Force an immediate update of the quickstart kit.
+
+##### zqs update
+
+Update the quickstart kit and all your plugins.
+
+##### zqs update-plugins
+
+Updates all your plugins.
 
 ### Functions and Aliases
 
@@ -212,25 +240,6 @@ This is to make it easy for you to add extra functions and aliases without havin
 
 The files will be sourced in alphanumeric order after loading all the plugins and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc to ensure they're loaded in the order you expect.
 
-#### zqs
-
-As of 2021-11-13, I've added a `zqs` command to start exposing some of the tunables in a more user-friendly way. The `zqs` command has the following subcommands:
-
-##### zqs check-for-updates
-
-Updates the quickstart kit if it has been longer than 7 days since the last update.
-
-##### zqs selfupdate
-
-Force an immediate update of the quickstart kit
-
-##### zqs update
-
-Update the quickstart kit and all your plugins
-
-##### zqs update-plugins
-
-Updates all your plugins
 ### I like a plugin, but the aliases it installs overwrite other commands or aliases
 
 Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since those are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`. Once you've cleared all the aliases you don't want, you can add new ones with the names you prefer.
@@ -246,7 +255,7 @@ However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, func
 
 The quickstart kit will automatically check for updates every seven days. If you want to change the interval, set `QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`. If you want to disable self updating entirely, add `unset QUICKSTART_KIT_REFRESH_IN_DAYS` in a file in `~/.zshrc.d`.
 
-### Changing the plugin list
+### Customizing the plugin list
 
 I've included what I think is a good starter set of ZSH plugins in this repository. However, everyone has their own preferences for their own environment.
 
@@ -325,7 +334,7 @@ Confirm that `ssh-agent` is running. If not, Rob Montero has a good [blog post](
 ### ZSH
 
 * For a list of other ZSH plugins, completions and themes you might like to use, check out my [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins) list. It also contains a list of other ZSH [tutorials and starter kits](https://github.com/unixorn/awesome-zsh-plugins#generic-zsh).
-* Justin Garrison has a good repo that details [Mastering ZSH](https://github.com/rothgar/mastering-zsh).
+* Justin Garrison has a good repository that details [Mastering ZSH](https://github.com/rothgar/mastering-zsh).
 
 ### Dotfiles in general
 
