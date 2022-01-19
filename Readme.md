@@ -129,7 +129,7 @@ Now that your fonts and default shell have been set up, install [zgenom](https:/
     2. `git clone https://github.com/jandamm/zgenom.git`
 2. Install the starter kit
     1. `cd ~`
-    2. `git clone git@github.com:unixorn/zsh-quickstart-kit.git`
+    2. `git clone https://github.com/unixorn/zsh-quickstart-kit.git`
 3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases`, and `.zsh-completions` from this repository into your `~`.
     1. You can do this with `stow` by:
         1. `cd zsh-quickstart-kit`
