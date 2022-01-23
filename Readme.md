@@ -55,7 +55,7 @@
 
 ## Announcement
 
-I've switched the quickstart kit to [zgenom](https://github.com/jandamm/zgenom.git) instead of zgen. This should be a painless update since zgenom is a superset of zgen.
+I've switched the quickstart kit to [zgenom](https://github.com/jandamm/zgenom.git) instead of `zgen`. This should be a painless update since `zgenom` is a superset of `zgen`.
 ## Installation
 
 ### Prerequisites
