@@ -1,4 +1,4 @@
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 #
