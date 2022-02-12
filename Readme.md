@@ -55,14 +55,14 @@
 
 ## Announcement
 
-I've switched the quickstart kit to [zgenom](https://github.com/jandamm/zgenom.git) instead of `zgen`. This should be a painless update since `zgenom` is a superset of `zgen`.
+I've switched the quickstart kit to use [zgenom](https://github.com/jandamm/zgenom.git) instead of `zgen`. This should be a painless update since `zgenom` is a superset of `zgen`.
 ## Installation
 
 ### Prerequisites
 
 #### Fonts
 
-This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlevel10k) ZSH theme, which requires a Powerline-compatible font in your terminal to display specific status glyphs. Powerline-compatible fonts include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
+This quickstart includes the [powerlevel10k](https://github.com/romkatv/powerlevel10k) ZSH theme, which requires a Powerline-compatible font in your terminal to display status glyphs. Powerline-compatible fonts include many useful glyphs, including the nice branch icon that the theme in this `.zshrc` uses.
 
 Here are a few good Powerline-compatible fonts:
 
@@ -70,7 +70,7 @@ Here are a few good Powerline-compatible fonts:
 * [Cascadia Code](https://github.com/microsoft/cascadia-code) - Microsoft's Cascadia Code
 * [Fantasque Awesome Font](https://github.com/ztomer/fantasque_awesome_powerline) - A nice monospaced font, patched with Font-Awesome, Octoicons, and Powerline-Glyphs.
 * [Fira Mono](https://github.com/mozilla/Fira) - Mozilla's Fira type family.
-* [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font explicitly designed for source code and terminal usage.
+* [Hack](http://sourcefoundry.org/hack/) - Another Powerline-compatible font designed for source code and terminal usage.
 * [Input Mono](https://input.djr.com/) - A family of fonts designed specifically for code. It offers both monospaced and proportional fonts and includes Powerline glyphs.
 * [Iosevka](https://be5invis.github.io/Iosevka/) - Iosevka is an open source slender monospace sans-serif and slab-serif typeface inspired by [Pragmata Pro](http://www.fsd.it/fonts/pragmatapro.htm), [M+](http://mplus-fonts.osdn.jp/) and [PF DIN Mono](https://www.myfonts.com/fonts/parachute/pf-din-mono/), designed to be the ideal font for programming.
 * [Monoid](http://larsenwork.com/monoid/) - Monoid is customizable and optimized for coding with bitmap-like sharpness at 15px line-height even on low res displays.
@@ -114,9 +114,9 @@ To enable the enhanced history search, you'll need to install [fzf](https://gith
 
 After installing a Nerdfont or Powerline-compatible font, you will need to configure your terminal emulator to use your selected Powerline-compatible font. The name of the correct font usually ends with *for Powerline*.
 
-If the Powerline symbols cannot be seen, try closing all instances of the terminal emulator. The X Server may also need to be restarted for the new font to load correctly.
+If the Powerline symbols can't be seen or are garbled, try closing all instances of the terminal emulator. The X Server may also need to be restarted for the new font to load correctly.
 
-If you still can’t see the new fonts, double-check that the font has been installed to a valid X font path.
+If you still can’t see the new fonts, confirm that the font has been installed to a valid X font path.
 
 If you get garbled branch glyphs, make sure there isn't a separate font setting for non-ASCII characters in your terminal application that you also need to set to use a Powerline-compatible font. Konsole needs to be set to use UTF-8 encoding, for example.
 
@@ -133,7 +133,7 @@ Now that your fonts and default shell have been set up, install [zgenom](https:/
 3. Configure zsh by symlinking the `.zshrc`, `.zsh_aliases`, and `.zsh-completions` from this repository into your `~`.
     1. You can do this with `stow` by:
         1. `cd zsh-quickstart-kit`
-        2. `stow --target=~ zsh`. If you have issues using `~` as a target, replace it with `/Users/YourUsername` on macOS or `/home/YourUsername` if you're on Linux. If you still have errors, symlink the files in zsh into your home directory.
+        2. `stow --target=~ zsh`. If you have issues using `~` as a target, do `stow --target="$HOME" zsh`. If you still have errors, symlink the files in the kit's `zsh` directory into your home directory.
 
 The `.zshrc`, `.zsh_aliases` & `.zsh_functions` files included in this kit enable the plugins listed below.
 
