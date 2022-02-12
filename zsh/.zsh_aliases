@@ -2,7 +2,7 @@
 #
 # Only including a shebang to trigger editors to use shell syntax highlighting
 #
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt in this repository.
 
@@ -128,6 +128,7 @@ alias raek='rake'
 alias tartvf='tar tvf'
 alias tartvzf='tar tvzf'
 alias tarxvf='tar xvf'
+alias tarxvjf='tar xvjf'
 
 # Deal with various stupidities.
 
@@ -154,5 +155,6 @@ alias ...="cd ../.."
 if [ -f ~/.zsh_aliases.local ]; then
   # shellcheck disable=SC1090
   source ~/.zsh_aliases.local
-  echo ".zsh_aliases.local is deprecated. Make entries in files in ~/.zshrc.d instead."
+  echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
+  echo "Make entries in ~/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi

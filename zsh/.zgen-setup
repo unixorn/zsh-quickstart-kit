@@ -3,7 +3,7 @@
 # Only including a shebang to trigger editors to use shell
 # syntax highlighting.
 #
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 
@@ -149,7 +149,6 @@ load-starter-plugin-list() {
     fi
   fi
 
-
   # A set of shell functions to make it easy to install small apps and
   # utilities distributed with pip.
   zgenom load sharat87/pip-app
@@ -274,8 +273,6 @@ fi
 if [[ -L ~/.zsh-quickstart-local-plugins ]]; then
   REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zsh-quickstart-local-plugins)"
 fi
-
-# echo "REAL_ZGEN_ZETUP: $REAL_ZGEN_SETUP"
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgenom/init.zsh) ]; then
