@@ -58,6 +58,8 @@ PATH="$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin"
 for path_candidate in /Applications/Xcode.app/Contents/Developer/usr/bin \
   /opt/homebrew/bin \
   /opt/homebrew/sbin \
+  /home/linuxbrew/.linuxbrew/bin \
+  /home/linuxbrew/.linuxbrew/sbin \
   /opt/local/bin \
   /opt/local/sbin \
   /usr/local/bin \
@@ -70,9 +72,10 @@ for path_candidate in /Applications/Xcode.app/Contents/Developer/usr/bin \
   ~/gocode
 do
   if [[ -d "${path_candidate}" ]]; then
-    export PATH="${PATH}:${path_candidate}"
+    path+=("${path_candidate}")
   fi
 done
+export PATH
 
 # We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
 # added there get deduped too.
