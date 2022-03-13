@@ -109,20 +109,33 @@ if [[ -z "$LS_COLORS" ]]; then
 fi
 
 load-our-ssh-keys() {
-  if [ -z "$SSH_AUTH_SOCK" ]; then
-   # Check for a currently running instance of the agent
-   RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
-   if [ "$RUNNING_AGENT" = "0" ]; then
+  # If keychain is installed let it take care of ssh-agent, else do it manually
+  if can_haz keychain; then
+    eval `keychain -q --eval`
+  else
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+      # If user has keychain installed, let it take care of ssh-agent, else do it manually
+      # Check for a currently running instance of the agent
+      RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
+      if [ "$RUNNING_AGENT" = "0" ]; then
         if [ ! -d ~/.ssh ] ; then
           mkdir -p ~/.ssh
         fi
         # Launch a new instance of the agent
         ssh-agent -s &> ~/.ssh/ssh-agent
-   fi
-   eval $(cat ~/.ssh/ssh-agent)
+      fi
+      eval $(cat ~/.ssh/ssh-agent)
+    fi
   fi
+
+  local key_manager=ssh-add
+
+  if can_haz keychain; then
+    key_manager=keychain
+  fi
+
   # Fun with SSH
-  if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
+  if [ $($key_manager -l | grep -c "The agent has no identities." ) -eq 1 ]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
       # macOS allows us to store ssh key pass phrases in the keychain, so try
       # to load ssh keys using pass phrases stored in the macOS keychain.
@@ -145,22 +158,13 @@ load-our-ssh-keys() {
     for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
     do
       if [ -f ${key} -a $(ssh-add -l | grep -F -c "$(ssh-keygen -l -f $key | awk '{print $2}')" ) -eq 0 ]; then
-        if ( which keychain &> /dev/null ); then
-          keychain ${key} &> /dev/null
-        else
-          ssh-add ${key} &> /dev/null
-        fi
+        $key_manager -q ${key}
       fi
     done
-    if ( which keychain &> /dev/null ); then
-      if [[ -r ~/.keychain/$(hostname)-sh ]]; then
-        source ~/.keychain/$(hostname)-sh
-      fi
-    fi
   fi
 }
 
-if [[ -z "$SSH_CLIENT" ]]; then
+if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   # We're not on a remote machine, so load keys
   load-our-ssh-keys
 fi
