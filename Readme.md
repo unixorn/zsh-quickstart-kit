@@ -41,9 +41,9 @@
   - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
 - [FAQ](#faq)
   - [How do I reconfigure the prompt?](#how-do-i-reconfigure-the-prompt)
-  - [I added a new completion plugin and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
+  - [I added a new completion plugin, and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
   - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
-  - [GNU stow complains with a warning that stowing zsh would cause conflicts](#gnu-stow-complains-with-a-warning-that-stowing-zsh-would-cause-conflicts)
+  - [GNU stow is warning that stowing zsh would cause conflicts](#gnu-stow-is-warning-that-stowing-zsh-would-cause-conflicts)
   - [_arguments:comparguments:325: can only be called from completion function](#_argumentscomparguments325-can-only-be-called-from-completion-function)
   - [Could not open a connection to your authentication agent](#could-not-open-a-connection-to-your-authentication-agent)
 - [Other Resources](#other-resources)
@@ -168,6 +168,7 @@ The zsh-quickstart-kit configures your ZSH environment so that it includes:
 * [unixorn/fzf-zsh-plugin](https://github.com/unixorn/fzf-zsh-plugin) - This enables `fzf`-powered history search.
 * [unixorn/git-extra-commands](https://github.com/unixorn/git-extra-commands) - A collection of extra helper scripts for `git`.
 * [unixorn/jpb.zshplugin](https://github.com/unixorn/jpb.zshplugin) - Some of my standard aliases & functions.
+* [unixorn/1password-op.plugin.zsh](https://github.com/unixorn/1password-op.plugin.zsh) - Tab completions for [1Password](https://1password.com)'s [op](https://developer.1password.com/docs/cli/get-started/) command line tool. Only installs itself if `op` is in your `$PATH`.
 * [unixorn/rake-completion.zshplugin](https://github.com/unixorn/rake-completion.zshplugin) - Reads the Rakefile in the current directory so you can tab-complete the Rakefile targets.
 * [unixorn/tumult.plugin.zsh](https://github.com/unixorn/tumult.plugin.zsh) - Adds macOS-specific functions and scripts. This plugin only adds itself to your `$PATH` if you're running macOS to allow you to use the same plugin list on macOS and other systems.
 * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Adds fish-like autosuggestions to your ZSH sessions.
@@ -249,7 +250,7 @@ Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since thos
 
 The quickstart kit does an opinionated (i.e., my way) setup of ZSH options and adds some functions and aliases I like on my systems.
 
-However, `~/.zshrc.d` is processed _after_ the quickstart sets its aliases, functions, and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
+However, `~/.zshrc.d` is processed *after* the quickstart sets its aliases, functions, and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
 
 
 ### Self-update Settings
@@ -262,7 +263,7 @@ I've included what I think is a good starter set of ZSH plugins in this reposito
 
 To make the list easier to customize without having to maintain a separate fork of the quickstart kit, if you create a file named `~/.zsh-quickstart-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
-**Using `~/.zsh-quickstart-local-plugins` is not additive. It will _completely replace_ the kit-provided list of plugins.**
+**Using `~/.zsh-quickstart-local-plugins` is not additive. It will *completely replace* the kit-provided list of plugins.**
 
 I realize that it would be a pain to create `.zsh-quickstart-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zsh-quickstart-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
 

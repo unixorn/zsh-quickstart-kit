@@ -12,6 +12,9 @@
 - [ ] A link to an external resource like a blog post or video
 - [ ] Text cleanups/updates
 - [ ] Test updates
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Plugin list change
 
 # Checklist
 
