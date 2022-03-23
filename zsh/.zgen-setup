@@ -161,6 +161,9 @@ load-starter-plugin-list() {
   # Docker completion
   zgenom load srijanshetty/docker-zsh
 
+  # Load tab completions for 1Password's op command line tool if it's installed
+  zgenom load unixorn/1password-op.plugin.zsh
+
   # Load me last
   GENCOMPL_FPATH=$HOME/.zsh/complete
 
