@@ -1,10 +1,14 @@
+# License Acceptance
+
+- [ ] This repository is Apache version 2.0 licensed (some scripts may have alternate licensing inline in their code) and by making this PR, I am contributing my changes to the repository under the terms of the Apache 2 license.
+
 <!--- Provide a general summary of your changes in the Title above -->
 
-# Description
+## Description
 
 <!--- Describe your changes in detail -->
 
-# Type of changes
+## Type of changes
 
 <!--- What types of changes does your submission introduce? Put an `x` in all the boxes that apply: [x] -->
 
@@ -16,7 +20,7 @@
 - [ ] New feature
 - [ ] Plugin list change
 
-# Checklist
+## Checklist
 
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. [x] -->
 <!--- If you're unsure about any of these, don't hesitate to ask. I'm happy to help! -->
@@ -29,7 +33,3 @@
 - [ ] If there was no author credit in a script added in this PR, I have added one.
 - [ ] I have confirmed that the link(s) in my PR are valid.
 - [ ] I have read the **CONTRIBUTING** document.
-
-# License Acceptance
-
-- [ ] This repository is Apache version 2.0 licensed (some scripts may have alternate licensing inline in their code) and by making this PR, I am contributing my changes to the repository under the terms of the Apache 2 license.
