@@ -31,8 +31,8 @@
       - [zqs update](#zqs-update)
       - [zqs update-plugins](#zqs-update-plugins)
   - [Functions and Aliases](#functions-and-aliases)
-    - [.zshrc.d](#zshrcd)
-  - [I like a plugin, but the aliases it installs overwrite other commands or aliases](#i-like-a-plugin-but-the-aliases-it-installs-overwrite-other-commands-or-aliases)
+    - [Customizing with ~/.zshrc.d](#customizing-with-zshrcd)
+  - [I like a plugin, but some of the aliases and functions it installs overwrite other commands or aliases I use](#i-like-a-plugin-but-some-of-the-aliases-and-functions-it-installs-overwrite-other-commands-or-aliases-i-use)
   - [ZSH options](#zsh-options)
   - [Self-update Settings](#self-update-settings)
   - [Customizing the plugin list](#customizing-the-plugin-list)
@@ -233,7 +233,7 @@ Updates all your plugins.
 
 ### Functions and Aliases
 
-#### .zshrc.d
+#### Customizing with ~/.zshrc.d
 
 The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`.
 
@@ -241,9 +241,11 @@ This makes it easy for you to add extra functions and aliases without having to 
 
 The files will be sourced in alphanumeric order after loading all the plugins, and I suggest you use a naming scheme of `001-onething`, `002-something-else` etc., to ensure they're loaded in the order you expect.
 
-### I like a plugin, but the aliases it installs overwrite other commands or aliases
+### I like a plugin, but some of the aliases and functions it installs overwrite other commands or aliases I use
 
-Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Since those are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`. Once you've cleared all the unwanted aliases, you can add new ones with your preferred names.
+Make a file in `~/.zshrc.d` named something like `999-reset-aliases`. Because files in `~/.zshrc.d` are loaded after all the ZSH plugins, you can add lines like `unalias xyzzy` to remove an alias named `xyzzy`, or `unset -f abcd` to remove a function named `abcd`.
+
+Once you've cleared all the unwanted aliases and functions, you can add new ones with your preferred names.
 
 ### ZSH options
 
