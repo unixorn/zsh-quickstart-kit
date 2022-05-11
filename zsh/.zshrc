@@ -43,8 +43,45 @@ if [[ -r ~/.powerlevel9k_font_mode ]]; then
   POWERLEVEL9K_MODE=$(head -1 ~/.powerlevel9k_font_mode)
 fi
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Unset COMPLETION_WAITING_DOTS in a file in ~/.zshrc.d if you want red dots to be displayed while waiting for completion
 export COMPLETION_WAITING_DOTS="true"
+
+# Provide a unified way for the quickstart to get/set settings.
+if [[ -f ~/.zqs-settings-path ]]; then
+  _ZQS_SETTINGS_DIR=$(cat ~/.zqs-settings-path)
+else
+  _ZQS_SETTINGS_DIR="${HOME}/.zqs-settings"
+fi
+export _ZQS_SETTINGS_DIR
+
+# Settings names have to be valid file names, and we're not doing any parsing here.
+_zqs-get-setting-value() {
+  local sfile="${_ZQS_SETTINGS_DIR}/${1}"
+  if [[ -f "$sfile" ]]; then
+    svalue=$(cat "$sfile")
+  else
+    if [[ $# -eq 2 ]]; then
+      svalue=$2
+    else
+      svalue=''
+    fi
+  fi
+  echo "$svalue"
+}
+
+_zqs-set-setting-value() {
+  if [[ $# -eq 2 ]]; then
+    mkdir -p "$_ZQS_SETTINGS_DIR"
+    echo "$2" > "${_ZQS_SETTINGS_DIR}/$1"
+  else
+    echo "Usage _zqs-set-setting-value SETTINGNAME VALUE"
+  fi
+}
+
+_zqs-purge-setting-value() {
+  local sfile="${_ZQS_SETTINGS_DIR}/${1}"
+  rm -f "$sfile"
+}
 
 # Correct spelling for commands
 setopt correct
