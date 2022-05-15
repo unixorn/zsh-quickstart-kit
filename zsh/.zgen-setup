@@ -62,8 +62,8 @@ load-starter-plugin-list() {
   ZGEN_LOADED=()
   ZGEN_COMPLETIONS=()
 
-  if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
-  zgenom oh-my-zsh
+  if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
+    zgenom oh-my-zsh
   fi
 
   # If you want to customize your plugin list, create a file named

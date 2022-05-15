@@ -91,12 +91,20 @@ _zqs-purge-setting() {
   rm -f "$sfile"
 }
 
+# Convert the old settings files into new style settings
 function _zqs-update-stale-settings-files() {
   if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
     _zqs-set-setting bullet-train true
     rm -f ~/.zsh-quickstart-use-bullet-train
+    echo "Converted old ~/.zsh-quickstart-use-bullet-train to new settings format"
+  fi
+  if [[ -f ~/.zsh-quickstart-no-omz ]]; then
+    _zqs-set-setting load-omz-plugins false
+    rm -f ~/.zsh-quickstart-no-omz
+    echo "Converted old ~/.zsh-quickstart-no-omz to new settings format"
   fi
 }
+_zqs-update-stale-settings-files
 
 # Add some quickstart feature toggle functions
 function zsh-quickstart-select-bullet-train() {
