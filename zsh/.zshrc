@@ -54,8 +54,16 @@ else
 fi
 export _ZQS_SETTINGS_DIR
 
+# _zqs-* functions are internal tooling for the quickstart. Modifying or unsetting
+# them is likely to break things badly.
+
+_zqs-trigger-init-rebuild() {
+  rm -f ~/.zgen/init.zsh
+  rm -f ~/.zgenom/init.zsh
+}
+
 # Settings names have to be valid file names, and we're not doing any parsing here.
-_zqs-get-setting-value() {
+_zqs-get-setting() {
   local sfile="${_ZQS_SETTINGS_DIR}/${1}"
   if [[ -f "$sfile" ]]; then
     svalue=$(cat "$sfile")
@@ -69,7 +77,7 @@ _zqs-get-setting-value() {
   echo "$svalue"
 }
 
-_zqs-set-setting-value() {
+_zqs-set-setting() {
   if [[ $# -eq 2 ]]; then
     mkdir -p "$_ZQS_SETTINGS_DIR"
     echo "$2" > "${_ZQS_SETTINGS_DIR}/$1"
@@ -78,9 +86,40 @@ _zqs-set-setting-value() {
   fi
 }
 
-_zqs-purge-setting-value() {
+_zqs-purge-setting() {
   local sfile="${_ZQS_SETTINGS_DIR}/${1}"
   rm -f "$sfile"
+}
+
+function _zqs-update-stale-settings-files() {
+  if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+    _zqs-set-setting bullet-train true
+    rm -f ~/.zsh-quickstart-use-bullet-train
+  fi
+}
+
+# Add some quickstart feature toggle functions
+function zsh-quickstart-select-bullet-train() {
+  _zqs-set-setting bullet-train true
+  _zqs-set-setting powerlevel10k false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-select-powerlevel10k() {
+  rm -f ~/.zsh-quickstart-use-bullet-train
+  _zqs-set-setting powerlevel10k true
+  _zqs-set-setting bullet-train false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-disable-omz-plugins() {
+  touch ~/.zsh-quickstart-no-omz
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-enable-omz-plugins() {
+  rm -f ~/.zsh-quickstart-no-omz
+  _zqs-trigger-init-rebuild
 }
 
 # Correct spelling for commands

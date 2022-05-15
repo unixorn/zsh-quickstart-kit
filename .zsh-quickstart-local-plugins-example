@@ -150,7 +150,8 @@ zgenom load zsh-users/zsh-autosuggestions
 # directories.
 zgenom load supercrabtree/k
 
-if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+# Be compatible with the old settings files for now
+if [[ -f ~/.zsh-quickstart-use-bullet-train ]]  ||  [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
   # Bullet train prompt setup.
   zgenom load https://github.com/caiogondim/bullet-train.zsh
 else
