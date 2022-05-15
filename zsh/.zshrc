@@ -113,12 +113,14 @@ function zsh-quickstart-select-powerlevel10k() {
 }
 
 function zsh-quickstart-disable-omz-plugins() {
-  touch ~/.zsh-quickstart-no-omz
+  rm -f ~/.zsh-quickstart-no-omz
+  _zqs-set-setting load-omz-plugins false
   _zqs-trigger-init-rebuild
 }
 
 function zsh-quickstart-enable-omz-plugins() {
   rm -f ~/.zsh-quickstart-no-omz
+  _zqs-set-setting load-omz-plugins true
   _zqs-trigger-init-rebuild
 }
 
