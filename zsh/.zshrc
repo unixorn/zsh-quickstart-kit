@@ -206,8 +206,12 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   load-our-ssh-keys
 fi
 
-# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
+# Load helper functions before we load zgen setup
+if [ -r ~/.zsh_functions ]; then
+  source ~/.zsh_functions
+fi
 
+# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 # Start zgenom
 if [ -f ~/.zgen-setup ]; then
   source ~/.zgen-setup
@@ -302,10 +306,6 @@ fi
 # Stuff only tested on zsh, or explicitly zsh-specific
 if [ -r ~/.zsh_aliases ]; then
   source ~/.zsh_aliases
-fi
-
-if [ -r ~/.zsh_functions ]; then
-  source ~/.zsh_functions
 fi
 
 export LOCATE_PATH=/var/db/locate.database
