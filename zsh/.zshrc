@@ -536,8 +536,12 @@ _update-zsh-quickstart() {
           # Cope with switch from master to main
           zqs_current_branch=$(git rev-parse --abbrev-ref HEAD)
           git fetch
-          # Determine the repo default branch and switch to it
+          # Determine the repo default branch and switch to it unless we're in testing mode
           zqs_default_branch="$(git remote show origin | grep 'HEAD branch' | awk '{print $3}')"
+          if [[ -f ~/.zqs-settings/testbranch ]]; then
+            zqs_default_branch="$(cat ~/.zqs-settings/testbranch)"
+            echo "Overriding default branch and using $zqs_default_branch for testing"
+          fi
           if [[ "$zqs_default_branch" != "$zqs_current_branch" ]]; then
             echo "The ZSH Quickstart Kit has switched default branches to $zqs_default_branch"
             echo "Changing branches in your local checkout from $zqs_current_branch to $zqs_default_branch"
