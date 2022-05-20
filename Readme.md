@@ -276,7 +276,7 @@ The quickstart automatically autoloads zmv. If you want to disable that, create 
 
 ### Disabling oh-my-zsh
 
-If you don't want `zgenom` to load the oh-my-zsh defaults, run `zws-disable-omz-plugins`.
+If you don't want `zgenom` to load the oh-my-zsh defaults, run `zqs-disable-omz-plugins`.
 
 ## FAQ
 
