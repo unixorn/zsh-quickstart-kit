@@ -532,21 +532,20 @@ _update-zsh-quickstart() {
       local gitroot=$(git rev-parse --show-toplevel)
       if [[ -f "${gitroot}/.gitignore" ]]; then
         if [[ $(grep -c zsh-quickstart-kit "${gitroot}/.gitignore") -ne 0 ]]; then
-          echo "---- updating ----"
           # Cope with switch from master to main
           zqs_current_branch=$(git rev-parse --abbrev-ref HEAD)
           git fetch
           # Determine the repo default branch and switch to it unless we're in testing mode
           zqs_default_branch="$(git remote show origin | grep 'HEAD branch' | awk '{print $3}')"
-          if [[ -f ~/.zqs-settings/testbranch ]]; then
-            zqs_default_branch="$(cat ~/.zqs-settings/testbranch)"
-            echo "Overriding default branch and using $zqs_default_branch for testing"
-          fi
-          if [[ "$zqs_default_branch" != "$zqs_current_branch" ]]; then
+          if [[ "$zqs_current_branch" == 'master' ]]; then
             echo "The ZSH Quickstart Kit has switched default branches to $zqs_default_branch"
             echo "Changing branches in your local checkout from $zqs_current_branch to $zqs_default_branch"
             git checkout "$zqs_default_branch"
           fi
+          if [[ "$zqs_current_branch" != "$zqs_default_branch" ]]; then
+            echo "Using $zqs_current_branch instead of $zqs_default_branch"
+          fi
+          echo "---- updating $zqs_current_branch ----"
           git pull
           date +%s >! ~/.zsh-quickstart-last-update
           unset zqs_default_branch

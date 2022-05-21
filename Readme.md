@@ -284,11 +284,6 @@ If you don't want `zgenom` to load the oh-my-zsh defaults, run `zqs-disable-omz-
 
 You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
 
-### I'm working on a feature branch, and it keeps reverting to main
-
-The quickstart kit tries to move people's checkouts to the repository's default branch. This was done to make the transition from the `master` to the `main` branch happen automagically for users.
-
-It is however, a pita when you're working on a feature branch and want to test it, so I've added `~/.zqs-settings/testbranch` - stick your working branch name in there and it won't get swapped to `main`.
 ### I added a new completion plugin, and it isn't working
 
 I've had reports that sometimes you need to reset your completions after adding a new plugin.
