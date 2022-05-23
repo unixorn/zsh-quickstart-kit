@@ -1,5 +1,4 @@
-
-# Contributing to tumult
+# Contributing to the ZSH Quickstart Kit
 
 The **ZSH Quickstart Kit** is a batteries-included starter kit for using `zsh`.
 
