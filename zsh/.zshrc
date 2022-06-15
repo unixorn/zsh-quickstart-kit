@@ -64,6 +64,8 @@ _zqs-trigger-init-rebuild() {
 
 # Settings names have to be valid file names, and we're not doing any parsing here.
 _zqs-get-setting() {
+  # If there is a $2, we return that as the default value if there's
+  # no settings file.
   local sfile="${_ZQS_SETTINGS_DIR}/${1}"
   if [[ -f "$sfile" ]]; then
     svalue=$(cat "$sfile")
