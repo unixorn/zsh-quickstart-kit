@@ -16,7 +16,7 @@
 ZGEN_LOADED=()
 ZGEN_COMPLETIONS=()
 
-if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
+if [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
   zgenom oh-my-zsh
 fi
 
@@ -98,7 +98,7 @@ zgenom load peterhurford/git-it-on.zsh
 # in a repository securely by encrypting them with gnupg.
 zgenom load StackExchange/blackbox
 
-if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
+if [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
   # Load some oh-my-zsh plugins
   zgenom oh-my-zsh plugins/pip
   zgenom oh-my-zsh plugins/sudo
@@ -150,7 +150,7 @@ zgenom load zsh-users/zsh-autosuggestions
 # directories.
 zgenom load supercrabtree/k
 
-if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+if [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
   # Bullet train prompt setup.
   zgenom load https://github.com/caiogondim/bullet-train.zsh
 else

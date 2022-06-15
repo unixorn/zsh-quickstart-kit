@@ -10,27 +10,6 @@
 # with a shell fragment in ~/.zshrc.d, then you don't have to maintain
 # your own fork of the quickstart kit
 
-# Add some quickstart toggle functions
-function zsh-quickstart-select-bullet-train() {
-  touch ~/.zsh-quickstart-use-bullet-train
-  rm -f ~/.zgen/init.zsh
-}
-
-function zsh-quickstart-select-powerlevel10k() {
-  rm -f ~/.zsh-quickstart-use-bullet-train
-  rm -f ~/.zgen/init.zsh
-}
-
-function zsh-quickstart-disable-omz-plugins() {
-  touch ~/.zsh-quickstart-no-omz
-  rm -f ~/.zgen/init.zsh
-}
-
-function zsh-quickstart-enable-omz-plugins() {
-  rm -f ~/.zsh-quickstart-no-omz
-  rm -f ~/.zgen/init.zsh
-}
-
 function exists() {
   if (( $+commands[$1] )); then return 0; else return 1; fi
 }

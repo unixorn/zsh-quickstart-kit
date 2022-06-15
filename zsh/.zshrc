@@ -54,8 +54,18 @@ else
 fi
 export _ZQS_SETTINGS_DIR
 
+# _zqs-* functions are internal tooling for the quickstart. Modifying or unsetting
+# them is likely to break things badly.
+
+_zqs-trigger-init-rebuild() {
+  rm -f ~/.zgen/init.zsh
+  rm -f ~/.zgenom/init.zsh
+}
+
 # Settings names have to be valid file names, and we're not doing any parsing here.
-_zqs-get-setting-value() {
+_zqs-get-setting() {
+  # If there is a $2, we return that as the default value if there's
+  # no settings file.
   local sfile="${_ZQS_SETTINGS_DIR}/${1}"
   if [[ -f "$sfile" ]]; then
     svalue=$(cat "$sfile")
@@ -69,7 +79,7 @@ _zqs-get-setting-value() {
   echo "$svalue"
 }
 
-_zqs-set-setting-value() {
+_zqs-set-setting() {
   if [[ $# -eq 2 ]]; then
     mkdir -p "$_ZQS_SETTINGS_DIR"
     echo "$2" > "${_ZQS_SETTINGS_DIR}/$1"
@@ -78,9 +88,50 @@ _zqs-set-setting-value() {
   fi
 }
 
-_zqs-purge-setting-value() {
+_zqs-purge-setting() {
   local sfile="${_ZQS_SETTINGS_DIR}/${1}"
   rm -f "$sfile"
+}
+
+# Convert the old settings files into new style settings
+function _zqs-update-stale-settings-files() {
+  if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+    _zqs-set-setting bullet-train true
+    rm -f ~/.zsh-quickstart-use-bullet-train
+    echo "Converted old ~/.zsh-quickstart-use-bullet-train to new settings format"
+  fi
+  if [[ -f ~/.zsh-quickstart-no-omz ]]; then
+    _zqs-set-setting load-omz-plugins false
+    rm -f ~/.zsh-quickstart-no-omz
+    echo "Converted old ~/.zsh-quickstart-no-omz to new settings format"
+  fi
+}
+_zqs-update-stale-settings-files
+
+# Add some quickstart feature toggle functions
+function zsh-quickstart-select-bullet-train() {
+  _zqs-set-setting bullet-train true
+  _zqs-set-setting powerlevel10k false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-select-powerlevel10k() {
+  rm -f ~/.zsh-quickstart-use-bullet-train
+  _zqs-set-setting powerlevel10k true
+  _zqs-set-setting bullet-train false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-disable-omz-plugins() {
+  rm -f ~/.zsh-quickstart-no-omz
+  _zqs-set-setting load-omz-plugins false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-enable-omz-plugins() {
+  rm -f ~/.zsh-quickstart-no-omz
+  _zqs-set-setting load-omz-plugins true
+  _zqs-trigger-init-rebuild
 }
 
 # Correct spelling for commands
@@ -206,8 +257,12 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   load-our-ssh-keys
 fi
 
-# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
+# Load helper functions before we load zgen setup
+if [ -r ~/.zsh_functions ]; then
+  source ~/.zsh_functions
+fi
 
+# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 # Start zgenom
 if [ -f ~/.zgen-setup ]; then
   source ~/.zgen-setup
@@ -302,10 +357,6 @@ fi
 # Stuff only tested on zsh, or explicitly zsh-specific
 if [ -r ~/.zsh_aliases ]; then
   source ~/.zsh_aliases
-fi
-
-if [ -r ~/.zsh_functions ]; then
-  source ~/.zsh_functions
 fi
 
 export LOCATE_PATH=/var/db/locate.database
@@ -483,17 +534,20 @@ _update-zsh-quickstart() {
       local gitroot=$(git rev-parse --show-toplevel)
       if [[ -f "${gitroot}/.gitignore" ]]; then
         if [[ $(grep -c zsh-quickstart-kit "${gitroot}/.gitignore") -ne 0 ]]; then
-          echo "---- updating ----"
           # Cope with switch from master to main
           zqs_current_branch=$(git rev-parse --abbrev-ref HEAD)
           git fetch
-          # Determine the repo default branch and switch to it
+          # Determine the repo default branch and switch to it unless we're in testing mode
           zqs_default_branch="$(git remote show origin | grep 'HEAD branch' | awk '{print $3}')"
-          if [[ "$zqs_default_branch" != "$zqs_current_branch" ]]; then
+          if [[ "$zqs_current_branch" == 'master' ]]; then
             echo "The ZSH Quickstart Kit has switched default branches to $zqs_default_branch"
             echo "Changing branches in your local checkout from $zqs_current_branch to $zqs_default_branch"
             git checkout "$zqs_default_branch"
           fi
+          if [[ "$zqs_current_branch" != "$zqs_default_branch" ]]; then
+            echo "Using $zqs_current_branch instead of $zqs_default_branch"
+          fi
+          echo "---- updating $zqs_current_branch ----"
           git pull
           date +%s >! ~/.zsh-quickstart-last-update
           unset zqs_default_branch
