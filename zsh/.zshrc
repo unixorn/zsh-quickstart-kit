@@ -14,7 +14,8 @@
 # Version 1.0.0
 #
 # If you want to change settings that are in this file, the easiest way
-# to do it is by adding a file to ~/.zshrc.d that redefines the sttings.
+# to do it is by adding a file to ~/.zshrc.d or ~/.zshrc.pre-plugins.d that
+# redefines the settings.
 #
 # All files in there will be sourced, and keeping your customizations
 # there will keep you from having to maintain a separate fork of the
@@ -257,9 +258,23 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   load-our-ssh-keys
 fi
 
-# Load helper functions before we load zgen setup
+# Load helper functions before we load zgenom setup
 if [ -r ~/.zsh_functions ]; then
   source ~/.zsh_functions
+fi
+
+# Make it easy to prepend your own customizations that override the
+# quickstart's defaults by loading all files from the
+# ~/.zshrc.pre-plugins.d directory
+mkdir -p ~/.zshrc.pre-plugins.d
+if [ -n "$(/bin/ls -A ~/.zshrc.pre-plugins.d)" ]; then
+  for _zqs_fragment in $(/bin/ls -A ~/.zshrc.pre-plugins.d)
+  do
+    if [ -r ~/.zshrc.pre-plugins.d/$_zqs_fragment ]; then
+      source ~/.zshrc.pre-plugins.d/$_zqs_fragment
+    fi
+  done
+  unset $_zqs_fragment
 fi
 
 # Now that we have $PATH set up and ssh keys loaded, configure zgenom.
@@ -482,12 +497,13 @@ fi
 # quickstart's defaults by loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
 if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
-  for dotfile in $(/bin/ls -A ~/.zshrc.d)
+  for _zqs_fragment in $(/bin/ls -A ~/.zshrc.d)
   do
-    if [ -r ~/.zshrc.d/$dotfile ]; then
-      source ~/.zshrc.d/$dotfile
+    if [ -r ~/.zshrc.d/$_zqs_fragment ]; then
+      source ~/.zshrc.d/$_zqs_fragment
     fi
   done
+  unset _zqs_fragment
 fi
 
 # If GOPATH is defined, add it to $PATH

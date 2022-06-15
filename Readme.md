@@ -235,7 +235,7 @@ Updates all your plugins.
 
 #### Customizing with ~/.zshrc.d
 
-The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`.
+The `.zshrc` included in this kit will automatically source any files it finds in `~/.zshrc.d`. This happens after plugins are loaded. If you need to set variables or aliases before plugins are loaded, create files in `~/.zshrc.pre-plugins.d`.
 
 This makes it easy for you to add extra functions and aliases without having to maintain a separate fork of this repository and allows you to configure the behavior of some of the plugins by setting environment variables.
 
