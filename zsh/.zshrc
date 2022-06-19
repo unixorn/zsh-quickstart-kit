@@ -63,6 +63,27 @@ _zqs-trigger-init-rebuild() {
   rm -f ~/.zgenom/init.zsh
 }
 
+# We need to load shell fragment files often enough to make it a function
+function load-shell-fragments() {
+  if [[ -z $1 ]]; then
+    echo "You must give load-shell-fragments a directory path"
+  else
+    if [[ -d "$1" ]]; then
+      if [ -n "$(/bin/ls -A $1)" ]; then
+        for _zqs_fragment in $(/bin/ls -A $1)
+        do
+          if [ -r $1/$_zqs_fragment ]; then
+            source $1/$_zqs_fragment
+          fi
+        done
+        unset _zqs_fragment
+      fi
+    else
+      echo "$1 is not a directory"
+    fi
+  fi
+}
+
 # Settings names have to be valid file names, and we're not doing any parsing here.
 _zqs-get-setting() {
   # If there is a $2, we return that as the default value if there's
@@ -267,15 +288,7 @@ fi
 # quickstart's defaults by loading all files from the
 # ~/.zshrc.pre-plugins.d directory
 mkdir -p ~/.zshrc.pre-plugins.d
-if [ -n "$(/bin/ls -A ~/.zshrc.pre-plugins.d)" ]; then
-  for _zqs_fragment in $(/bin/ls -A ~/.zshrc.pre-plugins.d)
-  do
-    if [ -r ~/.zshrc.pre-plugins.d/$_zqs_fragment ]; then
-      source ~/.zshrc.pre-plugins.d/$_zqs_fragment
-    fi
-  done
-  unset $_zqs_fragment
-fi
+load-shell-fragments ~/.zshrc.pre-plugins.d
 
 # Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 # Start zgenom
@@ -387,22 +400,17 @@ if [ -d /Library/Java/Home ];then
 fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # Load macOS-specific aliases - keep supporting the old name
-  [ -f ~/.osx_aliases ] && source ~/.osx_aliases
-  if [ -d ~/.osx_aliases.d ]; then
-    for alias_file in ~/.osx_aliases.d/*
-    do
-      source "$alias_file"
-    done
-  fi
-
-  # Apple renamed the OS, so...
-  [ -f ~/.macos_aliases ] && source ~/.macos_aliases
+  # Load macOS-specific aliases
+  # Apple renamed the OS, so use the macos one first
+  [ -r ~/.macos_aliases ] && source ~/.macos_aliases
   if [ -d ~/.macos_aliases.d ]; then
-    for alias_file in ~/.macos_aliases.d/*
-    do
-      source "$alias_file"
-    done
+    load-shell-fragments ~/.macos_aliases.d
+  fi
+  # Keep supporting the old name, but emit a deprecation warning
+  [ -r ~/.osx_aliases ] && source ~/.osx_aliases
+  if [ -d ~/.osx_aliases.d ]; then
+    echo "Apple renamed the os to macos - the .osx_aliases.d directory is deprecated in favor of .macos_aliases.d"
+    load-shell-fragments ~/.osx_aliases.d
   fi
 fi
 
@@ -477,15 +485,12 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
 # Load any custom zsh completions we've installed
+if [[ -d ~/.zsh-completions.d ]]; then
+  load-shell-fragments ~/.zsh-completions.d
+fi
 if [[ -d ~/.zsh-completions ]]; then
-  for completion in ~/.zsh-completions/*
-  do
-    if [[ -r "$completion" ]]; then
-      source "$completion"
-    else
-      echo "Can't read $completion"
-    fi
-  done
+  echo '~/.zsh_completions is deprecated in favor of ~/.zsh_completions.d'
+  load-shell-fragments ~/.zsh-completions
 fi
 
 # Load zmv
@@ -496,15 +501,7 @@ fi
 # Make it easy to append your own customizations that override the
 # quickstart's defaults by loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
-if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
-  for _zqs_fragment in $(/bin/ls -A ~/.zshrc.d)
-  do
-    if [ -r ~/.zshrc.d/$_zqs_fragment ]; then
-      source ~/.zshrc.d/$_zqs_fragment
-    fi
-  done
-  unset _zqs_fragment
-fi
+load-shell-fragments ~/.zshrc.d
 
 # If GOPATH is defined, add it to $PATH
 if [[ -n "$GOPATH" ]]; then
