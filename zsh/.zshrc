@@ -123,6 +123,17 @@ function zsh-quickstart-select-powerlevel10k() {
   _zqs-trigger-init-rebuild
 }
 
+# Binary feature settings functions should always be named
+# zsh-quickstart-disable-FEATURE and zsh-quickstart-enable-FEATURE
+
+function zsh-quickstart-disable-bindkey-handling() {
+  _zqs-set-setting handle-bindkeys false
+}
+
+function zsh-quickstart-enable-bindkey-handling() {
+  _zqs-set-setting handle-bindkeys true
+}
+
 function zsh-quickstart-disable-omz-plugins() {
   rm -f ~/.zsh-quickstart-no-omz
   _zqs-set-setting load-omz-plugins false
@@ -346,20 +357,22 @@ QUICKSTART_KIT_REFRESH_IN_DAYS=7
 # does a zgen update. Closes #62.
 DISABLE_AUTO_UPDATE=true
 
-# Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
-globalias() {
-   if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
-     zle _expand_alias
-     zle expand-word
-   fi
-   zle self-insert
-}
+if [[ $(_zqs-get-setting handle-bindkeys true) == 'true' ]]; then
+  # Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
+  globalias() {
+    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
+      zle _expand_alias
+      zle expand-word
+    fi
+    zle self-insert
+  }
 
-zle -N globalias
+  zle -N globalias
 
-bindkey " " globalias
-bindkey "^ " magic-space           # control-space to bypass completion
-bindkey -M isearch " " magic-space # normal space during searches
+  bindkey " " globalias
+  bindkey "^ " magic-space           # control-space to bypass completion
+  bindkey -M isearch " " magic-space # normal space during searches
+fi
 
 # Make it easier to customize the quickstart to your needs without
 # having to maintain your own fork.
@@ -636,19 +649,29 @@ fi
 function zqs-help() {
   echo "The zqs command allows you to manipulate your ZSH quickstart."
   echo
-  echo "options:"
+  echo "Quickstart action commands:"
   echo "zqs check-for-updates - Update the quickstart kit if it has been longer than $QUICKSTART_KIT_REFRESH_IN_DAYS days since the last update."
-  echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
-  echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs selfupdate - Force an immediate update of the quickstart kit"
   echo "zqs update - Update the quickstart kit and all your plugins"
   echo "zqs update-plugins - Update your plugins"
+  echo ""
+  echo "Quickstart settings commands:"
+  echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
+  echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
+  echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
 }
 
 function zqs() {
   case "$1" in
     'check-for-updates')
       _check-for-zsh-quickstart-update
+      ;;
+    'disable-bindkey-handling')
+      zsh-quickstart-disable-bindkey-handling
+      ;;
+    'enable-bindkey-handling')
+      zsh-quickstart-enable-bindkey-handling
       ;;
     'disable-omz-plugins')
       zsh-quickstart-disable-omz-plugins
