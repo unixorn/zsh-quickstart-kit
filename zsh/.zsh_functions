@@ -139,7 +139,11 @@ function htmime() {
     print "USAGE: htmime <URL>"
     return 1
   fi
-  mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
+  if can_haz curl; then
+    mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
+  else
+    echo "Can't find curl in your PATH"
+  fi
   print $mime
 }
 
