@@ -25,6 +25,8 @@
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. [x] -->
 <!--- If you're unsure about any of these, don't hesitate to ask. I'm happy to help! -->
 
+- [ ] I have read the **CONTRIBUTING** document.
+- [ ] I have updated the readme if this PR changes/updates quickstart functionality.
 - [ ] All new and existing tests pass.
 - [ ] Any scripts added use `#!/usr/bin/env interpreter` instead of potentially platform-specific direct paths (`#!/bin/sh` is an allowed exception)
 - [ ] Scripts are marked executable
@@ -32,4 +34,3 @@
 - [ ] I have added a credit line to README.md for the script
 - [ ] If there was no author credit in a script added in this PR, I have added one.
 - [ ] I have confirmed that the link(s) in my PR are valid.
-- [ ] I have read the **CONTRIBUTING** document.
