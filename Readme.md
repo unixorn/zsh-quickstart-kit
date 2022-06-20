@@ -25,6 +25,8 @@
   - [Behavior toggles](#behavior-toggles)
     - [zqs](#zqs)
       - [zqs check-for-updates](#zqs-check-for-updates)
+      - [zqs-disable-bindkey-handling](#zqs-disable-bindkey-handling)
+      - [zqs-enable-bindkey-handling](#zqs-enable-bindkey-handling)
       - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
       - [zqs enable-omz-plugins](#zqs-enable-omz-plugins)
       - [zqs selfupdate](#zqs-selfupdate)
@@ -211,9 +213,16 @@ As of 2021-11-13, I've added a `zqs` command to start exposing some of the confi
 
 Updates the quickstart kit if it has been longer than seven days since the last update.
 
+##### zqs-disable-bindkey-handling
+
+Disable `bindkey` setup and alias expansion in the quickstart `.zshrc` so people can use plugins like [globalias](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/globalias) to handle it instead.
+
+##### zqs-enable-bindkey-handling
+
+Let the quickstart's `.zshrc` configure `bindkey` setup and alias expansion. This is the default behavior.
 ##### zqs disable-omz-plugins
 
-Sets the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
+Set the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
 
 ##### zqs enable-omz-plugins
 
