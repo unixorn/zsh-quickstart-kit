@@ -293,6 +293,18 @@ If you don't want `zgenom` to load the oh-my-zsh defaults, run `zqs-disable-omz-
 
 You may want to reconfigure your prompt after using it. The quickstart uses the [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, so you can reconfigure your prompt by running `p10k configure`.
 
+### Powerlevel 10k warns that there is console output during startup
+
+You see a warning during session startup -
+
+```sh
+[WARNING]: Console output during zsh initialization detected.
+When using Powerlevel10k with instant prompt, console output during zsh
+initialization may indicate issues.
+```
+
+You can stifle this output by adding `typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet` in a fragment file in `~/.zshrc.d`.
+
 ### I added a new completion plugin, and it isn't working
 
 I've had reports that sometimes you need to reset your completions after adding a new plugin.
