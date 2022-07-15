@@ -5,6 +5,11 @@
 # Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt in this repository.
+#
+# If you want to customize these, the best thing to do is override them
+# with a shell fragment in ~/.zshrc.d. Files there are automatically sourced
+# by the quickstart kit, so if you do that, you don't have to maintain your
+# own fork of the quickstart kit.
 
 if [[ -d ~/gocode ]]; then
   export GOPATH=~/gocode

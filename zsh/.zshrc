@@ -192,6 +192,8 @@ for path_candidate in /Applications/Xcode.app/Contents/Developer/usr/bin \
   /usr/local/sbin \
   ~/.cabal/bin \
   ~/.cargo/bin \
+  ~/.linuxbrew/bin \
+  ~/.linuxbrew/sbin \
   ~/.rbenv/bin \
   ~/bin \
   ~/src/gocode/bin \
