@@ -262,6 +262,7 @@ The quickstart kit does an opinionated (i.e., my way) setup of ZSH options and a
 
 However, `~/.zshrc.d` is processed *after* the quickstart sets its aliases, functions, and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
 
+The kit also looks for files in `~/.zshrc.pre-plugins.d`, and you can use snippet files in there to set environment variables that alter the startup behavior of plugins.
 
 ### Self-update Settings
 
@@ -270,6 +271,14 @@ The quickstart kit will automatically check for updates every seven days. If you
 ### Customizing the plugin list
 
 I've included what I think is a good starter set of ZSH plugins in this repository. However, everyone has their preferences for their environment.
+
+There are two main ways to customize the list.
+
+You can either add a new plugin in a file in `~/.zshrc.pre-plugins.d`, or you can make a `~/.zsh-quickstart-local-plugin` file.
+
+If you're just adding plugins to the standard list and want to automatically get any new changes I make to that standard list (new plugins, new locations when existing plugins are moved, etc) then adding a file like `/zshrc.pre-plugins.d/999-add-some-plugins` with entries like `zgenom load githubuser/pluginrepo && zgenom save` is the way to go - the kit will load its plugins, then add yours on the end.
+
+If you don't care about changes to the kit's plugins, then go with creating a `~/.zsh-quickstart-local-plugin` file.
 
 To make the list easier to customize without having to maintain a separate fork of the quickstart kit, if you create a file named `~/.zsh-quickstart-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
@@ -281,7 +290,7 @@ Copy that to your `$HOME/.zsh-quickstart-local-plugins`, change the list, and th
 
 ### Disabling zmv
 
-The quickstart automatically autoloads zmv. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
+The quickstart automatically autoloads `zmv`. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
 
 ### Disabling oh-my-zsh
 
