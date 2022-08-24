@@ -1,0 +1,9 @@
+I've added a notifications system to the quickstart kit. It will be used when new features are added to the kit, or there are security-related changes.
+
+Each notice should only be displayed once, but if you don't want to see future notifications, you can disable them by running
+
+`zqs disable-notifications`
+
+and re-enable them with
+
+`zqs enable-notifications`
