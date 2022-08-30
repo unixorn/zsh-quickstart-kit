@@ -49,7 +49,7 @@ warn-about-prompt-change() {
 
 # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
 # they break, so get the order right.
-zgenom load zsh-users/zsh-syntax-highlighting
+zgenom load zdharma-continuum/fast-syntax-highlighting
 zgenom load zsh-users/zsh-history-substring-search
 
 # Set keystrokes for substring searching
