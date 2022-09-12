@@ -15,11 +15,6 @@ if [[ -d ~/gocode ]]; then
   export GOPATH=~/gocode
 fi
 
-# Sublime
-if [[ -x /usr/local/bin/subl ]]; then
-  alias s="subl"
-fi
-
 # Yes, these tests are ugly. They do however, work.
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # do macOS specific things
