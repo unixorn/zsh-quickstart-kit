@@ -174,7 +174,7 @@ setopt correct
 unsetopt correctall
 
 # Base PATH
-PATH="$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin"
+PATH="$PATH:/sbin:/usr/sbin:/bin:/usr/bin"
 
 # If you need to add extra directories to $PATH that are not checked for
 # here, add a file in ~/.zshrc.d - then you won't have to maintain a
