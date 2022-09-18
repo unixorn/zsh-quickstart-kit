@@ -240,6 +240,18 @@ Update the quickstart kit and all your plugins.
 
 Updates all your plugins.
 
+##### zqs get-setting
+
+`zqs get-setting NAME [OPTIONAL default value]` prints the value of a `zqs` setting, or if unset and a default value was passed, the specified default.
+
+##### zs set-setting
+
+`zqs set-setting NAME VALUE` writes a setting.
+
+##### zs delete-setting
+
+`zqs delete-setting NAME` deletes a setting from `zqs`'s crude parameter store.
+
 ### Functions and Aliases
 
 #### Customizing with ~/.zshrc.d
