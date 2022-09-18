@@ -661,6 +661,7 @@ function zqs-help() {
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
+  echo "zqs set-setting SETTINGNAME value - Set an arbitrary zqs setting"
 }
 
 function zqs() {
@@ -693,6 +694,10 @@ function zqs() {
     'get-setting')
       shift
       _zqs-get-setting $@
+      ;;
+    'set-setting')
+      shift
+      _zqs-set-setting $@
       ;;
     *)
       zqs-help
