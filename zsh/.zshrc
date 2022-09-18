@@ -421,6 +421,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   if [ -d ~/.macos_aliases.d ]; then
     load-shell-fragments ~/.macos_aliases.d
   fi
+
   # Keep supporting the old name, but emit a deprecation warning
   [ -r ~/.osx_aliases ] && source ~/.osx_aliases
   if [ -d ~/.osx_aliases.d ]; then
@@ -659,6 +660,7 @@ function zqs-help() {
   echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
 }
 
 function zqs() {
@@ -687,6 +689,10 @@ function zqs() {
       ;;
     'update-plugins')
       zgenom update
+      ;;
+    'get-setting')
+      shift
+      _zqs-get-setting $@
       ;;
     *)
       zqs-help
