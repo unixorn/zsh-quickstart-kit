@@ -315,6 +315,14 @@ fi
 mkdir -p ~/.zshrc.pre-plugins.d
 load-shell-fragments ~/.zshrc.pre-plugins.d
 
+# macOS doesn't have a python by default. This makes the omz python plugin
+# sad, so if there isn't a python, alias it to python3
+if ! can_haz python; then
+  if can_haz python3; then
+    alias python=python3
+  fi
+fi
+
 # Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 # Start zgenom
 if [ -f ~/.zgen-setup ]; then
