@@ -110,6 +110,18 @@ _zqs-set-setting() {
   fi
 }
 
+_zqs-delete-setting(){
+  # We want to keep output clean when settings are cleared internally, so
+  # use a separate function when called by a human we can display a warning
+  # if the setting doesn't exist.
+  local sfile="${_ZQS_SETTINGS_DIR}/${1}"
+  if [[ -f "$sfile" ]]; then
+    rm -f "$sfile"
+  else
+    echo "There is no settings file for ${1}"
+  fi
+}
+
 _zqs-purge-setting() {
   local sfile="${_ZQS_SETTINGS_DIR}/${1}"
   rm -f "$sfile"
@@ -421,6 +433,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   if [ -d ~/.macos_aliases.d ]; then
     load-shell-fragments ~/.macos_aliases.d
   fi
+
   # Keep supporting the old name, but emit a deprecation warning
   [ -r ~/.osx_aliases ] && source ~/.osx_aliases
   if [ -d ~/.osx_aliases.d ]; then
@@ -659,6 +672,9 @@ function zqs-help() {
   echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs delete-setting SETTINGNAME - Remove a zqs setting file"
+  echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
+  echo "zqs set-setting SETTINGNAME value - Set an arbitrary zqs setting"
 }
 
 function zqs() {
@@ -687,6 +703,17 @@ function zqs() {
       ;;
     'update-plugins')
       zgenom update
+      ;;
+    'delete-setting')
+      shift
+      _zqs-delete-setting $@
+    'get-setting')
+      shift
+      _zqs-get-setting $@
+      ;;
+    'set-setting')
+      shift
+      _zqs-set-setting $@
       ;;
     *)
       zqs-help
