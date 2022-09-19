@@ -715,6 +715,7 @@ function zqs() {
     'delete-setting')
       shift
       _zqs-delete-setting $@
+      ;;
     'get-setting')
       shift
       _zqs-get-setting $@
