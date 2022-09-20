@@ -315,11 +315,18 @@ fi
 mkdir -p ~/.zshrc.pre-plugins.d
 load-shell-fragments ~/.zshrc.pre-plugins.d
 
-# macOS doesn't have a python by default. This makes the omz python plugin
-# sad, so if there isn't a python, alias it to python3
+# macOS doesn't have a python by default. This makes the omz python and
+# zsh-completion-generator plugins sad, so if there isn't a python, alias
+# it to python3
 if ! can_haz python; then
   if can_haz python3; then
     alias python=python3
+  fi
+  # Ugly hack for zsh-completion-generator - but only do it if the user
+  # hasn't already set GENCOMPL_PY
+  if [[ -z "$GENCOMPL_PY" ]]; then
+    export GENCOMPL_PY='python3'
+    export ZSH_COMPLETION_HACK='true'
   fi
 fi
 
@@ -327,6 +334,13 @@ fi
 # Start zgenom
 if [ -f ~/.zgen-setup ]; then
   source ~/.zgen-setup
+fi
+
+# Undo the hackery for issue 180
+# Don't unset GENCOMPL_PY if we didn't set it
+if [[ -n "$ZSH_COMPLETION_HACK" ]]; then
+  unset GENCOMPL_PY
+  unset ZSH_COMPLETION_HACK
 fi
 
 # Set some history options
