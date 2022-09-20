@@ -302,7 +302,7 @@ Copy that to your `$HOME/.zsh-quickstart-local-plugins`, change the list, and th
 
 ### Disabling zmv
 
-The quickstart automatically autoloads `zmv`. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
+The quickstart automatically autoloads `zmv`. If you want to disable that so you can configure it with another plugin or on your own, run `zqs disable-zmv-autoloading`.
 
 ### Disabling oh-my-zsh
 
