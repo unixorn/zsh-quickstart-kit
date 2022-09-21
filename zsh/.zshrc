@@ -668,7 +668,7 @@ else
   source ~/.p10k.zsh
 fi
 
-if [[ -z "$DONT_PRINT_SSH_KEY_LIST" ]]; then
+if [[ $(_zqs-get-setting list-ssh-keys true) == 'true' ]]; then
   echo
   echo "Current SSH Keys:"
   ssh-add -l
@@ -708,6 +708,8 @@ function zqs-help() {
   echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs disable-ssh-key-listing - Set the quickstart to not display all the loaded ssh keys"
+  echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. Default behavior."
   echo "zqs disable-zmv-autoloading - Set the quickstart to not run 'autoload -U zmv'. Useful if you're using another plugin to handle it."
   echo "zqs enable-zmv-autoloading - Set the quickstart to run 'autoload -U zmv'. Default behavior."
   echo "zqs delete-setting SETTINGNAME - Remove a zqs setting file"
@@ -737,6 +739,12 @@ function zqs() {
       ;;
     'enable-omz-plugins')
       zsh-quickstart-enable-omz-plugins
+      ;;
+    'enable-ssh-key-listing')
+      _zqs-set-setting list-ssh-keys true
+      ;;
+    'disable-ssh-key-listing')
+      _zqs-set-setting list-ssh-keys false
       ;;
     'selfupdate')
       _update-zsh-quickstart
