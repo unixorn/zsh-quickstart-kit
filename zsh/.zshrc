@@ -283,7 +283,7 @@ load-our-ssh-keys() {
 
       # check if Monterey or higher
       # https://scriptingosx.com/2020/09/macos-version-big-sur-update/
-      if [[ $(sw_vers -buildVersion) > "21" ]]; then
+      if [[ $(sw_vers -productVersion | cut -d '.' -f 1) -ge "12" ]]; then
         # Load all ssh keys that have pass phrases stored in macOS keychain using new flags
         ssh-add --apple-load-keychain
       else ssh-add -qA
