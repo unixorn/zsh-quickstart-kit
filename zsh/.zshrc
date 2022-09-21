@@ -132,14 +132,20 @@ function _zqs-update-stale-settings-files() {
   if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
     _zqs-set-setting bullet-train true
     rm -f ~/.zsh-quickstart-use-bullet-train
-    echo "Converted old ~/.zsh-quickstart-use-bullet-train to new settings format"
+    echo "Converted old ~/.zsh-quickstart-use-bullet-train to new settings system"
   fi
   if [[ -f ~/.zsh-quickstart-no-omz ]]; then
     _zqs-set-setting load-omz-plugins false
     rm -f ~/.zsh-quickstart-no-omz
-    echo "Converted old ~/.zsh-quickstart-no-omz to new settings format"
+    echo "Converted old ~/.zsh-quickstart-no-omz to new settings system"
+  fi
+  if [[ -f ~/.zsh-quickstart-no-zmv ]]; then
+    _zqs-set-setting no-zmv true
+    rm -f ~/.zsh-quickstart-no-zmv
+    echo "Converted old ~/.zsh-quickstart-no-zmv to new settings system"
   fi
 }
+
 _zqs-update-stale-settings-files
 
 # Add some quickstart feature toggle functions
@@ -165,6 +171,14 @@ function zsh-quickstart-disable-bindkey-handling() {
 
 function zsh-quickstart-enable-bindkey-handling() {
   _zqs-set-setting handle-bindkeys true
+}
+
+function _zqs-enable-zmv-autoloading() {
+  _zqs-set-setting no-zmv false
+}
+
+function _zqs-disable-zmv-autoloading() {
+  _zqs-set-setting no-zmv true
 }
 
 function zsh-quickstart-disable-omz-plugins() {
@@ -544,7 +558,7 @@ if [[ -d ~/.zsh-completions ]]; then
 fi
 
 # Load zmv
-if [[ ! -f ~/.zsh-quickstart-no-zmv ]]; then
+if [[ $(_zqs-get-setting no-zmv false) == 'false' ]]; then
   autoload -U zmv
 fi
 
@@ -654,7 +668,7 @@ else
   source ~/.p10k.zsh
 fi
 
-if [[ -z "$DONT_PRINT_SSH_KEY_LIST" ]]; then
+if [[ $(_zqs-get-setting list-ssh-keys true) == 'true' ]]; then
   echo
   echo "Current SSH Keys:"
   ssh-add -l
@@ -694,6 +708,10 @@ function zqs-help() {
   echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs disable-ssh-key-listing - Set the quickstart to not display all the loaded ssh keys"
+  echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. Default behavior."
+  echo "zqs disable-zmv-autoloading - Set the quickstart to not run 'autoload -U zmv'. Useful if you're using another plugin to handle it."
+  echo "zqs enable-zmv-autoloading - Set the quickstart to run 'autoload -U zmv'. Default behavior."
   echo "zqs delete-setting SETTINGNAME - Remove a zqs setting file"
   echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
   echo "zqs set-setting SETTINGNAME value - Set an arbitrary zqs setting"
@@ -710,11 +728,23 @@ function zqs() {
     'enable-bindkey-handling')
       zsh-quickstart-enable-bindkey-handling
       ;;
+    'disable-zmv-autoloading')
+      _zqs-disable-zmv-autoloading
+      ;;
+    'enable-zmv-autoloading')
+      _zqs-enable-zmv-autoloading
+      ;;
     'disable-omz-plugins')
       zsh-quickstart-disable-omz-plugins
       ;;
     'enable-omz-plugins')
       zsh-quickstart-enable-omz-plugins
+      ;;
+    'enable-ssh-key-listing')
+      _zqs-set-setting list-ssh-keys true
+      ;;
+    'disable-ssh-key-listing')
+      _zqs-set-setting list-ssh-keys false
       ;;
     'selfupdate')
       _update-zsh-quickstart

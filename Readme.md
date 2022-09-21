@@ -29,9 +29,16 @@
       - [zqs-enable-bindkey-handling](#zqs-enable-bindkey-handling)
       - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
       - [zqs enable-omz-plugins](#zqs-enable-omz-plugins)
+      - [zqs-disable-ssh-key-listing](#zqs-disable-ssh-key-listing)
+      - [zqs-enable-ssh-key-listing](#zqs-enable-ssh-key-listing)
+      - [zqs-disable-zmv-autoloading](#zqs-disable-zmv-autoloading)
+      - [zqs-enable-zmv-autoloading](#zqs-enable-zmv-autoloading)
       - [zqs selfupdate](#zqs-selfupdate)
       - [zqs update](#zqs-update)
       - [zqs update-plugins](#zqs-update-plugins)
+      - [zqs get-setting](#zqs-get-setting)
+      - [zqs set-setting](#zqs-set-setting)
+      - [zqs delete-setting](#zqs-delete-setting)
   - [Functions and Aliases](#functions-and-aliases)
     - [Customizing with ~/.zshrc.d](#customizing-with-zshrcd)
   - [I like a plugin, but some of the aliases and functions it installs overwrite other commands or aliases I use](#i-like-a-plugin-but-some-of-the-aliases-and-functions-it-installs-overwrite-other-commands-or-aliases-i-use)
@@ -42,6 +49,7 @@
   - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
 - [FAQ](#faq)
   - [How do I reconfigure the prompt?](#how-do-i-reconfigure-the-prompt)
+  - [Powerlevel 10k warns that there is console output during startup](#powerlevel-10k-warns-that-there-is-console-output-during-startup)
   - [I added a new completion plugin, and it isn't working](#i-added-a-new-completion-plugin-and-it-isnt-working)
   - [I get a git error when I try to update the kit](#i-get-a-git-error-when-i-try-to-update-the-kit)
   - [GNU stow is warning that stowing zsh would cause conflicts](#gnu-stow-is-warning-that-stowing-zsh-would-cause-conflicts)
@@ -220,6 +228,7 @@ Disable `bindkey` setup and alias expansion in the quickstart `.zshrc` so people
 ##### zqs-enable-bindkey-handling
 
 Let the quickstart's `.zshrc` configure `bindkey` setup and alias expansion. This is the default behavior.
+
 ##### zqs disable-omz-plugins
 
 Set the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
@@ -227,6 +236,22 @@ Set the quickstart to not include any oh-my-zsh plugins from the standard plugin
 ##### zqs enable-omz-plugins
 
 Sets the quickstart to include the oh-my-zsh plugins from the standard plugin list.
+
+##### zqs-disable-ssh-key-listing
+
+Don't print the loaded `ssh` keys when creating a new session.
+
+##### zqs-enable-ssh-key-listing
+
+Print the loaded `ssh` keys when creating a new session. This is the default behavior.
+
+##### zqs-disable-zmv-autoloading
+
+Don't run `autoload -U zmv` when creating a new session.
+
+##### zqs-enable-zmv-autoloading
+
+Run `autoload -U zmv` when creating a new session. This is the default behavior.
 
 ##### zqs selfupdate
 
@@ -244,11 +269,11 @@ Updates all your plugins.
 
 `zqs get-setting NAME [OPTIONAL default value]` prints the value of a `zqs` setting, or if unset and a default value was passed, the specified default.
 
-##### zs set-setting
+##### zqs set-setting
 
 `zqs set-setting NAME VALUE` writes a setting.
 
-##### zs delete-setting
+##### zqs delete-setting
 
 `zqs delete-setting NAME` deletes a setting from `zqs`'s crude parameter store.
 
@@ -302,7 +327,7 @@ Copy that to your `$HOME/.zsh-quickstart-local-plugins`, change the list, and th
 
 ### Disabling zmv
 
-The quickstart automatically autoloads `zmv`. If you want to disable that, create a file named `.zsh-quickstart-no-zmv` in your home directory.
+The quickstart automatically autoloads `zmv`. If you want to disable that so you can configure it with another plugin or on your own, run `zqs disable-zmv-autoloading`.
 
 ### Disabling oh-my-zsh
 
