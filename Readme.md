@@ -27,10 +27,12 @@
       - [zqs check-for-updates](#zqs-check-for-updates)
       - [zqs-disable-bindkey-handling](#zqs-disable-bindkey-handling)
       - [zqs-enable-bindkey-handling](#zqs-enable-bindkey-handling)
-      - [zqs-disable-ssh-key-listing](#zqs-disable-ssh-key-listing)
-      - [zqs-enable-ssh-key-listing](#zqs-enable-ssh-key-listing)
       - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
       - [zqs enable-omz-plugins](#zqs-enable-omz-plugins)
+      - [zqs-disable-ssh-key-listing](#zqs-disable-ssh-key-listing)
+      - [zqs-enable-ssh-key-listing](#zqs-enable-ssh-key-listing)
+      - [zqs-disable-zmv-autoloading](#zqs-disable-zmv-autoloading)
+      - [zqs-enable-zmv-autoloading](#zqs-enable-zmv-autoloading)
       - [zqs selfupdate](#zqs-selfupdate)
       - [zqs update](#zqs-update)
       - [zqs update-plugins](#zqs-update-plugins)
@@ -227,6 +229,14 @@ Disable `bindkey` setup and alias expansion in the quickstart `.zshrc` so people
 
 Let the quickstart's `.zshrc` configure `bindkey` setup and alias expansion. This is the default behavior.
 
+##### zqs disable-omz-plugins
+
+Set the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
+
+##### zqs enable-omz-plugins
+
+Sets the quickstart to include the oh-my-zsh plugins from the standard plugin list.
+
 ##### zqs-disable-ssh-key-listing
 
 Don't print the loaded `ssh` keys when creating a new session.
@@ -235,13 +245,13 @@ Don't print the loaded `ssh` keys when creating a new session.
 
 Print the loaded `ssh` keys when creating a new session. This is the default behavior.
 
-##### zqs disable-omz-plugins
+##### zqs-disable-zmv-autoloading
 
-Set the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
+Don't run `autoload -U zmv` when creating a new session.
 
-##### zqs enable-omz-plugins
+##### zqs-enable-zmv-autoloading
 
-Sets the quickstart to include the oh-my-zsh plugins from the standard plugin list.
+Run `autoload -U zmv` when creating a new session. This is the default behavior.
 
 ##### zqs selfupdate
 
