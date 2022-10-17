@@ -257,6 +257,13 @@ if [[ -z "$LS_COLORS" ]]; then
   export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 fi
 
+if [[ $(_zqs-get-setting ssh-askpass-require true) == 'true' ]]; then
+  echo
+  echo "Setting SSH_ASKPASS_REQUIRE=never,\nthis will prompt for your ssh passphrase at the command line"
+  export SSH_ASKPASS_REQUIRE=never
+  echo
+fi
+
 load-our-ssh-keys() {
   # If keychain is installed let it take care of ssh-agent, else do it manually
   if can_haz keychain; then
@@ -708,6 +715,8 @@ function zqs-help() {
   echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs enable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase on the command line."
+  echo "zqs disable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase via a gui program. Default behavior"
   echo "zqs disable-ssh-key-listing - Set the quickstart to not display all the loaded ssh keys"
   echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. Default behavior."
   echo "zqs disable-zmv-autoloading - Set the quickstart to not run 'autoload -U zmv'. Useful if you're using another plugin to handle it."
@@ -739,6 +748,12 @@ function zqs() {
       ;;
     'enable-omz-plugins')
       zsh-quickstart-enable-omz-plugins
+      ;;
+    'enable-ssh-askpass-require')
+      _zqs-set-setting ssh-askpass-require true
+      ;;
+    'disable-ssh-askpass-require')
+      _zqs-set-setting ssh-askpass-require false
       ;;
     'enable-ssh-key-listing')
       _zqs-set-setting list-ssh-keys true
