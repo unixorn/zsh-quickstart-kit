@@ -412,3 +412,13 @@ Confirm that `ssh-agent` is running. If not, Rob Montero has a good [blog post](
 ### Vim
 
 If you're using vim, [spf13](http://vim.spf13.com/) is an excellent starter configuration and plugin collection.
+
+## Thanks
+
+Many thanks to all the contributors over the years who've helped make the quickstart better.
+
+<a href="https://github.com/unixorn/zsh-quickstart-kit/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=unixorn/zsh-quickstart-kit" />
+</a>
+
+Made with [contributors-img](https://contributors-img.web.app).
