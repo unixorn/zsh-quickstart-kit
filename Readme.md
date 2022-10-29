@@ -32,7 +32,7 @@
         - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
         - [zqs enable-omz-plugins](#zqs-enable-omz-plugins)
         - [zqs enable-ssh-askpass-require](#zqs-enable-ssh-askpass-require)
-        - [zqs diasble-ssh-askpass-require](#zqs-diasble-ssh-askpass-require)
+        - [zqs disable-ssh-askpass-require](#zqs-disable-ssh-askpass-require)
         - [zqs-disable-ssh-key-listing](#zqs-disable-ssh-key-listing)
         - [zqs-enable-ssh-key-listing](#zqs-enable-ssh-key-listing)
         - [zqs-disable-zmv-autoloading](#zqs-disable-zmv-autoloading)

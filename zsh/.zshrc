@@ -193,6 +193,27 @@ function zsh-quickstart-enable-omz-plugins() {
   _zqs-trigger-init-rebuild
 }
 
+function zsh-quickstart-enable-ssh-askpass-require() {
+  zsh-quickstart-check-for-ssh-askpass()
+  _zqs-set-setting ssh-askpass-require true
+  export SSH_ASKPASS_REQUIRE=never
+}
+
+function zsh-quickstart-disable-ssh-askpass-require() {
+  _zqs-set-setting ssh-askpass-require false
+}
+
+function zsh-quickstart-check-for-ssh-askpass() {
+  if ! can_haz ssh-askpass; then
+    echo "You'll need to install ssh-askpass for the quickstart to prompt,"
+    echo "for your ssh key/s passphrase on shell startup."
+    echo "This is the default behavior for ssh-add."
+    echo  $(tput setaf 2)"https://www.man7.org/linux/man-pages/man1/ssh-add.1.html#ENVIRONMENT"$(tput sgr0)
+    echo "If you would like the prompt in your shell on startup."
+    echo "Enable the following zqs setting:"
+    echo $(tput setaf 2)"zqs enable-ssh-askpass-require true"$(tput sgr0)
+  fi
+}
 # Correct spelling for commands
 setopt correct
 
@@ -257,13 +278,6 @@ if [[ -z "$LS_COLORS" ]]; then
   export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 fi
 
-if [[ $(_zqs-get-setting ssh-askpass-require true) == 'true' ]]; then
-  echo
-  echo "Setting SSH_ASKPASS_REQUIRE=never,\nthis will prompt for your ssh passphrase at the command line"
-  export SSH_ASKPASS_REQUIRE=never
-  echo
-fi
-
 load-our-ssh-keys() {
   # If keychain is installed let it take care of ssh-agent, else do it manually
   if can_haz keychain; then
@@ -322,6 +336,7 @@ load-our-ssh-keys() {
 
 if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   # We're not on a remote machine, so load keys
+  zsh-quickstart-check-for-ssh-askpass
   load-our-ssh-keys
 fi
 
@@ -750,10 +765,10 @@ function zqs() {
       zsh-quickstart-enable-omz-plugins
       ;;
     'enable-ssh-askpass-require')
-      _zqs-set-setting ssh-askpass-require true
+      zsh-quickstart-enable-ssh-askpass-require
       ;;
     'disable-ssh-askpass-require')
-      _zqs-set-setting ssh-askpass-require false
+      zsh-quickstart-disable-ssh-askpass-require
       ;;
     'enable-ssh-key-listing')
       _zqs-set-setting list-ssh-keys true
