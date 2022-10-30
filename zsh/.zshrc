@@ -194,7 +194,7 @@ function zsh-quickstart-enable-omz-plugins() {
 }
 
 function zsh-quickstart-enable-ssh-askpass-require() {
-  zsh-quickstart-check-for-ssh-askpass()
+  zsh-quickstart-check-for-ssh-askpass
   _zqs-set-setting ssh-askpass-require true
   export SSH_ASKPASS_REQUIRE=never
 }
