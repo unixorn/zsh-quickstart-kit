@@ -13,7 +13,7 @@ The **ZSH Quickstart Kit** is a batteries-included starter kit for using `zsh`.
 
 ## Contribution Guidelines
 
-Please only add scripts that have a license attached. I'd prefer to avoid the gray area of unlicensed code.
+Please only add scripts that have a license attached. I want to avoid the gray area of unlicensed code.
 
 ## New Features
 
@@ -21,4 +21,6 @@ Please open an issue before starting to code so we can discuss the new feature, 
 
 When adding a new feature, please also add `zqs-enable-featurename` and `zqs-disable-featurename` functions to `.zshrc`, and also update the `zqs-help` function. New features should use the `_zqs-get-setting` and `_zqs-set-setting` functions to load any settings they need instead of directly creating cookie files.
 
-Please update the README to include instructions for your new feature.
+## Readme
+
+Please update the README to include instructions for your new feature. You don't have to bother with updating the TOC, I'll do that with `doctoc` after merging your PR.
