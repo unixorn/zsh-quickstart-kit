@@ -205,17 +205,16 @@ function zsh-quickstart-enable-ssh-askpass-require() {
 
 function zsh-quickstart-disable-ssh-askpass-require() {
   _zqs-set-setting ssh-askpass-require false
+  zsh-quickstart-check-for-ssh-askpass
 }
 
 function zsh-quickstart-check-for-ssh-askpass() {
   if ! can_haz ssh-askpass; then
+    echo "If you disable the ssh-askpass-require feature."
     echo "You'll need to install ssh-askpass for the quickstart to prompt,"
     echo "for your ssh key/s passphrase on shell startup."
-    echo "This is the default behavior for ssh-add."
-    echo  $(tput setaf 2)"https://www.man7.org/linux/man-pages/man1/ssh-add.1.html#ENVIRONMENT"$(tput sgr0)
-    echo "If you would like the prompt in your shell on startup."
-    echo "Enable the following zqs setting:"
-    echo $(tput setaf 2)"zqs enable-ssh-askpass-require true"$(tput sgr0)
+    echo "This is the default behavior for ssh-add:"
+    echo $(tput setaf 2)"https://www.man7.org/linux/man-pages/man1/ssh-add.1.html#ENVIRONMENT"$(tput sgr0)
   fi
 }
 # Correct spelling for commands
@@ -342,8 +341,6 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   # We're not on a remote machine, so load keys
   if [[ "$(_zqs-get-setting ssh-askpass-require)" == 'true' ]]; then
     zsh-quickstart-set-ssh-askpass-require
-  else
-    zsh-quickstart-check-for-ssh-askpass
   fi
   load-our-ssh-keys
 fi
