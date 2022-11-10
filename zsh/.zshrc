@@ -200,11 +200,11 @@ function zsh-quickstart-set-ssh-askpass-require() {
 }
 
 function zsh-quickstart-enable-ssh-askpass-require() {
-  _zqs-set-setting ssh-askpass-require true
+  _zqs-set-setting enable-ssh-askpass-require true
 }
 
 function zsh-quickstart-disable-ssh-askpass-require() {
-  _zqs-set-setting ssh-askpass-require false
+  _zqs-set-setting enable-ssh-askpass-require false
   zsh-quickstart-check-for-ssh-askpass
 }
 
