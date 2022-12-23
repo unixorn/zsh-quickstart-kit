@@ -213,7 +213,7 @@ Running the following commands will toggle behavior the next time you start a sh
 * Prompt selectors - We now use the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt. I won't change the prompt out from under people without a way for them to get the old behavior, so there are commands to switch back and forth.
   * `zsh-quickstart-select-powerlevel10k` -  Switch to the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt now used as the kit's default.
   * `zsh-quickstart-select-bullet-train` - Switch back to the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt originally used in the kit.
-* You can disable printing the list of `ssh` keys by setting `DONT_PRINT_SSH_KEY_LIST` in a file in `~/.zshrc.d`.
+* You can disable printing the list of `ssh` keys by executing `zqs disable-ssh-key-listing`.
 * `bash` prints `^C` when you're typing a command and control-c to cancel, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I like seeing the `^C`, so by default, the quickstart traps `SIGINT` and prints the `^C`. You can disable this by exporting `ZSH_QUICKSTART_SKIP_TRAPINT='false'` in one of the files in `~/.zshrc.d`.
 
 #### zqs
