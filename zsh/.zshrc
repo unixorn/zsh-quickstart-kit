@@ -533,15 +533,6 @@ if [[ -r "$GRC_SETUP" ]]; then
 fi
 unset GRC_SETUP
 
-if (( $+commands[grc] ))
-then
-  function ping5(){
-    grc --color=auto ping -c 5 "$@"
-  }
-else
-  alias ping5='ping -c 5'
-fi
-
 # These need to be done after $PATH is set up so we can find
 # grc and exa
 
