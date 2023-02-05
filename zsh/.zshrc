@@ -1,4 +1,4 @@
-# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2023 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 #
@@ -516,22 +516,6 @@ if [ "$TERM" = "screen" -a ! "$SHOWED_SCREEN_MESSAGE" = "true" ]; then
     echo "+---------------------------------------+"
   fi
 fi
-
-# grc colorizes the output of a lot of commands. If the user installed it,
-# use it.
-
-# Try and find the grc setup file
-if (( $+commands[grc] )); then
-  GRC_SETUP='/usr/local/etc/grc.bashrc'
-fi
-if (( $+commands[grc] )) && (( $+commands[brew] ))
-then
-  GRC_SETUP="$(brew --prefix)/etc/grc.bashrc"
-fi
-if [[ -r "$GRC_SETUP" ]]; then
-  source "$GRC_SETUP"
-fi
-unset GRC_SETUP
 
 # These need to be done after $PATH is set up so we can find
 # grc and exa
