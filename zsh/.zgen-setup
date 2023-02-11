@@ -128,6 +128,19 @@ load-starter-plugin-list() {
   # in a repository securely by encrypting them with gnupg.
   zgenom load StackExchange/blackbox
 
+  if [[ -f ~/.zqs-additional-plugins ]]; then
+    separator='\n'
+    plugins=(${(ps.$separator.)$(cat ~/.zqs-additional-plugins)})
+
+    for plugin in $plugins; do
+      zgenom load "$plugin"
+    done
+
+    unset plugin
+    unset plugins
+    unset separator
+  fi
+
   if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
     # Load some oh-my-zsh plugins
     zgenom oh-my-zsh plugins/pip
