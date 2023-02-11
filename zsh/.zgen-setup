@@ -129,7 +129,8 @@ load-starter-plugin-list() {
   zgenom load StackExchange/blackbox
 
   if [[ -f ~/.zqs-additional-plugins ]]; then
-    readarray ~/.zqs-additional-plugins plugins
+    separator='\n'
+    plugins=(${(ps.$separator.)$(cat ~/.zqs-additional-plugins)})
 
     for plugin in $plugins; do
       zgenom load "$plugin"
@@ -138,7 +139,8 @@ load-starter-plugin-list() {
     zgenom save
 
     unset plugin
-    unset newplugins
+    unset plugins
+    unset separator
   fi
 
   if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
