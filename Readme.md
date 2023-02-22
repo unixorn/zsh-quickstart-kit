@@ -387,7 +387,7 @@ From https://github.com/unixorn/zsh-quickstart-kit
     Aborting
 ```
 
-This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and to let you customize your ZSH settings without maintaining your own fork, the kit-provided `.zshrc` will load any files it finds in `~/.zshrc.d`.
+This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and to let you customize your ZSH settings without being forced to maintain your own fork of the kit, the kit-provided `.zshrc` will load any files it finds in `~/.zshrc.d`.
 
 ### GNU stow is warning that stowing zsh would cause conflicts
 
@@ -408,6 +408,17 @@ This has been solved by running `zgen update` or switching to [zgenom](https://g
 ### Could not open a connection to your authentication agent
 
 Confirm that `ssh-agent` is running. If not, Rob Montero has a good [blog post](https://rob.cr/blog/using-ssh-agent-mac-os-x/) on setting up `ssh-agent` on macOS, and here are [instructions](https://wiki.archlinux.org/title/SSH_keys#Start_ssh-agent_with_systemd_user) for starting `ssh-agent` with `systemd` on Linux.
+
+### I want to pin a plugin version
+
+The plugin standard doesn't include a standard way of determining a version. If you need to pin a version of a plugin, the easiest way to do it is to fork the plugin's repository and then have your `~/.zsh-quickstart-local-plugins` refer to that.
+
+If you don't want to maintain a fork, you can also have `zgenom` load from a local directory. So clone the repository, then add something like
+```sh
+zgenom load ~/path/to/your/copy/of/example.plugin.zsh
+```
+
+Then you can tag working versions, pull from upstream for testing, and if the upstream doesn't work for you, check out your `last-working-version` tag, and `zgenom` will use your tagged version instead of the tip of the default branch.
 
 ## Other Resources
 
