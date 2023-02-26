@@ -2,34 +2,13 @@
 #
 # Only including a shebang to trigger editors shell syntax highlighting
 #
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 #
 # If you want to customize these, the best thing to do is override them
 # with a shell fragment in ~/.zshrc.d, then you don't have to maintain
 # your own fork of the quickstart kit
-
-# Add some quickstart toggle functions
-function zsh-quickstart-select-bullet-train() {
-  touch ~/.zsh-quickstart-use-bullet-train
-  rm -f ~/.zgen/init.zsh
-}
-
-function zsh-quickstart-select-powerlevel10k() {
-  rm -f ~/.zsh-quickstart-use-bullet-train
-  rm -f ~/.zgen/init.zsh
-}
-
-function zsh-quickstart-disable-omz-plugins() {
-  touch ~/.zsh-quickstart-no-omz
-  rm -f ~/.zgen/init.zsh
-}
-
-function zsh-quickstart-enable-omz-plugins() {
-  rm -f ~/.zsh-quickstart-no-omz
-  rm -f ~/.zgen/init.zsh
-}
 
 function exists() {
   if (( $+commands[$1] )); then return 0; else return 1; fi
@@ -40,13 +19,17 @@ function ff() {
   find . -type f -iname '*'$@'*' -ls
 }
 
-function hgrep_full() {
-  history | egrep --color -i "$@"
+function hgrep-full() {
+  if can_haz egrep; then
+    history | egrep --color -i "$@"
+  else
+    history | grep -i "$@"
+  fi
 }
 
 # easier to type, leaving hgrep_full for backwards compatibility
-function hgrep-full() {
-  hgrep_full "$@"
+function hgrep_full() {
+  hgrep-full "$@"
 }
 
 function envgrep() {
@@ -66,8 +49,21 @@ function man() {
       man "$@"
 }
 
-# From commandlinefu.com
-function watch() { t=$1; shift; while test :; do clear; date=$(date); echo -e "Every $ts: $@ \t\t\t\t $date"; $@; sleep $t; done }
+if ! can_haz watch; then
+  # From commandlinefu.com
+  function watch () {
+    t="$1"
+    shift
+    while test :
+    do
+      clear
+      date=$(date)
+      echo -e "Every $ts: $@ \t\t\t\t $date"
+      $@
+      sleep "$t"
+    done
+  }
+fi
 
 # scp file to machine you're sshing into this machine from
 function mecp() {
@@ -78,41 +74,57 @@ function calc() {
   awk "BEGIN{ print $* }" ;
 }
 
-function get_nr_jobs() {
+function get-nr-jobs() {
   jobs | wc -l
 }
+alias get_nr_jobs="get-nr-jobs"
 
 function get_load() {
   uptime | awk '{print $11}' | tr ',' ' '
 }
 
-function mtr_url() {
-  host=$(ruby -ruri -e "puts (URI.parse('$1').host or '$1')")
-  sudo mtr -t $host
+function mtr-url() {
+  if can_haz mtr; then
+    host=$(ruby -ruri -e "puts (URI.parse('$1').host or '$1')")
+    sudo mtr -t "$host"
+  else
+    echo 'Cannot find mtr in your PATH - install it and try again'
+  fi
 }
+alias mtr_url="mtr-url"
 
 function fix_tmux_ssh_agent() {
-  for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
-    if (tmux show-environment | grep "^${key}" > /dev/null); then
-      value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
-      export ${key}="${value}"
-    fi
-  done
+  if can_haz tmux; then
+    for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
+      if (tmux show-environment | grep "^${key}" > /dev/null); then
+        value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
+        export ${key}="${value}"
+      fi
+    done
+  else
+    echo "Can't find tmux in your PATH. Install it and try again."
+  fi
 }
 
-# Probe a /24 for hosts
 function scan24() {
-  nmap -sP ${1}/24
+  if can_haz nmap; then
+    # Probe a /24 for hosts
+    nmap -sP ${1}/24
+  else
+    echo "Can't find nmap in your PATH - install it and try again."
+  fi
 }
 
-# Netjoin - Block until a network connection is obtained.
-# Originally from https://github.com/bamos/dotfiles/blob/master/.funcs
-function nj() {
-  while true; do
-    ping -c 1 8.8.8.8 &> /dev/null && break
-    sleep 1
-  done
-}
+if ! can_haz nj; then
+  # Netjoin - Block until a network connection is obtained.
+  # Originally from https://github.com/bamos/dotfiles/blob/master/.funcs
+  function nj() {
+    while true; do
+      ping -c 1 8.8.8.8 &> /dev/null && break
+      sleep 1
+    done
+  }
+fi
 
 # lists zombie processes
 function zombie() {
@@ -127,7 +139,11 @@ function htmime() {
     print "USAGE: htmime <URL>"
     return 1
   fi
-  mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
+  if can_haz curl; then
+    mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
+  else
+    echo "Can't find curl in your PATH"
+  fi
   print $mime
 }
 
@@ -143,5 +159,6 @@ function httpserver() {
 # Honor old .zsh_functions.local customizations, but print depecation warning.
 if [ -f ~/.zsh_functions.local ]; then
   source .zsh_functions.local
-  echo ".zsh_functions.local is deprecated. Make entries in ~/.zshrc.d instead."
+  echo ".zsh_functions.local is deprecated and will stop working after June 1st, 2022."
+  echo "Make entries in ~/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi

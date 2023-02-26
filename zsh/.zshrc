@@ -1,4 +1,4 @@
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2023 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 #
@@ -14,7 +14,8 @@
 # Version 1.0.0
 #
 # If you want to change settings that are in this file, the easiest way
-# to do it is by adding a file to ~/.zshrc.d that redefines the sttings.
+# to do it is by adding a file to ~/.zshrc.d or ~/.zshrc.pre-plugins.d that
+# redefines the settings.
 #
 # All files in there will be sourced, and keeping your customizations
 # there will keep you from having to maintain a separate fork of the
@@ -24,6 +25,11 @@
 function can_haz() {
   which "$@" > /dev/null 2>&1
 }
+
+# Fix weirdness with intellij
+if [[ -z "${INTELLIJ_ENVIRONMENT_READER}" ]]; then
+    export POWERLEVEL9K_INSTANT_PROMPT='quiet'
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -38,9 +44,179 @@ if [[ -r ~/.powerlevel9k_font_mode ]]; then
   POWERLEVEL9K_MODE=$(head -1 ~/.powerlevel9k_font_mode)
 fi
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Unset COMPLETION_WAITING_DOTS in a file in ~/.zshrc.d if you want red dots to be displayed while waiting for completion
 export COMPLETION_WAITING_DOTS="true"
 
+# Provide a unified way for the quickstart to get/set settings.
+if [[ -f ~/.zqs-settings-path ]]; then
+  _ZQS_SETTINGS_DIR=$(cat ~/.zqs-settings-path)
+else
+  _ZQS_SETTINGS_DIR="${HOME}/.zqs-settings"
+fi
+export _ZQS_SETTINGS_DIR
+
+# _zqs-* functions are internal tooling for the quickstart. Modifying or unsetting
+# them is likely to break things badly.
+
+_zqs-trigger-init-rebuild() {
+  rm -f ~/.zgen/init.zsh
+  rm -f ~/.zgenom/init.zsh
+}
+
+# We need to load shell fragment files often enough to make it a function
+function load-shell-fragments() {
+  if [[ -z $1 ]]; then
+    echo "You must give load-shell-fragments a directory path"
+  else
+    if [[ -d "$1" ]]; then
+      if [ -n "$(/bin/ls -A $1)" ]; then
+        for _zqs_fragment in $(/bin/ls -A $1)
+        do
+          if [ -r $1/$_zqs_fragment ]; then
+            source $1/$_zqs_fragment
+          fi
+        done
+        unset _zqs_fragment
+      fi
+    else
+      echo "$1 is not a directory"
+    fi
+  fi
+}
+
+# Settings names have to be valid file names, and we're not doing any parsing here.
+_zqs-get-setting() {
+  # If there is a $2, we return that as the default value if there's
+  # no settings file.
+  local sfile="${_ZQS_SETTINGS_DIR}/${1}"
+  if [[ -f "$sfile" ]]; then
+    svalue=$(cat "$sfile")
+  else
+    if [[ $# -eq 2 ]]; then
+      svalue=$2
+    else
+      svalue=''
+    fi
+  fi
+  echo "$svalue"
+}
+
+_zqs-set-setting() {
+  if [[ $# -eq 2 ]]; then
+    mkdir -p "$_ZQS_SETTINGS_DIR"
+    echo "$2" > "${_ZQS_SETTINGS_DIR}/$1"
+  else
+    echo "Usage _zqs-set-setting-value SETTINGNAME VALUE"
+  fi
+}
+
+_zqs-delete-setting(){
+  # We want to keep output clean when settings are cleared internally, so
+  # use a separate function when called by a human we can display a warning
+  # if the setting doesn't exist.
+  local sfile="${_ZQS_SETTINGS_DIR}/${1}"
+  if [[ -f "$sfile" ]]; then
+    rm -f "$sfile"
+  else
+    echo "There is no settings file for ${1}"
+  fi
+}
+
+_zqs-purge-setting() {
+  local sfile="${_ZQS_SETTINGS_DIR}/${1}"
+  rm -f "$sfile"
+}
+
+# Convert the old settings files into new style settings
+function _zqs-update-stale-settings-files() {
+  if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+    _zqs-set-setting bullet-train true
+    rm -f ~/.zsh-quickstart-use-bullet-train
+    echo "Converted old ~/.zsh-quickstart-use-bullet-train to new settings system"
+  fi
+  if [[ -f ~/.zsh-quickstart-no-omz ]]; then
+    _zqs-set-setting load-omz-plugins false
+    rm -f ~/.zsh-quickstart-no-omz
+    echo "Converted old ~/.zsh-quickstart-no-omz to new settings system"
+  fi
+  if [[ -f ~/.zsh-quickstart-no-zmv ]]; then
+    _zqs-set-setting no-zmv true
+    rm -f ~/.zsh-quickstart-no-zmv
+    echo "Converted old ~/.zsh-quickstart-no-zmv to new settings system"
+  fi
+}
+
+_zqs-update-stale-settings-files
+
+# Add some quickstart feature toggle functions
+function zsh-quickstart-select-bullet-train() {
+  _zqs-set-setting bullet-train true
+  _zqs-set-setting powerlevel10k false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-select-powerlevel10k() {
+  rm -f ~/.zsh-quickstart-use-bullet-train
+  _zqs-set-setting powerlevel10k true
+  _zqs-set-setting bullet-train false
+  _zqs-trigger-init-rebuild
+}
+
+# Binary feature settings functions should always be named
+# zsh-quickstart-disable-FEATURE and zsh-quickstart-enable-FEATURE
+
+function zsh-quickstart-disable-bindkey-handling() {
+  _zqs-set-setting handle-bindkeys false
+}
+
+function zsh-quickstart-enable-bindkey-handling() {
+  _zqs-set-setting handle-bindkeys true
+}
+
+function _zqs-enable-zmv-autoloading() {
+  _zqs-set-setting no-zmv false
+}
+
+function _zqs-disable-zmv-autoloading() {
+  _zqs-set-setting no-zmv true
+}
+
+function zsh-quickstart-disable-omz-plugins() {
+  rm -f ~/.zsh-quickstart-no-omz
+  _zqs-set-setting load-omz-plugins false
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-enable-omz-plugins() {
+  rm -f ~/.zsh-quickstart-no-omz
+  _zqs-set-setting load-omz-plugins true
+  _zqs-trigger-init-rebuild
+}
+
+function zsh-quickstart-set-ssh-askpass-require() {
+  if [[ $(_zqs-get-setting ssh-askpass-require) == 'true' ]]; then
+    export SSH_ASKPASS_REQUIRE=never
+  fi
+}
+
+function zsh-quickstart-enable-ssh-askpass-require() {
+  _zqs-set-setting enable-ssh-askpass-require true
+}
+
+function zsh-quickstart-disable-ssh-askpass-require() {
+  _zqs-set-setting enable-ssh-askpass-require false
+  zsh-quickstart-check-for-ssh-askpass
+}
+
+function zsh-quickstart-check-for-ssh-askpass() {
+  if ! can_haz ssh-askpass; then
+    echo "If you disable the ssh-askpass-require feature."
+    echo "You'll need to install ssh-askpass for the quickstart to prompt,"
+    echo "for your ssh key/s passphrase on shell startup."
+    echo "This is the default behavior for ssh-add:"
+    echo $(tput setaf 2)"https://www.man7.org/linux/man-pages/man1/ssh-add.1.html#ENVIRONMENT"$(tput sgr0)
+  fi
+}
 # Correct spelling for commands
 setopt correct
 
@@ -48,31 +224,42 @@ setopt correct
 unsetopt correctall
 
 # Base PATH
-PATH="$PATH:/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin"
+PATH="$PATH:/sbin:/usr/sbin:/bin:/usr/bin"
 
 # If you need to add extra directories to $PATH that are not checked for
 # here, add a file in ~/.zshrc.d - then you won't have to maintain a
 # fork of the kit.
 
 # Conditional PATH additions
-for path_candidate in /opt/local/sbin \
-  /Applications/Xcode.app/Contents/Developer/usr/bin \
+for path_candidate in /Applications/Xcode.app/Contents/Developer/usr/bin \
+  /opt/homebrew/bin \
+  /opt/homebrew/sbin \
+  /home/linuxbrew/.linuxbrew/bin \
+  /home/linuxbrew/.linuxbrew/sbin \
   /opt/local/bin \
-  /usr/local/share/npm/bin \
+  /opt/local/sbin \
+  /usr/local/bin \
+  /usr/local/sbin \
   ~/.cabal/bin \
   ~/.cargo/bin \
+  ~/.linuxbrew/bin \
+  ~/.linuxbrew/sbin \
   ~/.rbenv/bin \
   ~/bin \
   ~/src/gocode/bin \
   ~/gocode
 do
   if [[ -d "${path_candidate}" ]]; then
-    export PATH="${PATH}:${path_candidate}"
+    path+=("${path_candidate}")
   fi
 done
+export PATH
+
+# We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
+# added there get deduped too.
 
 # Deal with brew if it's installed. Note - brew can be installed outside
-# of /usr/local, so add its bin and sbin directories.
+# of /usr/local, so use brew --prefix to find its bin and sbin directories.
 if can_haz brew; then
   BREW_PREFIX=$(brew --prefix)
   if [[ -d "${BREW_PREFIX}/bin" ]]; then
@@ -81,41 +268,50 @@ if can_haz brew; then
   if [[ -d "${BREW_PREFIX}/sbin" ]]; then
     export PATH="$PATH:${BREW_PREFIX}/sbin"
   fi
-elif [[ -d /opt/homebrew ]]; then
-  BREW_PREFIX=/opt/homebrew
-  if [[ -d "${BREW_PREFIX}/bin" ]]; then
-    export PATH="$PATH:${BREW_PREFIX}/bin"
-  fi
-  if [[ -d "${BREW_PREFIX}/sbin" ]]; then
-    export PATH="$PATH:${BREW_PREFIX}/sbin"
-  fi
 fi
-
-# We will dedupe $PATH after loading ~/.zshrc.d/* so that any duplicates
-# added there get deduped too.
 
 # Yes, these are a pain to customize. Fortunately, Geoff Greer made an online
 # tool that makes it easy to customize your color scheme and keep them in sync
 # across Linux and OS X/*BSD at http://geoff.greer.fm/lscolors/
 
-export LSCOLORS='Exfxcxdxbxegedabagacad'
-export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
+if [[ -z "$LSCOLORS" ]]; then
+  export LSCOLORS='Exfxcxdxbxegedabagacad'
+fi
+if [[ -z "$LS_COLORS" ]]; then
+  export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
+fi
 
 load-our-ssh-keys() {
   if can_haz op; then export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
   else
+    # If keychain is installed let it take care of ssh-agent, else do it manually
+  if can_haz keychain; then
+    eval `keychain -q --eval`
+  else
     if [ -z "$SSH_AUTH_SOCK" ]; then
-    # Check for a currently running instance of the agent
-    RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
-    if [ "$RUNNING_AGENT" = "0" ]; then
-          # Launch a new instance of the agent
+       # If user has keychain installed, let it take care of ssh-agent, else do it manually
+      # Check for a currently running instance of the agent
+       RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
+       if [ "$RUNNING_AGENT" = "0" ]; then
+          if [ ! -d ~/.ssh ] ; then
+          mkdir -p ~/.ssh
+        fi
+        # Launch a new instance of the agent
           ssh-agent -s &> ~/.ssh/ssh-agent
-    fi
-    eval $(cat ~/.ssh/ssh-agent)
-    fi
+       fi
+       eval $(cat ~/.ssh/ssh-agent)
+      fi
   fi
+  fi
+
+  local key_manager=ssh-add
+
+  if can_haz keychain; then
+    key_manager=keychain
+  fi
+
   # Fun with SSH
-  if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
+  if [ $($key_manager -l | grep -c "The agent has no identities." ) -eq 1 ]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
       # macOS allows us to store ssh key pass phrases in the keychain, so try
       # to load ssh keys using pass phrases stored in the macOS keychain.
@@ -128,41 +324,67 @@ load-our-ssh-keys() {
 
       # check if Monterey or higher
       # https://scriptingosx.com/2020/09/macos-version-big-sur-update/
-      if [[ $(sw_vers -buildVersion) > "21" ]]; then
+      if [[ $(sw_vers -productVersion | cut -d '.' -f 1) -ge "12" ]]; then
         # Load all ssh keys that have pass phrases stored in macOS keychain using new flags
         ssh-add --apple-load-keychain
       else ssh-add -qA
       fi
     fi
 
-    for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' \))
+    for key in $(find ~/.ssh -type f -a \( -name '*id_rsa' -o -name '*id_dsa' -o -name '*id_ecdsa' -o -name '*id_ed25519' \))
     do
       if [ -f ${key} -a $(ssh-add -l | grep -F -c "$(ssh-keygen -l -f $key | awk '{print $2}')" ) -eq 0 ]; then
-        if ( which keychain &> /dev/null ); then
-          keychain ${key} &> /dev/null
-        else
-          ssh-add ${key} &> /dev/null
-        fi
+        $key_manager -q ${key}
       fi
     done
-    if ( which keychain &> /dev/null ); then
-      if [[ -r ~/.keychain/$(hostname)-sh ]]; then
-        source ~/.keychain/$(hostname)-sh
-      fi
-    fi
   fi
 }
 
-if [[ -z "$SSH_CLIENT" ]]; then
+if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   # We're not on a remote machine, so load keys
+  if [[ "$(_zqs-get-setting ssh-askpass-require)" == 'true' ]]; then
+    zsh-quickstart-set-ssh-askpass-require
+  fi
   load-our-ssh-keys
 fi
 
-# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
+# Load helper functions before we load zgenom setup
+if [ -r ~/.zsh_functions ]; then
+  source ~/.zsh_functions
+fi
 
+# Make it easy to prepend your own customizations that override the
+# quickstart's defaults by loading all files from the
+# ~/.zshrc.pre-plugins.d directory
+mkdir -p ~/.zshrc.pre-plugins.d
+load-shell-fragments ~/.zshrc.pre-plugins.d
+
+# macOS doesn't have a python by default. This makes the omz python and
+# zsh-completion-generator plugins sad, so if there isn't a python, alias
+# it to python3
+if ! can_haz python; then
+  if can_haz python3; then
+    alias python=python3
+  fi
+  # Ugly hack for zsh-completion-generator - but only do it if the user
+  # hasn't already set GENCOMPL_PY
+  if [[ -z "$GENCOMPL_PY" ]]; then
+    export GENCOMPL_PY='python3'
+    export ZSH_COMPLETION_HACK='true'
+  fi
+fi
+
+# Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 # Start zgenom
 if [ -f ~/.zgen-setup ]; then
   source ~/.zgen-setup
+fi
+
+# Undo the hackery for issue 180
+# Don't unset GENCOMPL_PY if we didn't set it
+if [[ -n "$ZSH_COMPLETION_HACK" ]]; then
+  unset GENCOMPL_PY
+  unset ZSH_COMPLETION_HACK
 fi
 
 # Set some history options
@@ -228,20 +450,22 @@ QUICKSTART_KIT_REFRESH_IN_DAYS=7
 # does a zgen update. Closes #62.
 DISABLE_AUTO_UPDATE=true
 
-# Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
-globalias() {
-   if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
-     zle _expand_alias
-     zle expand-word
-   fi
-   zle self-insert
-}
+if [[ $(_zqs-get-setting handle-bindkeys true) == 'true' ]]; then
+  # Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
+  globalias() {
+    if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
+      zle _expand_alias
+      zle expand-word
+    fi
+    zle self-insert
+  }
 
-zle -N globalias
+  zle -N globalias
 
-bindkey " " globalias
-bindkey "^ " magic-space           # control-space to bypass completion
-bindkey -M isearch " " magic-space # normal space during searches
+  bindkey " " globalias
+  bindkey "^ " magic-space           # control-space to bypass completion
+  bindkey -M isearch " " magic-space # normal space during searches
+fi
 
 # Make it easier to customize the quickstart to your needs without
 # having to maintain your own fork.
@@ -254,10 +478,6 @@ fi
 # Stuff only tested on zsh, or explicitly zsh-specific
 if [ -r ~/.zsh_aliases ]; then
   source ~/.zsh_aliases
-fi
-
-if [ -r ~/.zsh_functions ]; then
-  source ~/.zsh_functions
 fi
 
 export LOCATE_PATH=/var/db/locate.database
@@ -273,22 +493,18 @@ if [ -d /Library/Java/Home ];then
 fi
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # Load macOS-specific aliases - keep supporting the old name
-  [ -f ~/.osx_aliases ] && source ~/.osx_aliases
-  if [ -d ~/.osx_aliases.d ]; then
-    for alias_file in ~/.osx_aliases.d/*
-    do
-      source "$alias_file"
-    done
+  # Load macOS-specific aliases
+  # Apple renamed the OS, so use the macos one first
+  [ -r ~/.macos_aliases ] && source ~/.macos_aliases
+  if [ -d ~/.macos_aliases.d ]; then
+    load-shell-fragments ~/.macos_aliases.d
   fi
 
-  # Apple renamed the OS, so...
-  [ -f ~/.macos_aliases ] && source ~/.macos_aliases
-  if [ -d ~/.macos_aliases.d ]; then
-    for alias_file in ~/.macos_aliases.d/*
-    do
-      source "$alias_file"
-    done
+  # Keep supporting the old name, but emit a deprecation warning
+  [ -r ~/.osx_aliases ] && source ~/.osx_aliases
+  if [ -d ~/.osx_aliases.d ]; then
+    echo "Apple renamed the os to macos - the .osx_aliases.d directory is deprecated in favor of .macos_aliases.d"
+    load-shell-fragments ~/.osx_aliases.d
   fi
 fi
 
@@ -304,29 +520,31 @@ if [ "$TERM" = "screen" -a ! "$SHOWED_SCREEN_MESSAGE" = "true" ]; then
   fi
 fi
 
-# grc colorizes the output of a lot of commands. If the user installed it,
-# use it.
+# These need to be done after $PATH is set up so we can find
+# grc and exa
 
-# Try and find the grc setup file
-if (( $+commands[grc] )); then
-  GRC_SETUP='/usr/local/etc/grc.bashrc'
+# Set up colorized ls when gls is present - it's installed by grc
+# shellcheck disable=SC2154
+if (( $+commands[gls] )); then
+  alias ls="gls -F --color"
+  alias l="gls -lAh --color"
+  alias ll="gls -l --color"
+  alias la='gls -A --color'
 fi
-if (( $+commands[grc] )) && (( $+commands[brew] ))
-then
-  GRC_SETUP="$(brew --prefix)/etc/grc.bashrc"
-fi
-if [[ -r "$GRC_SETUP" ]]; then
-  source "$GRC_SETUP"
-fi
-unset GRC_SETUP
 
-if (( $+commands[grc] ))
-then
-  function ping5(){
-    grc --color=auto ping -c 5 "$@"
-  }
-else
-  alias ping5='ping -c 5'
+# When present, use exa instead of ls
+if can_haz exa; then
+  if [[ -z "$EXA_TREE_IGNORE" ]]; then
+    EXA_TREE_IGNORE=".cache|cache|node_modules|vendor|.git"
+  fi
+
+  alias l='exa -al --icons --git --time-style=long-iso --group-directories-first --color-scale'
+  alias ls='exa --group-directories-first'
+
+  # Don't step on system-installed tree command
+  if ! can_haz tree; then
+    alias tree='exa --tree'
+  fi
 fi
 
 # Speed up autocomplete, force prefix mapping
@@ -336,33 +554,23 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
 # Load any custom zsh completions we've installed
+if [[ -d ~/.zsh-completions.d ]]; then
+  load-shell-fragments ~/.zsh-completions.d
+fi
 if [[ -d ~/.zsh-completions ]]; then
-  for completion in ~/.zsh-completions/*
-  do
-    if [[ -r "$completion" ]]; then
-      source "$completion"
-    else
-      echo "Can't read $completion"
-    fi
-  done
+  echo '~/.zsh_completions is deprecated in favor of ~/.zsh_completions.d'
+  load-shell-fragments ~/.zsh-completions
 fi
 
 # Load zmv
-if [[ ! -f ~/.zsh-quickstart-no-zmv ]]; then
+if [[ $(_zqs-get-setting no-zmv false) == 'false' ]]; then
   autoload -U zmv
 fi
 
 # Make it easy to append your own customizations that override the
 # quickstart's defaults by loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
-if [ -n "$(/bin/ls -A ~/.zshrc.d)" ]; then
-  for dotfile in $(/bin/ls -A ~/.zshrc.d)
-  do
-    if [ -r ~/.zshrc.d/$dotfile ]; then
-      source ~/.zshrc.d/$dotfile
-    fi
-  done
-fi
+load-shell-fragments ~/.zshrc.d
 
 # If GOPATH is defined, add it to $PATH
 if [[ -n "$GOPATH" ]]; then
@@ -408,17 +616,20 @@ _update-zsh-quickstart() {
       local gitroot=$(git rev-parse --show-toplevel)
       if [[ -f "${gitroot}/.gitignore" ]]; then
         if [[ $(grep -c zsh-quickstart-kit "${gitroot}/.gitignore") -ne 0 ]]; then
-          echo "---- updating ----"
           # Cope with switch from master to main
           zqs_current_branch=$(git rev-parse --abbrev-ref HEAD)
           git fetch
-          # Determine the repo default branch and switch to it
+          # Determine the repo default branch and switch to it unless we're in testing mode
           zqs_default_branch="$(git remote show origin | grep 'HEAD branch' | awk '{print $3}')"
-          if [[ "$zqs_default_branch" != "$zqs_current_branch" ]]; then
+          if [[ "$zqs_current_branch" == 'master' ]]; then
             echo "The ZSH Quickstart Kit has switched default branches to $zqs_default_branch"
             echo "Changing branches in your local checkout from $zqs_current_branch to $zqs_default_branch"
             git checkout "$zqs_default_branch"
           fi
+          if [[ "$zqs_current_branch" != "$zqs_default_branch" ]]; then
+            echo "Using $zqs_current_branch instead of $zqs_default_branch"
+          fi
+          echo "---- updating $zqs_current_branch ----"
           git pull
           date +%s >! ~/.zsh-quickstart-last-update
           unset zqs_default_branch
@@ -462,7 +673,7 @@ else
   source ~/.p10k.zsh
 fi
 
-if [[ -z "$DONT_PRINT_SSH_KEY_LIST" ]]; then
+if [[ $(_zqs-get-setting list-ssh-keys true) == 'true' ]]; then
   echo
   echo "Current SSH Keys:"
   ssh-add -l
@@ -491,9 +702,26 @@ fi
 function zqs-help() {
   echo "The zqs command allows you to manipulate your ZSH quickstart."
   echo
-  echo "options:"
+  echo "Quickstart action commands:"
   echo "zqs check-for-updates - Update the quickstart kit if it has been longer than $QUICKSTART_KIT_REFRESH_IN_DAYS days since the last update."
   echo "zqs selfupdate - Force an immediate update of the quickstart kit"
+  echo "zqs update - Update the quickstart kit and all your plugins"
+  echo "zqs update-plugins - Update your plugins"
+  echo ""
+  echo "Quickstart settings commands:"
+  echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
+  echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
+  echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+  echo "zqs enable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase on the command line."
+  echo "zqs disable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase via a gui program. Default behavior"
+  echo "zqs disable-ssh-key-listing - Set the quickstart to not display all the loaded ssh keys"
+  echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. Default behavior."
+  echo "zqs disable-zmv-autoloading - Set the quickstart to not run 'autoload -U zmv'. Useful if you're using another plugin to handle it."
+  echo "zqs enable-zmv-autoloading - Set the quickstart to run 'autoload -U zmv'. Default behavior."
+  echo "zqs delete-setting SETTINGNAME - Remove a zqs setting file"
+  echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
+  echo "zqs set-setting SETTINGNAME value - Set an arbitrary zqs setting"
 }
 
 function zqs() {
@@ -501,8 +729,57 @@ function zqs() {
     'check-for-updates')
       _check-for-zsh-quickstart-update
       ;;
+    'disable-bindkey-handling')
+      zsh-quickstart-disable-bindkey-handling
+      ;;
+    'enable-bindkey-handling')
+      zsh-quickstart-enable-bindkey-handling
+      ;;
+    'disable-zmv-autoloading')
+      _zqs-disable-zmv-autoloading
+      ;;
+    'enable-zmv-autoloading')
+      _zqs-enable-zmv-autoloading
+      ;;
+    'disable-omz-plugins')
+      zsh-quickstart-disable-omz-plugins
+      ;;
+    'enable-omz-plugins')
+      zsh-quickstart-enable-omz-plugins
+      ;;
+    'enable-ssh-askpass-require')
+      zsh-quickstart-enable-ssh-askpass-require
+      ;;
+    'disable-ssh-askpass-require')
+      zsh-quickstart-disable-ssh-askpass-require
+      ;;
+    'enable-ssh-key-listing')
+      _zqs-set-setting list-ssh-keys true
+      ;;
+    'disable-ssh-key-listing')
+      _zqs-set-setting list-ssh-keys false
+      ;;
     'selfupdate')
       _update-zsh-quickstart
+      ;;
+    'update')
+      _update-zsh-quickstart
+      zgenom update
+      ;;
+    'update-plugins')
+      zgenom update
+      ;;
+    'delete-setting')
+      shift
+      _zqs-delete-setting $@
+      ;;
+    'get-setting')
+      shift
+      _zqs-get-setting $@
+      ;;
+    'set-setting')
+      shift
+      _zqs-set-setting $@
       ;;
     *)
       zqs-help

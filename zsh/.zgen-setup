@@ -3,13 +3,19 @@
 # Only including a shebang to trigger editors to use shell
 # syntax highlighting.
 #
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 
 # Clone zgenom if you haven't already
 if [[ -z "$ZGENOM_PARENT_DIR" ]]; then
   ZGENOM_PARENT_DIR=$HOME
+  ZGENOM_SOURCE_FILE=$ZGENOM_PARENT_DIR/.zqs-zgenom/zgenom.zsh
+
+  # Set ZGENOM_SOURCE_FILE to the old directory if it already exists
+  if [[ -f "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh" ]] ; then
+    ZGENOM_SOURCE_FILE=$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh
+  fi
 fi
 
 # zgenom stores the clones plugins & themes in $ZGEN_DIR when it
@@ -17,23 +23,23 @@ fi
 # is unclean.
 ZGEN_DIR=${ZGEN_DIR:-$HOME/.zgenom}
 
-if [[ ! -f $ZGENOM_PARENT_DIR/zgenom/zgenom.zsh ]]; then
+if [[ ! -f "$ZGENOM_SOURCE_FILE" ]] ; then
   if [[ ! -d "$ZGENOM_PARENT_DIR" ]]; then
     mkdir -p "$ZGENOM_PARENT_DIR"
   fi
   pushd $ZGENOM_PARENT_DIR
-  git clone https://github.com/jandamm/zgenom.git
+  git clone https://github.com/jandamm/zgenom.git .zqs-zgenom
   popd
 fi
 
-if [[ ! -f "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh" ]]; then
+if [[ ! -f "$ZGENOM_SOURCE_FILE" ]] ; then
   echo "Can't find zgenom.zsh"
 else
   # echo "Loading zgenom"
-  source "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh"
+  source "$ZGENOM_SOURCE_FILE"
 fi
 
-unset ZGENOM_PARENT_DIR
+unset ZGENOM_PARENT_DIR ZGENOM_SOURCE_FILE
 
 warn-about-prompt-change() {
   if [[ ! -f ~/.zsh-quickstart-kit-prompt-switch-warning ]]; then
@@ -56,12 +62,12 @@ load-starter-plugin-list() {
   ZGEN_LOADED=()
   ZGEN_COMPLETIONS=()
 
-  if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
+  if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
     zgenom oh-my-zsh
   fi
 
   # If you want to customize your plugin list, create a file named
-  # .zsh-quickstart-local-plugins-example in your home directory. That 
+  # .zsh-quickstart-local-plugins-example in your home directory. That
   # file will be sourced during startup *instead* of running this
   # load-starter-plugin-list function, so make sure to include everything
   # from this function that you want to keep.
@@ -73,7 +79,7 @@ load-starter-plugin-list() {
 
   # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
   # they break, so get the order right.
-  zgenom load zsh-users/zsh-syntax-highlighting
+  zgenom load zdharma-continuum/fast-syntax-highlighting
   zgenom load zsh-users/zsh-history-substring-search
 
   # Set keystrokes for substring searching
@@ -122,7 +128,20 @@ load-starter-plugin-list() {
   # in a repository securely by encrypting them with gnupg.
   zgenom load StackExchange/blackbox
 
-  if [[ ! -f ~/.zsh-quickstart-no-omz ]]; then
+  if [[ -f ~/.zqs-additional-plugins ]]; then
+    separator='\n'
+    plugins=(${(ps.$separator.)$(cat ~/.zqs-additional-plugins)})
+
+    for plugin in $plugins; do
+      zgenom load "$plugin"
+    done
+
+    unset plugin
+    unset plugins
+    unset separator
+  fi
+
+  if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
     # Load some oh-my-zsh plugins
     zgenom oh-my-zsh plugins/pip
     zgenom oh-my-zsh plugins/sudo
@@ -139,10 +158,9 @@ load-starter-plugin-list() {
     if [ $(uname -a | grep -ci Darwin) = 1 ]; then
       # Load macOS-specific plugins
       zgenom oh-my-zsh plugins/brew
-      zgenom oh-my-zsh plugins/osx
+      zgenom oh-my-zsh plugins/macos
     fi
   fi
-
 
   # A set of shell functions to make it easy to install small apps and
   # utilities distributed with pip.
@@ -155,6 +173,9 @@ load-starter-plugin-list() {
 
   # Docker completion
   zgenom load srijanshetty/docker-zsh
+
+  # Load tab completions for 1Password's op command line tool if it's installed
+  zgenom load unixorn/1password-op.plugin.zsh
 
   # Load me last
   GENCOMPL_FPATH=$HOME/.zsh/complete
@@ -172,7 +193,8 @@ load-starter-plugin-list() {
   # directories.
   zgenom load supercrabtree/k
 
-  if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+  # Be compatible with the old settings files for now
+  if [[ -f ~/.zsh-quickstart-use-bullet-train ]] || [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
     # Bullet train prompt setup.
     zgenom load https://github.com/caiogondim/bullet-train.zsh
   else
@@ -247,7 +269,7 @@ fi
 
 # If you don't want my standard starter set of plugins, create a file named
 # .zsh-quickstart-local-plugins and add your zgenom load commands there. Don't forget to
-# run `zgen save` at the end of your .zsh-quickstart-local-plugins file.
+# run `zgenom save` at the end of your .zsh-quickstart-local-plugins file.
 #
 # Warning: .zgen-local-plugins REPLACES the starter list setup, it doesn't
 # add to it.
@@ -268,8 +290,6 @@ fi
 if [[ -L ~/.zsh-quickstart-local-plugins ]]; then
   REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zsh-quickstart-local-plugins)"
 fi
-
-# echo "REAL_ZGEN_ZETUP: $REAL_ZGEN_SETUP"
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgenom/init.zsh) ]; then

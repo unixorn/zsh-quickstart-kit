@@ -1,21 +1,17 @@
 ---
-engines:
+version: "2"
+plugins:
+  pep8:
+    enabled: true
   duplication:
     enabled: true
     config:
       languages:
-      - "python"
+        - "python"
   fixme:
     enabled: true
-    exclude_paths:
+    exclude_patterns:
       - config/engines.yml
-  pep8:
-    enabled: true
-    checks:
-      E111:
-        enabled: false
-      E501:
-        enabled: false
   markdownlint:
     enabled: true
     checks:
@@ -25,20 +21,18 @@ engines:
         enabled: false
       MD026:
         enabled: false
+      MD029:
+        enabled: false
+      MD033:
+        enabled: false
   shellcheck:
     enabled: true
-ratings:
-  paths:
-    - "bin/**/*"
-    - "**.py"
-    - "**.md"
-exclude_paths:
-  - .bundle/
-  - benchmarks/**/*
-  - bin/imgcat
-  - build/
-  - dist/
-  - include/**/*
-  - lib/**/*
-  - License.md
-  - spec/**/*
+    exclude_patterns:
+      - .bundle/
+      - benchmarks/**/*
+      - node_modules/**/*
+      - bin/**/*
+      - include/**/*
+      - lib/**/*
+      - License.md
+      - spec/**/*

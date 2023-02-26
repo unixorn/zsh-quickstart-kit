@@ -2,17 +2,17 @@
 #
 # Only including a shebang to trigger editors to use shell syntax highlighting
 #
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2022 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt in this repository.
+#
+# If you want to customize these, the best thing to do is override them
+# with a shell fragment in ~/.zshrc.d. Files there are automatically sourced
+# by the quickstart kit, so if you do that, you don't have to maintain your
+# own fork of the quickstart kit.
 
 if [[ -d ~/gocode ]]; then
   export GOPATH=~/gocode
-fi
-
-# Sublime
-if [[ -x /usr/local/bin/subl ]]; then
-  alias s="subl"
 fi
 
 # Yes, these tests are ugly. They do however, work.
@@ -31,15 +31,6 @@ if [[ "$(uname -s)" == "Linux" ]]; then
   alias l-d="ls -lFad"
   alias l="ls -laF"
   alias ll="ls -lFa | TERM=vt100 less"
-fi
-
-# Set up colorized ls when gls is present - it's installed by grc
-# shellcheck disable=SC2154
-if (( $+commands[gls] )); then
-  alias ls="gls -F --color"
-  alias l="gls -lAh --color"
-  alias ll="gls -l --color"
-  alias la='gls -A --color'
 fi
 
 export CVS_RSH=ssh
@@ -67,11 +58,16 @@ if [ -x /opt/local/bin/vim ]; then
 fi
 
 # So does brew
-if [ -x /usr/local/bin/vim ]; then
-    alias vim="/usr/local/bin/vim"
-    alias vi="/usr/local/bin/vim"
-    export EDITOR="/usr/local/bin/vim"
+if can_haz brew; then
+  brew_prefix="$(brew --prefix)/bin"
+  if [[ -x "$brew_prefix/vim" ]]; then
+      alias vim="$brew_prefix/vim"
+      alias vi="$brew_prefix/vim"
+      export EDITOR="$brew_prefix/vim"
+  fi
+  unset brew_prefix
 fi
+
 # Clearly, I really like vim.
 
 export VISUAL=${EDITOR}
@@ -137,6 +133,7 @@ alias raek='rake'
 alias tartvf='tar tvf'
 alias tartvzf='tar tvzf'
 alias tarxvf='tar xvf'
+alias tarxvjf='tar xvjf'
 
 # Deal with various stupidities.
 
@@ -147,12 +144,15 @@ if [ -x /sw/bin/ldapsearch ];then
 fi
 
 # Use brew versions if present
-if [ -x /usr/local/bin/mysql/bin/mysql ]; then
-  alias mysql="/usr/local/mysql/bin/mysql"
-fi
+if can_haz brew; then
+  brew_prefix=$(brew --prefix)
+  if [ -x "${brew_prefix}/bin/mysql/bin/mysql" ]; then
+    alias mysql="${brew_prefix}/mysql/bin/mysql"
+  fi
 
-if [ -x /usr/local/bin/mysql/bin/mysqladmin ]; then
-  alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
+  if [ -x "${brew_prefix}/bin/mysql/bin/mysqladmin" ]; then
+    alias mysqladmin="${brew_prefix}/mysql/bin/mysqladmin"
+  fi
 fi
 
 # Help the lazy typists again.
@@ -163,5 +163,6 @@ alias ...="cd ../.."
 if [ -f ~/.zsh_aliases.local ]; then
   # shellcheck disable=SC1090
   source ~/.zsh_aliases.local
-  echo ".zsh_aliases.local is deprecated. Make entries in files in ~/.zshrc.d instead."
+  echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
+  echo "Make entries in ~/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi
