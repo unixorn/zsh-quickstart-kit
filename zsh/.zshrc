@@ -173,6 +173,18 @@ function zsh-quickstart-enable-bindkey-handling() {
   _zqs-set-setting handle-bindkeys true
 }
 
+function zqs-quickstart-disable-control-c-decorator() {
+  _zqs-set-setting control-c-decorator false
+  echo "Disabled the control-c decorator in future zsh sessions."
+  echo "You can re-enable the quickstart's control-c decorator by running 'zqs enable-control-c-decorator'"
+}
+
+function zqs-quickstart-enable-control-c-decorator() {
+  echo "The control-c decorator is enabled for future zsh sessions."
+  echo "You can disable the quickstart's control-c decorator by running 'zqs disable-control-c-decorator'"
+  _zqs-set-setting control-c-decorator true
+}
+
 function _zqs-enable-zmv-autoloading() {
   _zqs-set-setting no-zmv false
 }
@@ -677,7 +689,14 @@ if [[ $(_zqs-get-setting list-ssh-keys true) == 'true' ]]; then
   echo
 fi
 
+# Don't break existing user setups, but transition to a zqs setting to reduce
+# pollution in the user's environment.
 if [[ -z "ZSH_QUICKSTART_SKIP_TRAPINT" ]]; then
+  echo "ZSH_QUICKSTART_SKIP_TRAPINT is deprecated in favor of running 'zqs disable-control-c-decorator' to write a settings knob"
+  zqs-quickstart-disable-control-c-decorator
+fi
+
+if [[ $(_zqs-get-setting control-c-decorator 'true') == 'true' ]]; then
   # Original source: https://vinipsmaker.wordpress.com/2014/02/23/my-zsh-config/
   # bash prints ^C when you're typing a command and control-c to cancel, so it
   # is easy to see it wasn't executed. By default, ZSH doesn't print the ^C.
@@ -707,7 +726,9 @@ function zqs-help() {
   echo ""
   echo "Quickstart settings commands:"
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
-  echo "zqs enable-bindkey-handling - Set the quickstart to confingure your bindkey settings. Default behavior."
+  echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. Default behavior."
+  echo "zqs enable-control-c-decorator - Creates a TRAPINT function to display '^C' when you type control-c instead of being silent. Default behavior."
+  echo "zqs disable-control-c-decorator - No longer creates a TRAPINT function to display '^C' when you type control-c."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase on the command line."
@@ -732,6 +753,13 @@ function zqs() {
     'enable-bindkey-handling')
       zsh-quickstart-enable-bindkey-handling
       ;;
+    'disable-control-c-decorator')
+      zqs-quickstart-disable-control-c-decorator
+      ;;
+    'enable-control-c-decorator')
+      zqs-quickstart-enable-control-c-decorator
+      ;;
+
     'disable-zmv-autoloading')
       _zqs-disable-zmv-autoloading
       ;;
