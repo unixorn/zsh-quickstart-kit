@@ -322,9 +322,9 @@ I've included what I think is a good starter set of ZSH plugins in this reposito
 
 There are two main ways to customize the list.
 
-You can either add a new plugin to `~/.zqs-additional-plugins`, or you can make a `~/.zsh-quickstart-local-plugin` file.
+You can either add a new plugin to `~/.zqs-add-plugins`, or you can make a `~/.zsh-quickstart-local-plugin` file.
 
-If you're just adding plugins to the standard list and want to automatically get any new changes I make to that standard list (new plugins, new locations when existing plugins are moved, etc) then adding a file called `~/.zqs-additional-plugins` with entries like `githubuser/pluginrepo` is the way to go - the kit will load its plugins, then add yours on the end. The file will be read line by line, and each line passed directly to `zgenom load`.
+If you're just adding plugins to the standard list and want to automatically get any new changes I make to that standard list (new plugins, new locations when existing plugins are moved, etc) then adding a file called `~/.zqs-add-plugins` with entries like `zgenom load githubuser/pluginrepo` is the way to go - the kit will load its plugins, then add yours on the end. You can also add separate files with plugins in the `~/.zshrc.add-plugins.d` directory.
 
 If you don't care about changes to the kit's plugins, then go with creating a `~/.zsh-quickstart-local-plugin` file.
 

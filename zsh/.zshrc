@@ -356,6 +356,13 @@ fi
 mkdir -p ~/.zshrc.pre-plugins.d
 load-shell-fragments ~/.zshrc.pre-plugins.d
 
+# Convert .zqs-additional-plugins to new format
+if [[ -f ~/.zqs-additional-plugins ]]; then
+  sed -e 's/^./zgenom load &/' ~/.zqs-additional-plugins > ~/.zqs-add-plugins
+  rm ~/.zqs-additional-plugins
+  echo "Plugins from .zqs-additional-plugins were moved to .zshrc.add-plugins with a format change"
+fi
+
 # macOS doesn't have a python by default. This makes the omz python and
 # zsh-completion-generator plugins sad, so if there isn't a python, alias
 # it to python3
