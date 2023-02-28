@@ -144,6 +144,12 @@ function _zqs-update-stale-settings-files() {
     rm -f ~/.zsh-quickstart-no-zmv
     echo "Converted old ~/.zsh-quickstart-no-zmv to new settings system"
   fi
+  # Don't break existing user setups, but transition to a zqs setting to reduce
+  # pollution in the user's environment.
+  if [[ -z "ZSH_QUICKSTART_SKIP_TRAPINT" ]]; then
+    echo "'ZSH_QUICKSTART_SKIP_TRAPINT' is deprecated in favor of running 'zqs disable-control-c-decorator' to write a settings knob."
+    zqs-quickstart-disable-control-c-decorator
+  fi
 }
 
 _zqs-update-stale-settings-files
@@ -687,13 +693,6 @@ if [[ $(_zqs-get-setting list-ssh-keys true) == 'true' ]]; then
   echo "Current SSH Keys:"
   ssh-add -l
   echo
-fi
-
-# Don't break existing user setups, but transition to a zqs setting to reduce
-# pollution in the user's environment.
-if [[ -z "ZSH_QUICKSTART_SKIP_TRAPINT" ]]; then
-  echo "'ZSH_QUICKSTART_SKIP_TRAPINT' is deprecated in favor of running 'zqs disable-control-c-decorator' to write a settings knob."
-  zqs-quickstart-disable-control-c-decorator
 fi
 
 if [[ $(_zqs-get-setting control-c-decorator 'true') == 'true' ]]; then
