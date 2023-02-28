@@ -129,6 +129,13 @@ _zqs-purge-setting() {
 
 # Convert the old settings files into new style settings
 function _zqs-update-stale-settings-files() {
+  # Convert .zqs-additional-plugins to new format
+  if [[ -f ~/.zqs-additional-plugins ]]; then
+    mkdir -p "~/.zshrc.add-plugins.d"
+    sed -e 's/^./zgenom load &/' ~/.zqs-additional-plugins >> ~/.zshrc.add-plugins.d/0000-transferred-plugins
+    rm -f ~/.zqs-additional-plugins
+    echo "Plugins from .zqs-additional-plugins were moved to .zshrc.add-plugins.d/0000-transferred-plugins with a format change"
+  fi
   if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
     _zqs-set-setting bullet-train true
     rm -f ~/.zsh-quickstart-use-bullet-train
@@ -355,13 +362,6 @@ fi
 # ~/.zshrc.pre-plugins.d directory
 mkdir -p ~/.zshrc.pre-plugins.d
 load-shell-fragments ~/.zshrc.pre-plugins.d
-
-# Convert .zqs-additional-plugins to new format
-if [[ -f ~/.zqs-additional-plugins ]]; then
-  sed -e 's/^./zgenom load &/' ~/.zqs-additional-plugins > ~/.zqs-add-plugins
-  rm ~/.zqs-additional-plugins
-  echo "Plugins from .zqs-additional-plugins were moved to .zshrc.add-plugins with a format change"
-fi
 
 # macOS doesn't have a python by default. This makes the omz python and
 # zsh-completion-generator plugins sad, so if there isn't a python, alias
