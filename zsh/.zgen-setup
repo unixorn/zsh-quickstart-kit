@@ -290,5 +290,21 @@ fi
 if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgenom/init.zsh) ]; then
   echo "$(basename ${REAL_ZGEN_SETUP}) ($REAL_ZGEN_SETUP) updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP}"
   setup-zgen-repos
+elif [ -d ~/.zshrc.add-plugins.d ]; then
+  init_timestamp=$(get_file_modification_time ~/.zgenom/init.zsh)
+  need_update=false
+  for file in ~/.zshrc.add-plugins.d/*; do
+    if [[ $(get_file_modification_time $file) -gt ${init_timestamp} ]]; then
+      need_update=true
+      break
+    fi
+  done
+  if [[ $need_update ]]; then
+    echo "Some files in ~/.zshrc.add-plugins.d updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP} and plugins dir"
+    setup-zgen-repos
+  fi
+  unset init_timestamp
+  unset need_update
 fi
+
 unset REAL_ZGEN_SETUP
