@@ -692,7 +692,7 @@ fi
 # Don't break existing user setups, but transition to a zqs setting to reduce
 # pollution in the user's environment.
 if [[ -z "ZSH_QUICKSTART_SKIP_TRAPINT" ]]; then
-  echo "ZSH_QUICKSTART_SKIP_TRAPINT is deprecated in favor of running 'zqs disable-control-c-decorator' to write a settings knob"
+  echo "'ZSH_QUICKSTART_SKIP_TRAPINT' is deprecated in favor of running 'zqs disable-control-c-decorator' to write a settings knob."
   zqs-quickstart-disable-control-c-decorator
 fi
 
