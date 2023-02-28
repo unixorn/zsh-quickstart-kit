@@ -411,7 +411,9 @@ setopt share_history
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+#ZSH Man page referencing the history_ignore parameter - https://manpages.ubuntu.com/manpages/kinetic/en/man1/zshparam.1.html
+HISTORY_IGNORE="(cd ..|l[s]#( *)#|pwd *|exit *|date *|* --help)"
 
 # Set some options about directories
 setopt pushd_ignore_dups
