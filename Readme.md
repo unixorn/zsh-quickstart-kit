@@ -28,6 +28,8 @@
       - [zqs-disable-bindkey-handling](#zqs-disable-bindkey-handling)
       - [zqs-enable-bindkey-handling](#zqs-enable-bindkey-handling)
       - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
+      - [zqs enable-control-c-decorator](#zqs-enable-control-c-decorator)
+      - [zqs disable-control-c-decorator](#zqs-disable-control-c-decorator)
       - [zqs enable-omz-plugins](#zqs-enable-omz-plugins)
       - [zqs enable-ssh-askpass-require](#zqs-enable-ssh-askpass-require)
       - [zqs disable-ssh-askpass-require](#zqs-disable-ssh-askpass-require)
@@ -57,6 +59,7 @@
   - [GNU stow is warning that stowing zsh would cause conflicts](#gnu-stow-is-warning-that-stowing-zsh-would-cause-conflicts)
   - [_arguments:comparguments:325: can only be called from completion function](#_argumentscomparguments325-can-only-be-called-from-completion-function)
   - [Could not open a connection to your authentication agent](#could-not-open-a-connection-to-your-authentication-agent)
+  - [I want to pin a plugin version](#i-want-to-pin-a-plugin-version)
 - [Other Resources](#other-resources)
   - [ZSH](#zsh)
   - [Dotfiles in general](#dotfiles-in-general)
@@ -214,7 +217,7 @@ Running the following commands will toggle behavior the next time you start a sh
   * `zsh-quickstart-select-powerlevel10k` -  Switch to the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt now used as the kit's default.
   * `zsh-quickstart-select-bullet-train` - Switch back to the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt originally used in the kit.
 * You can disable printing the list of `ssh` keys by executing `zqs disable-ssh-key-listing`.
-* `bash` prints `^C` when you're typing a command and control-c to cancel, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I like seeing the `^C`, so by default, the quickstart traps `SIGINT` and prints the `^C`. You can disable this by exporting `ZSH_QUICKSTART_SKIP_TRAPINT='false'` in one of the files in `~/.zshrc.d`.
+* `bash` prints `^C` when you're typing a command and hit control-c to cancel it, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I prefer seeing the `^C`, so by default, the quickstart traps `SIGINT` and prints the `^C`. You can disable this behavior by running `zqs enable-control-c-decorator`.
 
 #### zqs
 
@@ -235,6 +238,14 @@ Let the quickstart's `.zshrc` configure `bindkey` setup and alias expansion. Thi
 ##### zqs disable-omz-plugins
 
 Set the quickstart to not include any oh-my-zsh plugins from the standard plugin list. Loading omz plugins can make terminal startup significantly slower.
+
+##### zqs enable-control-c-decorator
+
+Set the quickstart to create a `TRAPINT` handler in future `zsh` sessions to also display control-C when you type control-c. This is the default behavior.
+
+##### zqs disable-control-c-decorator
+
+Set the quickstart to not create the `TRAPINT` handler to display control-C when you type control-c in future `zsh` sessions.
 
 ##### zqs enable-omz-plugins
 
