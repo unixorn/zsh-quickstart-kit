@@ -131,7 +131,7 @@ _zqs-purge-setting() {
 function _zqs-update-stale-settings-files() {
   # Convert .zqs-additional-plugins to new format
   if [[ -f ~/.zqs-additional-plugins ]]; then
-    mkdir -p "~/.zshrc.add-plugins.d"
+    mkdir -p ~/.zshrc.add-plugins.d
     sed -e 's/^./zgenom load &/' ~/.zqs-additional-plugins >> ~/.zshrc.add-plugins.d/0000-transferred-plugins
     rm -f ~/.zqs-additional-plugins
     echo "Plugins from .zqs-additional-plugins were moved to .zshrc.add-plugins.d/0000-transferred-plugins with a format change"
