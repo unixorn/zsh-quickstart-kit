@@ -49,6 +49,8 @@
   - [ZSH options](#zsh-options)
   - [Self-update Settings](#self-update-settings)
   - [Customizing the plugin list](#customizing-the-plugin-list)
+    - [Using fragment files](#using-fragment-files)
+    - [Complete plugin list replacement](#complete-plugin-list-replacement)
   - [Disabling zmv](#disabling-zmv)
   - [Disabling oh-my-zsh](#disabling-oh-my-zsh)
 - [FAQ](#faq)
@@ -331,19 +333,21 @@ The quickstart kit will automatically check for updates every seven days. If you
 
 I've included what I think is a good starter set of ZSH plugins in this repository. However, everyone has their preferences for their environment.
 
-There are two main ways to customize the list.
+To make things easier to customize without users having to maintain their own forks, the kit provides two ways to customize the list of plugins it will load.
 
-You can either add a new plugin to `~/.zqs-add-plugins`, or you can make a `~/.zsh-quickstart-local-plugin` file.
+You can either add a fragment file to `~/.zshrc.add-plugins.d`, or you can make a `~/.zsh-quickstart-local-plugin` file.
 
-If you're just adding plugins to the standard list and want to automatically get any new changes I make to that standard list (new plugins, new locations when existing plugins are moved, etc) then adding a file called `~/.zqs-add-plugins` with entries like `zgenom load githubuser/pluginrepo` is the way to go - the kit will load its plugins, then add yours on the end. You can also add separate files with plugins in the `~/.zshrc.add-plugins.d` directory.
+#### Using fragment files
 
-If you don't care about changes to the kit's plugins, then go with creating a `~/.zsh-quickstart-local-plugin` file.
+If all you want to do is add plugins to the standard list and you want to still automatically get any new changes I make to that standard list (new plugins, new locations when existing plugins are moved, etc) then adding a file into `~/.zshrc.add-plugins.d` with your extra plugins listed as `zgenom load githubuser/pluginrepo` (one line per plugin) is the way to go. The kit will load its plugins, then add yours on the end. You can add separate files with plugins in the `~/.zshrc.add-plugins.d` directory - my personal use case is having one file with all the plugins I use everywhere, and one that has extra plugins I only need on my work machines. This is the easiest option.
 
-To make the list easier to customize without having to maintain a separate fork of the quickstart kit, if you create a file named `~/.zsh-quickstart-local-plugins`, the `.zshrc` from this starter kit will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
+#### Complete plugin list replacement
 
-**Using `~/.zsh-quickstart-local-plugins` is not additive. It will *completely replace* the kit-provided list of plugins.**
+If you don't care about future changes to the kit's plugins and want to fully replace the built-in list, then create a `~/.zsh-quickstart-local-plugins` file. When the kit detects a file named `~/.zsh-quickstart-local-plugins`, its `.zshrc` will source that **instead** of running the `load-starter-plugin-list` function defined in `~/.zgen-setup`.
 
-I realize that it would be a pain to create `.zsh-quickstart-local-plugins` from scratch, so to make customizing your plugins easier, I've included a `.zsh-quickstart-local-plugins-example` file at the root of the repository that will install the same plugin list that the kit does by default that you can use as a starting point for your own customizations.
+**Using `~/.zsh-quickstart-local-plugins` is not additive. It will *completely replace* the kit-provided list of plugins.** If you want to just add more plugins, use the fragment file method above.
+
+Creating a `.zsh-quickstart-local-plugins` from scratch is a pain, so to make customizing your plugin list easier, I've included a `.zsh-quickstart-local-plugins-example` file at the root of the repository that installs the same plugin list that the kit does by default that you can use as a starting point for your own `.zsh-quickstart-local-plugins` file.
 
 Copy that to your `$HOME/.zsh-quickstart-local-plugins`, change the list, and the next time you start a terminal session, you'll get your plugin list loaded instead of the kit's defaults.
 
