@@ -40,6 +40,7 @@
       - [zqs selfupdate](#zqs-selfupdate)
       - [zqs update](#zqs-update)
       - [zqs update-plugins](#zqs-update-plugins)
+      - [zqs cleanup](#zqs-cleanup)
       - [zqs get-setting](#zqs-get-setting)
       - [zqs set-setting](#zqs-set-setting)
       - [zqs delete-setting](#zqs-delete-setting)
