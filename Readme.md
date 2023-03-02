@@ -287,6 +287,10 @@ Update the quickstart kit and all your plugins.
 
 Updates all your plugins.
 
+##### zqs cleanup
+
+Cleanup unused plugins after removing them from the list
+
 ##### zqs get-setting
 
 `zqs get-setting NAME [OPTIONAL default value]` prints the value of a `zqs` setting, or if unset and a default value was passed, the specified default.
