@@ -297,7 +297,7 @@ elif [ -d ~/.zshrc.add-plugins.d ]; then
       need_update="true"
   fi
 
-  if [[ -n "$(ls -A ~/.zshrc.add-plugins.d)" ]] && [[ -z $need_update ]]; then
+  if [[ -n "$("ls" -A ~/.zshrc.add-plugins.d)" ]] && [[ -z $need_update ]]; then
     for file in ~/.zshrc.add-plugins.d/*; do
       if [[ $(get_file_modification_time "${file}") -gt ${init_timestamp} ]]; then
         need_update="true"
