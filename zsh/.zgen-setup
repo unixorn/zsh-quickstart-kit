@@ -105,6 +105,9 @@ load-starter-plugin-list() {
   # across macOS and Linux/BSD.
   zgenom load unixorn/tumult.plugin.zsh
 
+  # Deal with Apple's squirrelly DNS
+  zgenom load eventi/noreallyjustfuckingstopalready
+
   # Warn you when you run a command that you've set an alias for without
   # using the alias.
   zgenom load djui/alias-tips
