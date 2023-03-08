@@ -631,12 +631,13 @@ _load-lastupdate-from-file() {
 }
 
 _update-zsh-quickstart() {
-  if [[ ! -L ~/.zshrc ]]; then
+  local _zshrc_loc=~/.zshrc
+  if [[ ! -L "${_zshrc_loc}" ]]; then
     echo ".zshrc is not a symlink, skipping zsh-quickstart-kit update"
   else
-    local _link_loc=$(readlink ~/.zshrc);
+    local _link_loc=${_zshrc_loc:A};
     if [[ "${_link_loc/${HOME}}" == "${_link_loc}" ]]; then
-      pushd $(dirname "${HOME}/$(readlink ~/.zshrc)");
+      pushd $(dirname "${HOME}/${_zshrc_loc:A}");
     else
       pushd $(dirname ${_link_loc});
     fi;
