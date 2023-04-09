@@ -565,7 +565,12 @@ if can_haz exa; then
     EXA_TREE_IGNORE=".cache|cache|node_modules|vendor|.git"
   fi
 
-  alias l='exa -al --icons --git --time-style=long-iso --group-directories-first --color-scale'
+  if [[ "$(exa --help | grep -c git)" == 0 ]]; then
+    # Not every linux exa build has git support compiled in
+    alias l='exa -al --icons --time-style=long-iso --group-directories-first --color-scale'
+  else
+    alias l='exa -al --icons --git --time-style=long-iso --group-directories-first --color-scale'
+  fi
   alias ls='exa --group-directories-first'
 
   # Don't step on system-installed tree command
