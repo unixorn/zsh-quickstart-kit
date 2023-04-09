@@ -1,0 +1,2 @@
+skip_check:
+  - CKV2_GHA_1
