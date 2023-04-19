@@ -312,7 +312,7 @@ load-our-ssh-keys() {
       export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
     fi
     if [[ "$(uname -s)" == "Linux" ]]; then
-      export SSH_AUTH_SOCK=~/.1password
+      export SSH_AUTH_SOCK=~/.1password/agent.sock
     fi
   else
     # If keychain is installed let it take care of ssh-agent, else do it manually
