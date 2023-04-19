@@ -28,7 +28,7 @@ function can_haz() {
 
 # Fix weirdness with intellij
 if [[ -z "${INTELLIJ_ENVIRONMENT_READER}" ]]; then
-    export POWERLEVEL9K_INSTANT_PROMPT='quiet'
+  export POWERLEVEL9K_INSTANT_PROMPT='quiet'
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -307,26 +307,32 @@ if [[ -z "$LS_COLORS" ]]; then
 fi
 
 load-our-ssh-keys() {
-  if can_haz op; then export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+  if can_haz op; then
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+    fi
+    if [[ "$(uname -s)" == "Linux" ]]; then
+      export SSH_AUTH_SOCK=~/.1password/agent.sock
+    fi
   else
     # If keychain is installed let it take care of ssh-agent, else do it manually
-  if can_haz keychain; then
-    eval `keychain -q --eval`
-  else
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-       # If user has keychain installed, let it take care of ssh-agent, else do it manually
-      # Check for a currently running instance of the agent
-       RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
-       if [ "$RUNNING_AGENT" = "0" ]; then
+    if can_haz keychain; then
+      eval `keychain -q --eval`
+    else
+      if [ -z "$SSH_AUTH_SOCK" ]; then
+        # If user has keychain installed, let it take care of ssh-agent, else do it manually
+        # Check for a currently running instance of the agent
+        RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
+        if [ "$RUNNING_AGENT" = "0" ]; then
           if [ ! -d ~/.ssh ] ; then
-          mkdir -p ~/.ssh
-        fi
-        # Launch a new instance of the agent
+            mkdir -p ~/.ssh
+          fi
+          # Launch a new instance of the agent
           ssh-agent -s &> ~/.ssh/ssh-agent
-       fi
-       eval $(cat ~/.ssh/ssh-agent)
+        fi
+        eval $(cat ~/.ssh/ssh-agent)
       fi
-  fi
+    fi
   fi
 
   local key_manager=ssh-add
