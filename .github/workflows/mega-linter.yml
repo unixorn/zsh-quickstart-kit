@@ -65,5 +65,5 @@ jobs:
         with:
           name: Mega-Linter reports
           path: |
-            report
+            mega-linter-reports
             mega-linter.log
