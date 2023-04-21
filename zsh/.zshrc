@@ -376,7 +376,10 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   if [[ "$(_zqs-get-setting ssh-askpass-require)" == 'true' ]]; then
     zsh-quickstart-set-ssh-askpass-require
   fi
-  load-our-ssh-keys
+  load_ssh_keys="$(_zqs-get-setting load-ssh-keys true)"
+  if [[ "$load_ssh_keys" != "false" ]]; then
+    load-our-ssh-keys
+  fi
 fi
 
 # Load helper functions before we load zgenom setup
@@ -750,17 +753,19 @@ function zqs-help() {
   echo ""
   echo "Quickstart settings commands:"
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
-  echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. Default behavior."
+  echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. This is the default behavior."
   echo "zqs enable-control-c-decorator - Creates a TRAPINT function to display '^C' when you type control-c instead of being silent. Default behavior."
   echo "zqs disable-control-c-decorator - No longer creates a TRAPINT function to display '^C' when you type control-c."
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase on the command line."
-  echo "zqs disable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase via a gui program. Default behavior"
+  echo "zqs disable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase via a gui program. This is the default behavior"
   echo "zqs disable-ssh-key-listing - Set the quickstart to not display all the loaded ssh keys"
-  echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. Default behavior."
+  echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. This is the default behavior."
+  echo "zqs disable-ssh-key-loading - Set the quickstart to not load your ssh keys. Useful if you're storing them in a yubikey."
+  echo "zqs enable-ssh-key-loading - Set the quickstart to load your ssh keys if they aren't already in an ssh agent. This is the default behavior."
   echo "zqs disable-zmv-autoloading - Set the quickstart to not run 'autoload -U zmv'. Useful if you're using another plugin to handle it."
-  echo "zqs enable-zmv-autoloading - Set the quickstart to run 'autoload -U zmv'. Default behavior."
+  echo "zqs enable-zmv-autoloading - Set the quickstart to run 'autoload -U zmv'. This is the default behavior."
   echo "zqs delete-setting SETTINGNAME - Remove a zqs setting file"
   echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
   echo "zqs set-setting SETTINGNAME value - Set an arbitrary zqs setting"
@@ -807,6 +812,12 @@ function zqs() {
       ;;
     'disable-ssh-key-listing')
       _zqs-set-setting list-ssh-keys false
+      ;;
+    'disable-ssh-key-loading')
+      _zqs-set-setting load-ssh-keys false
+      ;;
+    'enable-ssh-key-loading')
+      _zqs-set-setting load-ssh-keys true
       ;;
     'selfupdate')
       _update-zsh-quickstart

@@ -35,6 +35,8 @@
       - [zqs disable-ssh-askpass-require](#zqs-disable-ssh-askpass-require)
       - [zqs-disable-ssh-key-listing](#zqs-disable-ssh-key-listing)
       - [zqs-enable-ssh-key-listing](#zqs-enable-ssh-key-listing)
+      - [zqs-disable-ssh-key-loading](#zqs-disable-ssh-key-loading)
+      - [zqs-enable-ssh-key-loading](#zqs-enable-ssh-key-loading)
       - [zqs-disable-zmv-autoloading](#zqs-disable-zmv-autoloading)
       - [zqs-enable-zmv-autoloading](#zqs-enable-zmv-autoloading)
       - [zqs selfupdate](#zqs-selfupdate)
@@ -274,6 +276,14 @@ Don't print the loaded `ssh` keys when creating a new session.
 ##### zqs-enable-ssh-key-listing
 
 Print the loaded `ssh` keys when creating a new session. This is the default behavior.
+
+##### zqs-disable-ssh-key-loading
+
+Don't load `ssh` keys when creating a new session. Useful if you're storing your private keys in a [yubikey](https://www.yubico.com/).
+
+##### zqs-enable-ssh-key-loading
+
+Load missing `ssh` private keys when creating a new session. This is the default behavior.
 
 ##### zqs-disable-zmv-autoloading
 
