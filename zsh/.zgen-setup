@@ -247,7 +247,7 @@ elif [[ $(uname | grep -ci Linux) = 1 ]]; then
 fi
 
 # check if there's an init.zsh file for zgen and generate one if not.
-if ! zgen saved; then
+if ! zgenom saved; then
   setup-zgen-repos
 fi
 
