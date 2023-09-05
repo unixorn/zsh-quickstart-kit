@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: docker://dkhamsing/awesome_bot:latest
       with:
         args: /github/workspace/Readme.md --allow 500,501,502,503,504,509,521 --allow-dupe --request-delay 1 --allow-redirect --allow-ssl --white-list https://ipfs.io,slideshare,https://img.shields.io
