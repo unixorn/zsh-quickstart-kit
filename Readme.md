@@ -395,7 +395,7 @@ When using Powerlevel10k with instant prompt, console output during zsh
 initialization may indicate issues.
 ```
 
-You can stifle this output by adding `typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet` in a fragment file in `~/.zshrc.d`.
+You can stifle this output by adding `typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet` in a fragment file in `~/.zshrc.pre-plugins.d`.
 
 ### I added a new completion plugin, and it isn't working
 
