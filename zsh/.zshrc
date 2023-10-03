@@ -568,23 +568,28 @@ if (( $+commands[gls] )); then
   alias la='gls -A --color'
 fi
 
-# When present, use exa instead of ls
-if can_haz exa; then
-  if [[ -z "$EXA_TREE_IGNORE" ]]; then
-    EXA_TREE_IGNORE=".cache|cache|node_modules|vendor|.git"
-  fi
+# When present, use exa or eza (newest) instead of ls
+if can_haz eza; then
+  ls_analog='eza'
+elif can_haz exa; then
+  ls_analog='exa'
+fi
 
-  if [[ "$(exa --help | grep -c git)" == 0 ]]; then
+if [ -v ls_analog ]; then
+  if [[ "$($ls_analog --help | grep -c git)" == 0 ]]; then
     # Not every linux exa build has git support compiled in
-    alias l='exa -al --icons --time-style=long-iso --group-directories-first --color-scale'
+    alias l="$ls_analog -al --icons --time-style=long-iso --group-directories-first --color-scale"
   else
-    alias l='exa -al --icons --git --time-style=long-iso --group-directories-first --color-scale'
+    alias l="$ls_analog -al --icons --git --time-style=long-iso --group-directories-first --color-scale"
   fi
-  alias ls='exa --group-directories-first'
+  alias ls="$ls_analog --group-directories-first"
 
   # Don't step on system-installed tree command
   if ! can_haz tree; then
-    alias tree='exa --tree'
+    if [[ -z "$TREE_IGNORE" ]]; then
+        TREE_IGNORE=".cache|cache|node_modules|vendor|.git"
+    fi
+    alias tree="$ls_analog --tree --ignore-glob='$TREE_IGNORE'"
   fi
 fi
 
