@@ -393,6 +393,10 @@ fi
 mkdir -p ~/.zshrc.pre-plugins.d
 load-shell-fragments ~/.zshrc.pre-plugins.d
 
+if [[ -d "$HOME/.zshrc.pre-plugins.$(uname).d" ]]; then
+  load-shell-fragments "$HOME/.zshrc.pre-plugins.$(uname).d"
+fi
+
 # macOS doesn't have a python by default. This makes the omz python and
 # zsh-completion-generator plugins sad, so if there isn't a python, alias
 # it to python3
@@ -617,6 +621,10 @@ fi
 # quickstart's defaults by loading all files from the ~/.zshrc.d directory
 mkdir -p ~/.zshrc.d
 load-shell-fragments ~/.zshrc.d
+
+if [[ -d "$HOME/.zshrc.$(uname).d" ]]; then
+  load-shell-fragments "$HOME/.zshrc.$(uname).d"
+fi
 
 # If GOPATH is defined, add it to $PATH
 if [[ -n "$GOPATH" ]]; then

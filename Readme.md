@@ -50,6 +50,7 @@
     - [Customizing with ~/.zshrc.d](#customizing-with-zshrcd)
   - [I like a plugin, but some of the aliases and functions it installs overwrite other commands or aliases I use](#i-like-a-plugin-but-some-of-the-aliases-and-functions-it-installs-overwrite-other-commands-or-aliases-i-use)
   - [ZSH options](#zsh-options)
+    - [Fragment file directories](#fragment-file-directories)
   - [Self-update Settings](#self-update-settings)
   - [Customizing the plugin list](#customizing-the-plugin-list)
     - [Using fragment files](#using-fragment-files)
@@ -341,9 +342,15 @@ Once you've cleared all the unwanted aliases and functions, you can add new ones
 
 The quickstart kit does an opinionated (i.e., my way) setup of ZSH options and adds some functions and aliases I like on my systems.
 
-However, `~/.zshrc.d` is processed *after* the quickstart sets its aliases, functions, and ZSH options, so if you don't care for something as set up in the quickstart, you can override the offending item in a shell fragment file there.
+#### Fragment file directories
 
-The kit also looks for files in `~/.zshrc.pre-plugins.d`, and you can use snippet files in there to set environment variables that alter the startup behavior of plugins.
+You can customize the quickstart by adding files to its `zshrc.d` directories.
+
+After the quickstart sets up its aliases, functions, plugins and ZSH options, it will source every fragment file in `~/.zshrc.d`.
+
+If you want to set variables _before_ the quickstart starts setup to alter behavior, stick your fragment files in `~/.zshrc.pre-plugins.d`.
+
+To make it easier to have macOS or Linux-specific settings tweaks, the quickstart also supports os-specific pre & post `.zshrc.d` directories. If you want a file to only be sourced on a single os, the quickstart also checks for `.zshrc.pre-plugins.$(uname).d` and `~/.zshrc.$(uname).d` during loading.
 
 ### Self-update Settings
 
