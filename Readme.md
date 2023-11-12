@@ -340,17 +340,17 @@ Once you've cleared all the unwanted aliases and functions, you can add new ones
 
 ### ZSH options
 
-The quickstart kit does an opinionated (i.e., my way) setup of ZSH options and adds some functions and aliases I like on my systems.
+The quickstart kit does an opinionated (i.e., my way) setup of ZSH options and adds some functions and aliases I like on my systems. I don't want you to have to maintain a separate fork if you don't like them and/or want to add your own, so the kit allows you to override or add behavior by creating fragment files that it will load during session startup.
 
 #### Fragment file directories
 
-You can customize the quickstart by adding files to its `zshrc.d` directories.
+You can customize the quickstart by adding files to its various `zshrc.d` directories.
+
+If you want to set variables _before_ the quickstart starts loading plugins to alter their behavior, stick your fragment files in `~/.zshrc.pre-plugins.d`.
 
 After the quickstart sets up its aliases, functions, plugins and ZSH options, it will source every fragment file in `~/.zshrc.d`.
 
-If you want to set variables _before_ the quickstart starts setup to alter behavior, stick your fragment files in `~/.zshrc.pre-plugins.d`.
-
-To make it easier to have macOS or Linux-specific settings tweaks, the quickstart also supports os-specific pre & post `.zshrc.d` directories. If you want a file to only be sourced on a single os, the quickstart also checks for `.zshrc.pre-plugins.$(uname).d` and `~/.zshrc.$(uname).d` during loading.
+To make it easier to have macOS, FreeBSD or Linux-specific settings tweaks, the quickstart also supports OS-specific pre & post `.zshrc.d` directories. If you want a file to only be sourced on a single OS, the quickstart also checks for `.zshrc.pre-plugins.$(uname).d` and `~/.zshrc.$(uname).d` during loading.
 
 ### Self-update Settings
 
@@ -406,7 +406,7 @@ You can stifle this output by adding `typeset -g POWERLEVEL9K_INSTANT_PROMPT=qui
 
 ### I added a new completion plugin, and it isn't working
 
-I've had reports that sometimes you need to reset your completions after adding a new plugin.
+I've had reports that sometimes you may need to reset your completions after adding a new plugin.
 
 ```sh
 rm ~/.zcompdump*
@@ -429,7 +429,7 @@ From https://github.com/unixorn/zsh-quickstart-kit
     Aborting
 ```
 
-This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and to let you customize your ZSH settings without being forced to maintain your own fork of the kit, the kit-provided `.zshrc` will load any files it finds in `~/.zshrc.d`.
+This happens when you edit a file provided by the quickstart kit, in this case, `.zshrc`. This is annoying, and to let you customize your ZSH settings without being forced to maintain your own fork of the kit, the kit-provided `.zshrc` will load any files it finds in the various `~/.zshrc.d` directories. See [Fragment File Directories](https://github.com/unixorn/zsh-quickstart-kit#fragment-file-directories) for more details.
 
 ### GNU stow is warning that stowing zsh would cause conflicts
 
