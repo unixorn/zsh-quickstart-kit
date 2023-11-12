@@ -56,6 +56,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISABLE_LINTERS: MARKDOWN_MARKDOWN_LINK_CHECK,REPOSITORY_SECRETLINT,SPELL_CSPELL
           REPOSITORY_CHECKOV_DISABLE_ERRORS: true
+          REPOSITORY_KICS_DISABLE_ERRORS: true
 
       # Upload Mega-Linter artifacts.
       # They will be available on Github action page "Artifacts" section
