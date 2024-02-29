@@ -232,7 +232,7 @@ Running the following commands will toggle behavior the next time you start a sh
   * `zsh-quickstart-select-powerlevel10k` -  Switch to the [powerlevel10k](https://github.com/romkatv/powerlevel10k) prompt now used as the kit's default.
   * `zsh-quickstart-select-bullet-train` - Switch back to the [bullet-train](https://github.com/caiogondim/bullet-train.zsh) prompt originally used in the kit.
 * You can disable printing the list of `ssh` keys by executing `zqs disable-ssh-key-listing`.
-* `bash` prints `^C` when you're typing a command and hit control-c to cancel it, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I prefer seeing the `^C`, so by default, the quickstart traps `SIGINT` and prints the `^C`. You can disable this behavior by running `zqs enable-control-c-decorator`.
+* `bash` prints `^C` when you're typing a command and hit control-c to cancel it, so it is easy to see it wasn't executed. By default, ZSH doesn't print the `^C`. I prefer seeing the `^C`, so by default, the quickstart traps `SIGINT` and prints the `^C`. You can disable this behavior by running `zqs disable-control-c-decorator` and enable it with `zqs enable-control-c-decorator`.
 
 #### zqs
 
@@ -297,6 +297,14 @@ Don't run `autoload -U zmv` when creating a new session.
 ##### zqs-enable-zmv-autoloading
 
 Run `autoload -U zmv` when creating a new session. This is the default behavior.
+
+##### `zqs-disable-zsh-profiling
+
+Disable ZSH's profiler. This is the default.
+
+##### `zqs-enable-zsh-profiling
+
+Turn on ZSH's profiler
 
 ##### zqs selfupdate
 
