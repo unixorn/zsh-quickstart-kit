@@ -20,6 +20,9 @@
 # All files in there will be sourced, and keeping your customizations
 # there will keep you from having to maintain a separate fork of the
 # quickstart kit.
+if [[ -f ~/.zqs-zprof-enabled ]]; then
+  zmodload zsh/zprof
+fi
 
 # Check if a command exists
 function can_haz() {
@@ -832,6 +835,14 @@ function zqs() {
     'enable-ssh-key-loading')
       _zqs-set-setting load-ssh-keys true
       ;;
+    # Profiling checks happen before the settings code is loaded, so we
+    # touch the actual file instead of reading via _zqs-get-setting
+    'disable-zsh-profiling')
+      rm -f ~/.zqs-zprof-enabled
+      ;;
+    'enable-zsh-profiling')
+      touch ~/.zqs-zprof-enabled
+      ;;
     'selfupdate')
       _update-zsh-quickstart
       ;;
@@ -863,3 +874,7 @@ function zqs() {
 
   esac
 }
+
+if [[ -f ~/.zqs-zprof-enabled ]]; then
+  zprof
+fi
