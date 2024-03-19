@@ -452,8 +452,8 @@ setopt share_history
 
 # Keep a ton of history. You can override these without editing .zshrc by
 # adding a file to ~/.zshrc.d that changes these variables.
-HISTSIZE=100000
-SAVEHIST=100000
+export HISTSIZE=100000
+export SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 #ZSH Man page referencing the history_ignore parameter - https://manpages.ubuntu.com/manpages/kinetic/en/man1/zshparam.1.html
