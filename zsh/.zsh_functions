@@ -27,8 +27,9 @@ function hgrep-full() {
   fi
 }
 
-# easier to type, leaving hgrep_full for backwards compatibility
+# hgrep-full is easier to type, leaving hgrep_full for backwards compatibility
 function hgrep_full() {
+  echo "hgrep_full is deprecated, use hgrep-full"
   hgrep-full "$@"
 }
 
