@@ -109,7 +109,7 @@ _zqs-set-setting() {
     mkdir -p "$_ZQS_SETTINGS_DIR"
     echo "$2" > "${_ZQS_SETTINGS_DIR}/$1"
   else
-    echo "Usage _zqs-set-setting-value SETTINGNAME VALUE"
+    echo "Usage: _zqs-set-setting-value SETTINGNAME VALUE"
   fi
 }
 
@@ -236,10 +236,19 @@ function zsh-quickstart-disable-ssh-askpass-require() {
   zsh-quickstart-check-for-ssh-askpass
 }
 
+function _zqs-enable-diff-so-fancy() {
+  _zqs-set-setting diff-so-fancy true
+}
+
+function _zqs-disable-diff-so-fancy() {
+  _zqs-set-setting diff-so-fancy false
+}
+
+
 function zsh-quickstart-check-for-ssh-askpass() {
   if ! can_haz ssh-askpass; then
-    echo "If you disable the ssh-askpass-require feature."
-    echo "You'll need to install ssh-askpass for the quickstart to prompt,"
+    echo "If you disable the ssh-askpass-require feature, you'll"
+    echo "need to install ssh-askpass for the quickstart to prompt,"
     echo "for your ssh key/s passphrase on shell startup."
     echo "This is the default behavior for ssh-add:"
     echo $(tput setaf 2)"https://www.man7.org/linux/man-pages/man1/ssh-add.1.html#ENVIRONMENT"$(tput sgr0)
@@ -383,6 +392,7 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   if [[ "$load_ssh_keys" != "false" ]]; then
     load-our-ssh-keys
   fi
+  unset load_ssh_keys
 fi
 
 # Load helper functions before we load zgenom setup
@@ -390,8 +400,8 @@ if [ -r ~/.zsh_functions ]; then
   source ~/.zsh_functions
 fi
 
-# Make it easy to prepend your own customizations that override the
-# quickstart's defaults by loading all files from the
+# Make it easy to prepend your own customizations that override
+# the quickstart kit's defaults by loading all files from the
 # ~/.zshrc.pre-plugins.d directory
 mkdir -p ~/.zshrc.pre-plugins.d
 load-shell-fragments ~/.zshrc.pre-plugins.d
@@ -452,11 +462,11 @@ setopt share_history
 
 # Keep a ton of history. You can override these without editing .zshrc by
 # adding a file to ~/.zshrc.d that changes these variables.
-HISTSIZE=100000
-SAVEHIST=100000
+export HISTSIZE=100000
+export SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
-#ZSH Man page referencing the history_ignore parameter - https://manpages.ubuntu.com/manpages/kinetic/en/man1/zshparam.1.html
+# ZSH Man page referencing the history_ignore parameter - https://manpages.ubuntu.com/manpages/kinetic/en/man1/zshparam.1.html
 HISTORY_IGNORE="(cd ..|l[s]#( *)#|pwd *|exit *|date *|* --help)"
 
 # Set some options about directories
@@ -490,7 +500,7 @@ TIMEFMT="%U user %S system %P cpu %*Es total"
 QUICKSTART_KIT_REFRESH_IN_DAYS=7
 
 # Disable Oh-My-ZSH's internal updating. Let it get updated when user
-# does a zgen update. Closes #62.
+# does a zgenom update. Closes #62.
 DISABLE_AUTO_UPDATE=true
 
 if [[ $(_zqs-get-setting handle-bindkeys true) == 'true' ]]; then
@@ -598,6 +608,7 @@ if [ -v ls_analog ]; then
     fi
     alias tree="$ls_analog --tree --ignore-glob='$TREE_IGNORE'"
   fi
+  unset ls_analog
 fi
 
 # Speed up autocomplete, force prefix mapping
@@ -694,7 +705,7 @@ _update-zsh-quickstart() {
           unset zqs_current_branch
         fi
       else
-        echo 'No quickstart marker found, is your quickstart a valid git checkout?'
+        echo 'No quickstart marker found, is your quickstart directory a valid git checkout?'
       fi
     popd
   fi
@@ -770,18 +781,28 @@ function zqs-help() {
   echo "Quickstart settings commands:"
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
   echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. This is the default behavior."
+
   echo "zqs enable-control-c-decorator - Creates a TRAPINT function to display '^C' when you type control-c instead of being silent. Default behavior."
   echo "zqs disable-control-c-decorator - No longer creates a TRAPINT function to display '^C' when you type control-c."
+
+  echo "zqs enable-diff-so-fancy - Load the diff-so-fancy ZSH plugin (defaults to true)"
+  echo "zqs disable-diff-so-fancy - Don't load the diff-so-fancy ZSH plugin"
+
   echo "zqs disable-omz-plugins - Set the quickstart to not load oh-my-zsh plugins if you're using the standard plugin list"
   echo "zqs enable-omz-plugins - Set the quickstart to load oh-my-zsh plugins if you're using the standard plugin list"
+
   echo "zqs enable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase on the command line."
   echo "zqs disable-ssh-askpass-require - Set the quickstart to prompt for your ssh passphrase via a gui program. This is the default behavior"
+
   echo "zqs disable-ssh-key-listing - Set the quickstart to not display all the loaded ssh keys"
   echo "zqs enable-ssh-key-listing - Set the quickstart to display all the loaded ssh keys. This is the default behavior."
+
   echo "zqs disable-ssh-key-loading - Set the quickstart to not load your ssh keys. Useful if you're storing them in a yubikey."
   echo "zqs enable-ssh-key-loading - Set the quickstart to load your ssh keys if they aren't already in an ssh agent. This is the default behavior."
+
   echo "zqs disable-zmv-autoloading - Set the quickstart to not run 'autoload -U zmv'. Useful if you're using another plugin to handle it."
   echo "zqs enable-zmv-autoloading - Set the quickstart to run 'autoload -U zmv'. This is the default behavior."
+
   echo "zqs delete-setting SETTINGNAME - Remove a zqs setting file"
   echo "zqs get-setting SETTINGNAME [optional default value] - load a zqs setting"
   echo "zqs set-setting SETTINGNAME value - Set an arbitrary zqs setting"
@@ -792,17 +813,63 @@ function zqs() {
     'check-for-updates')
       _check-for-zsh-quickstart-update
       ;;
+
+# Internal commands
+    'cleanup')
+      zgenom clean
+      ;;
+
+    'delete-setting')
+      shift
+      _zqs-delete-setting $@
+      ;;
+
+    'get-setting')
+      shift
+      _zqs-get-setting $@
+      ;;
+
+    'selfupdate')
+      _update-zsh-quickstart
+      ;;
+
+    'set-setting')
+      shift
+      _zqs-set-setting $@
+      ;;
+
+    'update')
+      _update-zsh-quickstart
+      zgenom update
+      ;;
+
+    'update-plugins')
+      zgenom update
+      ;;
+
+# Set/Unset settings
+
     'disable-bindkey-handling')
       zsh-quickstart-disable-bindkey-handling
       ;;
     'enable-bindkey-handling')
       zsh-quickstart-enable-bindkey-handling
       ;;
+
     'disable-control-c-decorator')
       zqs-quickstart-disable-control-c-decorator
       ;;
     'enable-control-c-decorator')
       zqs-quickstart-enable-control-c-decorator
+      ;;
+
+    'disable-diff-so-fancy')
+      echo "Disabling diff-so-fancy plugin. New ZSH sessions will no longer use the plugin."
+      _zqs-set-setting diff-so-fancy false
+      ;;
+    'enable-diff-so-fancy')
+      echo "Enabling diff-so-fancy plugin. It will be loaded the next time you start a ZSH session."
+      _zqs-set-setting diff-so-fancy true
       ;;
 
     'disable-zmv-autoloading')
@@ -811,62 +878,44 @@ function zqs() {
     'enable-zmv-autoloading')
       _zqs-enable-zmv-autoloading
       ;;
+
     'disable-omz-plugins')
       zsh-quickstart-disable-omz-plugins
       ;;
     'enable-omz-plugins')
       zsh-quickstart-enable-omz-plugins
       ;;
+
     'enable-ssh-askpass-require')
       zsh-quickstart-enable-ssh-askpass-require
       ;;
     'disable-ssh-askpass-require')
       zsh-quickstart-disable-ssh-askpass-require
       ;;
+
     'enable-ssh-key-listing')
       _zqs-set-setting list-ssh-keys true
       ;;
     'disable-ssh-key-listing')
       _zqs-set-setting list-ssh-keys false
       ;;
+
     'disable-ssh-key-loading')
       _zqs-set-setting load-ssh-keys false
       ;;
     'enable-ssh-key-loading')
       _zqs-set-setting load-ssh-keys true
       ;;
+
     # Profiling checks happen before the settings code is loaded, so we
     # touch the actual file instead of reading via _zqs-get-setting
     'disable-zsh-profiling')
       rm -f ~/.zqs-zprof-enabled
+      echo "New ZSH sessions will no longer use profiling."
       ;;
     'enable-zsh-profiling')
       touch ~/.zqs-zprof-enabled
-      ;;
-    'selfupdate')
-      _update-zsh-quickstart
-      ;;
-    'update')
-      _update-zsh-quickstart
-      zgenom update
-      ;;
-    'update-plugins')
-      zgenom update
-      ;;
-    'cleanup')
-      zgenom clean
-      ;;
-    'delete-setting')
-      shift
-      _zqs-delete-setting $@
-      ;;
-    'get-setting')
-      shift
-      _zqs-get-setting $@
-      ;;
-    'set-setting')
-      shift
-      _zqs-set-setting $@
+      echo "New ZSH sessions will use profiling."
       ;;
     *)
       zqs-help

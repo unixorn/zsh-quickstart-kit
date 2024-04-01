@@ -85,6 +85,11 @@ zgenom load djui/alias-tips
 # Add my collection of git helper scripts.
 zgenom load unixorn/git-extra-commands
 
+# Add diff-so-fancy so git can use it
+if [[ "$(_zqs-get-setting diff-so-fancy true)" == 'true' ]]; then
+  zgenom load so-fancy/diff-so-fancy
+fi
+
 # Supercharge your history search with fzf
 zgenom load unixorn/fzf-zsh-plugin
 
