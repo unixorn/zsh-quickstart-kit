@@ -222,9 +222,7 @@ function zsh-quickstart-enable-omz-plugins() {
 }
 
 function zsh-quickstart-set-ssh-askpass-require() {
-  if [[ $(_zqs-get-setting ssh-askpass-require) == 'true' ]]; then
-    export SSH_ASKPASS_REQUIRE=never
-  fi
+  export SSH_ASKPASS_REQUIRE=never
 }
 
 function zsh-quickstart-enable-ssh-askpass-require() {
@@ -385,7 +383,7 @@ load-our-ssh-keys() {
 
 if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
   # We're not on a remote machine, so load keys
-  if [[ "$(_zqs-get-setting ssh-askpass-require)" == 'true' ]]; then
+  if [[ "$(_zqs-get-setting enable-ssh-askpass-require)" == 'true' ]]; then
     zsh-quickstart-set-ssh-askpass-require
   fi
   load_ssh_keys="$(_zqs-get-setting load-ssh-keys true)"
