@@ -29,6 +29,12 @@ function can_haz() {
   which "$@" > /dev/null 2>&1
 }
 
+function zqs-debug() {
+  if [[ -f ~/.zqs-debug-mode ]]; then
+    echo $@
+  fi
+}
+
 # Fix weirdness with intellij
 if [[ -z "${INTELLIJ_ENVIRONMENT_READER}" ]]; then
   export POWERLEVEL9K_INSTANT_PROMPT='quiet'
@@ -326,6 +332,7 @@ fi
 
 onepassword-agent-check() {
   # 1password ssh agent support
+  zqs-debug "Checking for 1password"
   if [[ $(_zqs-get-setting use-1password-ssh-agent true) == 'true' ]]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
       local ONE_P_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
@@ -333,11 +340,13 @@ onepassword-agent-check() {
     if [[ "$(uname -s)" == "Linux" ]]; then
       local ONE_P_SOCK=~/.1password/agent.sock
     fi
+    zqs-debug "ONE_P_SOCK=$ONE_P_SOCK"
     if [[ -r "$ONE_P_SOCK" ]];then
       export SSH_AUTH_SOCK="$ONE_P_SOCK"
     else
       echo "Quickstart is set to use 1Password's ssh agent, but $ONE_P_SOCK isn't readable!"
     fi
+    zqs-debug "Set SSH_AUTH_SOCK to $SSH_AUTH_SOCK"
   fi
 }
 
@@ -890,6 +899,12 @@ function zqs() {
       ;;
     'enable-control-c-decorator')
       zqs-quickstart-enable-control-c-decorator
+      ;;
+    'disable-debug-mode')
+      rm -f ~/.zqs-debug-mode
+      ;;
+    'enable-debug-mode')
+      date > ~/.zqs-debug-mode
       ;;
 
     'disable-diff-so-fancy')
