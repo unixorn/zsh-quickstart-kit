@@ -29,6 +29,12 @@ function can_haz() {
   which "$@" > /dev/null 2>&1
 }
 
+function zqs-debug() {
+  if [[ -f ~/.zqs-debug-mode ]]; then
+    echo $@
+  fi
+}
+
 # Fix weirdness with intellij
 if [[ -z "${INTELLIJ_ENVIRONMENT_READER}" ]]; then
   export POWERLEVEL9K_INSTANT_PROMPT='quiet'
@@ -178,6 +184,13 @@ function zsh-quickstart-select-powerlevel10k() {
   _zqs-trigger-init-rebuild
 }
 
+function zsh-quickstart-disable-1password-ssh-agent() {
+  _zqs-set-setting use-1password-ssh-agent false
+}
+function zsh-quickstart-enable-1password-ssh-agent() {
+  _zqs-set-setting use-1password-ssh-agent true
+}
+
 # Binary feature settings functions should always be named
 # zsh-quickstart-disable-FEATURE and zsh-quickstart-enable-FEATURE
 
@@ -241,7 +254,6 @@ function _zqs-enable-diff-so-fancy() {
 function _zqs-disable-diff-so-fancy() {
   _zqs-set-setting diff-so-fancy false
 }
-
 
 function zsh-quickstart-check-for-ssh-askpass() {
   if ! can_haz ssh-askpass; then
@@ -316,32 +328,44 @@ if [[ -z "$LS_COLORS" ]]; then
   export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 fi
 
-load-our-ssh-keys() {
-  if can_haz op; then
+onepassword-agent-check() {
+  # 1password ssh agent support
+  zqs-debug "Checking for 1password"
+  if [[ $(_zqs-get-setting use-1password-ssh-agent true) == 'true' ]]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
-      export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+      local ONE_P_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
     fi
     if [[ "$(uname -s)" == "Linux" ]]; then
-      export SSH_AUTH_SOCK=~/.1password/agent.sock
+      local ONE_P_SOCK=~/.1password/agent.sock
     fi
-  else
-    # If keychain is installed let it take care of ssh-agent, else do it manually
-    if can_haz keychain; then
-      eval `keychain -q --eval`
+    zqs-debug "ONE_P_SOCK=$ONE_P_SOCK"
+    if [[ -r "$ONE_P_SOCK" ]];then
+      export SSH_AUTH_SOCK="$ONE_P_SOCK"
     else
-      if [ -z "$SSH_AUTH_SOCK" ]; then
-        # If user has keychain installed, let it take care of ssh-agent, else do it manually
-        # Check for a currently running instance of the agent
-        RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
-        if [ "$RUNNING_AGENT" = "0" ]; then
-          if [ ! -d ~/.ssh ] ; then
-            mkdir -p ~/.ssh
-          fi
-          # Launch a new instance of the agent
-          ssh-agent -s &> ~/.ssh/ssh-agent
+      echo "Quickstart is set to use 1Password's ssh agent, but $ONE_P_SOCK isn't readable!"
+    fi
+    zqs-debug "Set SSH_AUTH_SOCK to $SSH_AUTH_SOCK"
+  fi
+}
+
+load-our-ssh-keys() {
+  onepassword-agent-check
+  # If keychain is installed let it take care of ssh-agent, else do it manually
+  if can_haz keychain; then
+    eval `keychain -q --eval`
+  else
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+      # If user has keychain installed, let it take care of ssh-agent, else do it manually
+      # Check for a currently running instance of the agent
+      RUNNING_AGENT="$(ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]')"
+      if [ "$RUNNING_AGENT" = "0" ]; then
+        if [ ! -d ~/.ssh ] ; then
+          mkdir -p ~/.ssh
         fi
-        eval $(cat ~/.ssh/ssh-agent)
+        # Launch a new instance of the agent
+        ssh-agent -s &> ~/.ssh/ssh-agent
       fi
+      eval $(cat ~/.ssh/ssh-agent)
     fi
   fi
 
@@ -368,7 +392,8 @@ load-our-ssh-keys() {
       if [[ $(sw_vers -productVersion | cut -d '.' -f 1) -ge "12" ]]; then
         # Load all ssh keys that have pass phrases stored in macOS keychain using new flags
         ssh-add --apple-load-keychain
-      else ssh-add -qA
+      else
+        ssh-add -qA
       fi
     fi
 
@@ -777,6 +802,10 @@ function zqs-help() {
   echo "zqs cleanup - Cleanup unused plugins after removing them from the list"
   echo ""
   echo "Quickstart settings commands:"
+
+  echo "zqs disable-1password-agent - New sessions will not use 1Password's ssh agent"
+  echo "zqs enable-1password-agent - New sessions will use 1Password's ssh agent if present."
+
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
   echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. This is the default behavior."
 
@@ -847,6 +876,15 @@ function zqs() {
 
 # Set/Unset settings
 
+    'disable-1password-agent')
+      echo "Disabling 1password ssh-agent. New ZSH sessions will no longer use 1password's ssh agent."
+      _zqs-set-setting use-1password-ssh-agent false
+      ;;
+    'enable-1password-agent')
+      echo "Enabling 1password ssh-agent. New ZSH sessions will use 1password's ssh agent."
+      _zqs-set-setting use-1password-ssh-agent true
+      ;;
+
     'disable-bindkey-handling')
       zsh-quickstart-disable-bindkey-handling
       ;;
@@ -859,6 +897,12 @@ function zqs() {
       ;;
     'enable-control-c-decorator')
       zqs-quickstart-enable-control-c-decorator
+      ;;
+    'disable-debug-mode')
+      rm -f ~/.zqs-debug-mode
+      ;;
+    'enable-debug-mode')
+      date > ~/.zqs-debug-mode
       ;;
 
     'disable-diff-so-fancy')
