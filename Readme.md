@@ -133,7 +133,7 @@ To enable the enhanced history search, you'll need to install [fzf](https://gith
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
 7. Install `fzf`
     1. Install `fzf` with `brew install fzf`
-    2. Run the `zsh "$(brew --prefix fzf)/install"` command to configure `fzf`
+    2. Run the `sh "$(brew --prefix fzf)/install"` command to configure `fzf`
     3. Press `Enter` (`y` default) for all questions except `Do you want to update your shell configuration files? ([y]/n)`. For this question, select `n` and press `Enter`.
 
 </details>
