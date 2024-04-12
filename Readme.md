@@ -131,7 +131,10 @@ To enable the enhanced history search, you'll need to install [fzf](https://gith
 6. Install some Powerline-compatible or NerdFont fonts from one of the links in the Fonts section above.
     1. In iTerm 2, go to Preferences->Profile in your iTerm 2 preferences, then select one of the Powerline-compatible fonts you just installed.
     2. **Make sure you also specify a Powerline-compatible font for non-ASCII in your iTerm 2 preferences or the prompt separators and branch glyphs will show up garbled**.
-7. Install `fzf` with `brew install fzf`
+7. Install `fzf`
+    1. Install `fzf` with `brew install fzf`
+    2. Run the `zsh "$(brew --prefix fzf)/install"` command to configure `fzf`
+    3. Press `Enter` (`y` default) for all questions except `Do you want to update your shell configuration files? ([y]/n)`. For this question, select `n` and press `Enter`.
 
 </details>
 
