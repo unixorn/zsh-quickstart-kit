@@ -349,7 +349,10 @@ onepassword-agent-check() {
 }
 
 load-our-ssh-keys() {
-  onepassword-agent-check
+  # setup ssh-agent for 1password only if it's installed
+  if can_haz op; then
+    onepassword-agent-check
+  fi
   # If keychain is installed let it take care of ssh-agent, else do it manually
   if can_haz keychain; then
     eval `keychain -q --eval`
