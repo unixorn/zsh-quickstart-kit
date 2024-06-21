@@ -1,4 +1,4 @@
-# Copyright 2006-2023 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2024 Joseph Block <jpb@unixorn.net>
 #
 # BSD licensed, see LICENSE.txt
 #
@@ -517,7 +517,8 @@ setopt extended_glob # Enable more powerful glob features
 
 # Long running processes should return time after they complete. Specified
 # in seconds.
-REPORTTIME=2
+REPORTTIME=${REPORTTIME:-2}
+
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
 # How often to check for an update. If you want to override this, the
