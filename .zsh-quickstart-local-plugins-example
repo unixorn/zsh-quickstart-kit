@@ -93,6 +93,9 @@ fi
 # Supercharge your history search with fzf
 zgenom load unixorn/fzf-zsh-plugin
 
+# Soup up command history search with fzf.
+zgen load unixorn/fzf-zsh-plugin
+
 # Add my bitbucket git helpers plugin.
 zgenom load unixorn/bitbucket-git-helpers.plugin.zsh
 

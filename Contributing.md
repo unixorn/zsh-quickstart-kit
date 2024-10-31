@@ -8,6 +8,7 @@ The **ZSH Quickstart Kit** is a batteries-included starter kit for using `zsh`.
 
 - [Contribution Guidelines](#contribution-guidelines)
 - [New Features](#new-features)
+- [Readme](#readme)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
