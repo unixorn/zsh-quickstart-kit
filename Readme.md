@@ -512,7 +512,7 @@ Then you can tag working versions, pull from upstream for testing, and if the up
 
 ### Vim
 
-If you're using vim, [spf13](http://vim.spf13.com/) is an excellent starter configuration and plugin collection.
+If you're using vim, [spf13](https://github.com/spf13/spf13-vim) is an excellent starter configuration and plugin collection.
 
 ## Thanks
 
