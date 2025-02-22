@@ -323,11 +323,11 @@ Don't run `autoload -U zmv` when creating a new session.
 
 Run `autoload -U zmv` when creating a new session. This is the default behavior.
 
-##### `zqs-disable-zsh-profiling
+##### zqs-disable-zsh-profiling
 
 Disable ZSH's profiler. This is the default.
 
-##### `zqs-enable-zsh-profiling
+##### zqs-enable-zsh-profiling
 
 Turn on ZSH's profiler
 
