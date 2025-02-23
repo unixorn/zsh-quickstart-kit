@@ -1,0 +1,7 @@
+if [ -f ~/.local/bin/mise  ]; then
+  eval "$(~/.local/bin/mise activate zsh)"
+elif [ -f /opt/homebrew/bin/mise  ]; then
+  eval "$(/opt/homebrew/bin/mise activate zsh --shims)"
+elif [ -f /usr/local/bin/mise  ]; then
+  eval "$(/usr/local/bin/mise activate zsh)"
+fi
