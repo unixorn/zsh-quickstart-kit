@@ -667,6 +667,11 @@ if [[ -d "$HOME/.zshrc.$(uname).d" ]]; then
   load-shell-fragments "$HOME/.zshrc.$(uname).d"
 fi
 
+# Load work-specific fragments when present
+if [[ -d "$HOME/.zshrc.work.d" ]]; then
+  load-shell-fragments "$HOME/.zshrc.work.d"
+fi
+
 # If GOPATH is defined, add it to $PATH
 if [[ -n "$GOPATH" ]]; then
   if [[ -d "$GOPATH" ]]; then
