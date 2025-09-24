@@ -12,25 +12,25 @@
 # own fork of the quickstart kit.
 
 if [[ -d ~/gocode ]]; then
-  export GOPATH=~/gocode
+    export GOPATH=~/gocode
 fi
 
 # Yes, these tests are ugly. They do however, work.
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # do macOS specific things
-  alias top="TERM=vt100 top"
+    # do macOS specific things
+    alias top="TERM=vt100 top"
 else
-  alias cputop="top -o cpu"
-  alias l-d="ls -lad"
-  alias l="ls -lah"
-  alias ll="ls -lah | less"
+    alias cputop="top -o cpu"
+    alias l-d="ls -lad"
+    alias l="ls -lah"
+    alias ll="ls -lah | less"
 fi
 
 if [[ "$(uname -s)" == "Linux" ]]; then
-  # we're on linux
-  alias l-d="ls -lFad"
-  alias l="ls -laF"
-  alias ll="ls -lFa | TERM=vt100 less"
+    # we're on linux
+    alias l-d="ls -lFad"
+    alias l="ls -laF"
+    alias ll="ls -lFa | TERM=vt100 less"
 fi
 
 export CVS_RSH=ssh
@@ -59,18 +59,20 @@ fi
 
 # So does brew
 if can_haz brew; then
-  brew_prefix="$(brew --prefix)/bin"
-  if [[ -x "$brew_prefix/vim" ]]; then
-      alias vim="$brew_prefix/vim"
-      alias vi="$brew_prefix/vim"
-      export EDITOR="$brew_prefix/vim"
-  fi
-  unset brew_prefix
+    brew_prefix="$(brew --prefix)/bin"
+    if [[ -x "$brew_prefix/vim" ]]; then
+        alias vim="$brew_prefix/vim"
+        alias vi="$brew_prefix/vim"
+        export EDITOR="$brew_prefix/vim"
+    fi
+    unset brew_prefix
 fi
 
 # Clearly, I really like vim.
 
-export VISUAL=${EDITOR}
+if (( ${+EDITOR} )); then
+    export VISUAL="${EDITOR}"
+fi
 
 # Clean up files that have the wrong line endings
 alias mac2unix="tr '\015' '\012'"
@@ -120,9 +122,9 @@ alias wget="wget -c"
 alias zh="fc -l -d -D"
 
 # My typical tyops.
+alias grep='GREP_COLORS="1;37;41" LANG=C grep --color=auto'
 alias gerp='grep'
 alias grep-i='grep -i'
-alias grep='GREP_COLORS="1;37;41" LANG=C grep --color=auto'
 alias grepi='grep -i'
 alias knfie='knife'
 alias maek='make'
@@ -145,14 +147,14 @@ fi
 
 # Use brew versions if present
 if can_haz brew; then
-  brew_prefix=$(brew --prefix)
-  if [ -x "${brew_prefix}/bin/mysql/bin/mysql" ]; then
-    alias mysql="${brew_prefix}/mysql/bin/mysql"
-  fi
+    brew_prefix=$(brew --prefix)
+    if [ -x "${brew_prefix}/bin/mysql/bin/mysql" ]; then
+        alias mysql="${brew_prefix}/mysql/bin/mysql"
+    fi
 
-  if [ -x "${brew_prefix}/bin/mysql/bin/mysqladmin" ]; then
-    alias mysqladmin="${brew_prefix}/mysql/bin/mysqladmin"
-  fi
+    if [ -x "${brew_prefix}/bin/mysql/bin/mysqladmin" ]; then
+        alias mysqladmin="${brew_prefix}/mysql/bin/mysqladmin"
+    fi
 fi
 
 # Help the lazy typists again.
@@ -160,9 +162,9 @@ alias ..="cd .."
 alias ...="cd ../.."
 
 # Honor old .zsh_aliases.local customizations, but print depecation warning.
-if [ -f ~/.zsh_aliases.local ]; then
-  # shellcheck disable=SC1090
-  source ~/.zsh_aliases.local
-  echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
-  echo "Make entries in ~/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
+if [ -f ${ZDOTDIR:-$HOME}/.zsh_aliases.local ]; then
+    # shellcheck disable=SC1090
+    source ${ZDOTDIR:-$HOME}/.zsh_aliases.local
+    echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
+    echo "Make entries in ${ZDOTDIR:-$HOME}/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi

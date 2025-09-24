@@ -20,7 +20,7 @@
 # All files in there will be sourced, and keeping your customizations
 # there will keep you from having to maintain a separate fork of the
 # quickstart kit.
-if [[ -f ~/.zqs-zprof-enabled ]]; then
+if [[ -f ${ZDOTDIR:-$HOME}/.zqs-zprof-enabled ]]; then
   zmodload zsh/zprof
 fi
 
@@ -30,7 +30,7 @@ function can_haz() {
 }
 
 function zqs-debug() {
-  if [[ -f ~/.zqs-debug-mode ]]; then
+  if [[ -f ${ZDOTDIR:-$HOME}/.zqs-debug-mode ]]; then
     echo $@
   fi
 }
@@ -57,10 +57,10 @@ fi
 export COMPLETION_WAITING_DOTS="true"
 
 # Provide a unified way for the quickstart to get/set settings.
-if [[ -f ~/.zqs-settings-path ]]; then
-  _ZQS_SETTINGS_DIR=$(cat ~/.zqs-settings-path)
+if [[ -f ${ZDOTDIR:-$HOME}/.zqs-settings-path ]]; then
+  _ZQS_SETTINGS_DIR=$(cat ${ZDOTDIR:-$HOME}/.zqs-settings-path)
 else
-  _ZQS_SETTINGS_DIR="${HOME}/.zqs-settings"
+  _ZQS_SETTINGS_DIR="${ZDOTDIR:-$HOME}/.zqs-settings"
 fi
 export _ZQS_SETTINGS_DIR
 
@@ -74,15 +74,15 @@ _zqs-trigger-init-rebuild() {
 
 # We need to load shell fragment files often enough to make it a function
 function load-shell-fragments() {
-  if [[ -z $1 ]]; then
+  if [[ -z ${1-} ]]; then
     echo "You must give load-shell-fragments a directory path"
   else
     if [[ -d "$1" ]]; then
-      if [ -n "$(/bin/ls -A $1)" ]; then
-        for _zqs_fragment in $(/bin/ls -A $1)
+      if [ -n "$(/bin/ls -A "$1")" ]; then
+        for _zqs_fragment in $(/bin/ls -A "$1")
         do
-          if [ -r $1/$_zqs_fragment ]; then
-            source $1/$_zqs_fragment
+          if [ -r "$1/$_zqs_fragment" ]; then
+            source "$1/$_zqs_fragment"
           fi
         done
         unset _zqs_fragment
@@ -139,25 +139,25 @@ _zqs-purge-setting() {
 # Convert the old settings files into new style settings
 function _zqs-update-stale-settings-files() {
   # Convert .zqs-additional-plugins to new format
-  if [[ -f ~/.zqs-additional-plugins ]]; then
-    mkdir -p ~/.zshrc.add-plugins.d
-    sed -e 's/^./zgenom load &/' ~/.zqs-additional-plugins >> ~/.zshrc.add-plugins.d/0000-transferred-plugins
-    rm -f ~/.zqs-additional-plugins
+  if [[ -f ${ZDOTDIR:-$HOME}/.zqs-additional-plugins ]]; then
+    mkdir -p ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d
+    sed -e 's/^./zgenom load &/' ${ZDOTDIR:-$HOME}/.zqs-additional-plugins >> ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d/0000-transferred-plugins
+    rm -f ${ZDOTDIR:-$HOME}/.zqs-additional-plugins
     echo "Plugins from .zqs-additional-plugins were moved to .zshrc.add-plugins.d/0000-transferred-plugins with a format change"
   fi
-  if [[ -f ~/.zsh-quickstart-use-bullet-train ]]; then
+  if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-use-bullet-train ]]; then
     _zqs-set-setting bullet-train true
-    rm -f ~/.zsh-quickstart-use-bullet-train
+    rm -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-use-bullet-train
     echo "Converted old ~/.zsh-quickstart-use-bullet-train to new settings system"
   fi
-  if [[ -f ~/.zsh-quickstart-no-omz ]]; then
+  if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz ]]; then
     _zqs-set-setting load-omz-plugins false
-    rm -f ~/.zsh-quickstart-no-omz
+    rm -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz
     echo "Converted old ~/.zsh-quickstart-no-omz to new settings system"
   fi
-  if [[ -f ~/.zsh-quickstart-no-zmv ]]; then
+  if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-zmv ]]; then
     _zqs-set-setting no-zmv true
-    rm -f ~/.zsh-quickstart-no-zmv
+    rm -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-zmv
     echo "Converted old ~/.zsh-quickstart-no-zmv to new settings system"
   fi
   # Don't break existing user setups, but transition to a zqs setting to reduce
@@ -321,10 +321,10 @@ fi
 # tool that makes it easy to customize your color scheme and keep them in sync
 # across Linux and OS X/*BSD at http://geoff.greer.fm/lscolors/
 
-if [[ -z "$LSCOLORS" ]]; then
+if [[ -z ${LSCOLORS-} ]]; then
   export LSCOLORS='Exfxcxdxbxegedabagacad'
 fi
-if [[ -z "$LS_COLORS" ]]; then
+if [[ -z ${LS_COLORS-} ]]; then
   export LS_COLORS='di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 fi
 
@@ -409,7 +409,7 @@ load-our-ssh-keys() {
   fi
 }
 
-if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
+if [[ -z ${SSH_CLIENT-} ]] || can_haz keychain; then
   # We're not on a remote machine, so load keys
   if [[ "$(_zqs-get-setting enable-ssh-askpass-require)" == 'true' ]]; then
     zsh-quickstart-set-ssh-askpass-require
@@ -422,18 +422,18 @@ if [[ -z "$SSH_CLIENT" ]] || can_haz keychain; then
 fi
 
 # Load helper functions before we load zgenom setup
-if [ -r ~/.zsh_functions ]; then
-  source ~/.zsh_functions
+if [ -r ${ZDOTDIR:-$HOME}/.zsh_functions ]; then
+  source ${ZDOTDIR:-$HOME}/.zsh_functions
 fi
 
 # Make it easy to prepend your own customizations that override
 # the quickstart kit's defaults by loading all files from the
 # ~/.zshrc.pre-plugins.d directory
-mkdir -p ~/.zshrc.pre-plugins.d
-load-shell-fragments ~/.zshrc.pre-plugins.d
+mkdir -p ${ZDOTDIR:-$HOME}/.zshrc.pre-plugins.d
+load-shell-fragments ${ZDOTDIR:-$HOME}/.zshrc.pre-plugins.d
 
-if [[ -d "$HOME/.zshrc.pre-plugins.$(uname).d" ]]; then
-  load-shell-fragments "$HOME/.zshrc.pre-plugins.$(uname).d"
+if [[ -d "${ZDOTDIR:-$HOME}/.zshrc.pre-plugins.$(uname).d" ]]; then
+  load-shell-fragments "${ZDOTDIR:-$HOME}/.zshrc.pre-plugins.$(uname).d"
 fi
 
 # macOS doesn't have a python by default. This makes the omz python and
@@ -445,7 +445,7 @@ if ! can_haz python; then
   fi
   # Ugly hack for zsh-completion-generator - but only do it if the user
   # hasn't already set GENCOMPL_PY
-  if [[ -z "$GENCOMPL_PY" ]]; then
+  if [[ -z ${GENCOMPL_PY-} ]]; then
     export GENCOMPL_PY='python3'
     export ZSH_COMPLETION_HACK='true'
   fi
@@ -453,13 +453,13 @@ fi
 
 # Now that we have $PATH set up and ssh keys loaded, configure zgenom.
 # Start zgenom
-if [ -f ~/.zgen-setup ]; then
-  source ~/.zgen-setup
+if [ -f ${ZDOTDIR:-$HOME}/.zgen-setup ]; then
+  source ${ZDOTDIR:-$HOME}/.zgen-setup
 fi
 
 # Undo the hackery for issue 180
 # Don't unset GENCOMPL_PY if we didn't set it
-if [[ -n "$ZSH_COMPLETION_HACK" ]]; then
+if [[ -n ${ZSH_COMPLETION_HACK-} ]]; then
   unset GENCOMPL_PY
   unset ZSH_COMPLETION_HACK
 fi
@@ -490,7 +490,7 @@ setopt share_history
 # adding a file to ~/.zshrc.d that changes these variables.
 export HISTSIZE=100000
 export SAVEHIST=100000
-HISTFILE=~/.zsh_history
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # ZSH Man page referencing the history_ignore parameter - https://manpages.ubuntu.com/manpages/kinetic/en/man1/zshparam.1.html
 HISTORY_IGNORE="(cd ..|l[s]#( *)#|pwd *|exit *|date *|* --help)"
@@ -551,13 +551,13 @@ fi
 # having to maintain your own fork.
 
 # Stuff that works on bash or zsh
-if [ -r ~/.sh_aliases ]; then
-  source ~/.sh_aliases
+if [ -r ${ZDOTDIR:-$HOME}/.sh_aliases ]; then
+  source ${ZDOTDIR:-$HOME}/.sh_aliases
 fi
 
 # Stuff only tested on zsh, or explicitly zsh-specific
-if [ -r ~/.zsh_aliases ]; then
-  source ~/.zsh_aliases
+if [ -r ${ZDOTDIR:-$HOME}/.zsh_aliases ]; then
+  source ${ZDOTDIR:-$HOME}/.zsh_aliases
 fi
 
 export LOCATE_PATH=/var/db/locate.database
@@ -575,16 +575,16 @@ fi
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # Load macOS-specific aliases
   # Apple renamed the OS, so use the macos one first
-  [ -r ~/.macos_aliases ] && source ~/.macos_aliases
+  [ -r ${ZDOTDIR:-$HOME}/.macos_aliases ] && source ${ZDOTDIR:-$HOME}/.macos_aliases
   if [ -d ~/.macos_aliases.d ]; then
-    load-shell-fragments ~/.macos_aliases.d
+    load-shell-fragments ${ZDOTDIR:-$HOME}/.macos_aliases.d
   fi
 
   # Keep supporting the old name, but emit a deprecation warning
-  [ -r ~/.osx_aliases ] && source ~/.osx_aliases
+  [ -r ${ZDOTDIR:-$HOME}/.osx_aliases ] && source ${ZDOTDIR:-$HOME}/.osx_aliases
   if [ -d ~/.osx_aliases.d ]; then
     echo "Apple renamed the os to macos - the .osx_aliases.d directory is deprecated in favor of .macos_aliases.d"
-    load-shell-fragments ~/.osx_aliases.d
+    load-shell-fragments ${ZDOTDIR:-$HOME}/.osx_aliases.d
   fi
 fi
 
@@ -630,10 +630,10 @@ if [ -v ls_analog ]; then
 
   # Don't step on system-installed tree command
   if ! can_haz tree; then
-    if [[ -z "$TREE_IGNORE" ]]; then
+    if [[ -z ${TREE_IGNORE-} ]]; then
         TREE_IGNORE=".cache|cache|node_modules|vendor|.git"
     fi
-    alias tree="$ls_analog --tree --ignore-glob='$TREE_IGNORE'"
+    alias tree="$ls_analog --tree --ignore-glob='${TREE_IGNORE-}'"
   fi
   unset ls_analog
 fi
@@ -641,16 +641,16 @@ fi
 # Speed up autocomplete, force prefix mapping
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' cache-path ${ZDOTDIR:-$HOME}/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
 # Load any custom zsh completions we've installed
-if [[ -d ~/.zsh-completions.d ]]; then
-  load-shell-fragments ~/.zsh-completions.d
+if [[ -d ${ZDOTDIR:-$HOME}/.zsh-completions.d ]]; then
+  load-shell-fragments ${ZDOTDIR:-$HOME}/.zsh-completions.d
 fi
-if [[ -d ~/.zsh-completions ]]; then
-  echo '~/.zsh_completions is deprecated in favor of ~/.zsh_completions.d'
-  load-shell-fragments ~/.zsh-completions
+if [[ -d ${ZDOTDIR:-$HOME}/.zsh-completions ]]; then
+  echo '${ZDOTDIR:-$HOME}/.zsh_completions is deprecated in favor of ${ZDOTDIR:-$HOME}/.zsh_completions.d'
+  load-shell-fragments ${ZDOTDIR:-$HOME}/.zsh-completions
 fi
 
 # Load zmv
@@ -660,20 +660,20 @@ fi
 
 # Make it easy to append your own customizations that override the
 # quickstart's defaults by loading all files from the ~/.zshrc.d directory
-mkdir -p ~/.zshrc.d
-load-shell-fragments ~/.zshrc.d
+mkdir -p ${ZDOTDIR:-$HOME}/.zshrc.d
+load-shell-fragments ${ZDOTDIR:-$HOME}/.zshrc.d
 
-if [[ -d "$HOME/.zshrc.$(uname).d" ]]; then
-  load-shell-fragments "$HOME/.zshrc.$(uname).d"
+if [[ -d "${ZDOTDIR:-$HOME}/.zshrc.$(uname).d" ]]; then
+  load-shell-fragments "${ZDOTDIR:-$HOME}/.zshrc.$(uname).d"
 fi
 
 # Load work-specific fragments when present
-if [[ -d "$HOME/.zshrc.work.d" ]]; then
-  load-shell-fragments "$HOME/.zshrc.work.d"
+if [[ -d "${ZDOTDIR:-$HOME}/.zshrc.work.d" ]]; then
+  load-shell-fragments "${ZDOTDIR:-$HOME}/.zshrc.work.d"
 fi
 
 # If GOPATH is defined, add it to $PATH
-if [[ -n "$GOPATH" ]]; then
+if [[ -n ${GOPATH-} ]]; then
   if [[ -d "$GOPATH" ]]; then
     export PATH="$PATH:$GOPATH"
   fi
@@ -684,7 +684,7 @@ fi
 typeset -aU path;
 
 # If desk is installed, load the Hook for desk activation
-[[ -n "$DESK_ENV" ]] && source "$DESK_ENV"
+[[ -n ${DESK_ENV-} ]] && source "$DESK_ENV"
 
 # Do selfupdate checking. We do this after processing ~/.zshrc.d to make the
 # refresh check interval easier to customize.
@@ -704,7 +704,7 @@ _load-lastupdate-from-file() {
 }
 
 _update-zsh-quickstart() {
-  local _zshrc_loc=~/.zshrc
+  local _zshrc_loc=${ZDOTDIR:-$HOME}/.zshrc
   if [[ ! -L "${_zshrc_loc}" ]]; then
     echo ".zshrc is not a symlink, skipping zsh-quickstart-kit update"
   else
@@ -732,7 +732,7 @@ _update-zsh-quickstart() {
           fi
           echo "---- updating $zqs_current_branch ----"
           git pull
-          date +%s >! ~/.zsh-quickstart-last-update
+          date +%s >! ${ZDOTDIR:-$HOME}/.zsh-quickstart-last-update
           unset zqs_default_branch
           unset zqs_current_branch
         fi
@@ -746,7 +746,7 @@ _update-zsh-quickstart() {
 _check-for-zsh-quickstart-update() {
   local day_seconds=$(expr 24 \* 60 \* 60)
   local refresh_seconds=$(expr "${day_seconds}" \* "${QUICKSTART_KIT_REFRESH_IN_DAYS}")
-  local last_quickstart_update=$(_load-lastupdate-from-file ~/.zsh-quickstart-last-update)
+  local last_quickstart_update=$(_load-lastupdate-from-file ${ZDOTDIR:-$HOME}/.zsh-quickstart-last-update)
 
   if [ ${last_quickstart_update} -gt ${refresh_seconds} ]; then
     echo "It has been $(expr ${last_quickstart_update} / ${day_seconds}) days since your zsh quickstart kit was updated"
@@ -755,7 +755,7 @@ _check-for-zsh-quickstart-update() {
   fi
 }
 
-if [[ ! -z "$QUICKSTART_KIT_REFRESH_IN_DAYS" ]]; then
+if [[ -n ${QUICKSTART_KIT_REFRESH_IN_DAYS-} ]]; then
   _check-for-zsh-quickstart-update
   # unset QUICKSTART_KIT_REFRESH_IN_DAYS
 fi
@@ -767,11 +767,11 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
 # Load iTerm shell integrations if found.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# To customize your prompt, run `p10k configure` or edit ~/.p10k.zsh.
-if [[ ! -f ~/.p10k.zsh ]]; then
-  echo "Run p10k configure or edit ~/.p10k.zsh to configure your prompt"
+# To customize your prompt, run `p10k configure` or edit ${ZDOTDIR:-$HOME}/.p10k.zsh.
+if [[ ! -f ${ZDOTDIR:-$HOME}/.p10k.zsh ]]; then
+  echo "Run p10k configure or edit ${ZDOTDIR:-$HOME}/.p10k.zsh to configure your prompt"
 else
-  source ~/.p10k.zsh
+  source ${ZDOTDIR:-$HOME}/.p10k.zsh
 fi
 
 if [[ $(_zqs-get-setting list-ssh-keys true) == 'true' ]]; then
@@ -804,7 +804,7 @@ function zqs-help() {
   echo "The zqs command allows you to manipulate your ZSH quickstart."
   echo
   echo "Quickstart action commands:"
-  echo "zqs check-for-updates - Update the quickstart kit if it has been longer than $QUICKSTART_KIT_REFRESH_IN_DAYS days since the last update."
+  echo "zqs check-for-updates - Update the quickstart kit if it has been longer than ${QUICKSTART_KIT_REFRESH_IN_DAYS-} days since the last update."
   echo "zqs selfupdate - Force an immediate update of the quickstart kit"
   echo "zqs update - Update the quickstart kit and all your plugins"
   echo "zqs update-plugins - Update your plugins"
