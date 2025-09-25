@@ -12,25 +12,25 @@
 # own fork of the quickstart kit.
 
 if [[ -d ~/gocode ]]; then
-    export GOPATH=~/gocode
+  export GOPATH=~/gocode
 fi
 
 # Yes, these tests are ugly. They do however, work.
 if [[ "$(uname -s)" == "Darwin" ]]; then
-    # do macOS specific things
-    alias top="TERM=vt100 top"
+  # do macOS specific things
+  alias top="TERM=vt100 top"
 else
-    alias cputop="top -o cpu"
-    alias l-d="ls -lad"
-    alias l="ls -lah"
-    alias ll="ls -lah | less"
+  alias cputop="top -o cpu"
+  alias l-d="ls -lad"
+  alias l="ls -lah"
+  alias ll="ls -lah | less"
 fi
 
 if [[ "$(uname -s)" == "Linux" ]]; then
-    # we're on linux
-    alias l-d="ls -lFad"
-    alias l="ls -laF"
-    alias ll="ls -lFa | TERM=vt100 less"
+  # we're on linux
+  alias l-d="ls -lFad"
+  alias l="ls -laF"
+  alias ll="ls -lFa | TERM=vt100 less"
 fi
 
 export CVS_RSH=ssh
@@ -39,39 +39,39 @@ export CVS_RSH=ssh
 alias historysummary="history | awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}' | sort -rn | head"
 
 if [ -x /bin/vim ]; then
-    alias vi="/bin/vim"
-    alias vim="/bin/vim"
-    export EDITOR="/bin/vim"
+  alias vi="/bin/vim"
+  alias vim="/bin/vim"
+  export EDITOR="/bin/vim"
 fi
 
 if [ -x /usr/bin/vim ]; then
-    alias vi="/usr/bin/vim"
-    alias vim="/usr/bin/vim"
-    export EDITOR="/usr/bin/vim"
+  alias vi="/usr/bin/vim"
+  alias vim="/usr/bin/vim"
+  export EDITOR="/usr/bin/vim"
 fi
 
 # MacPorts has a newer vim than Apple ships
 if [ -x /opt/local/bin/vim ]; then
-    alias vim="/opt/local/bin/vim"
-    alias vi="/opt/local/bin/vim"
-    export EDITOR="/opt/local/bin/vim"
+  alias vim="/opt/local/bin/vim"
+  alias vi="/opt/local/bin/vim"
+  export EDITOR="/opt/local/bin/vim"
 fi
 
 # So does brew
 if can_haz brew; then
-    brew_prefix="$(brew --prefix)/bin"
-    if [[ -x "$brew_prefix/vim" ]]; then
-        alias vim="$brew_prefix/vim"
-        alias vi="$brew_prefix/vim"
-        export EDITOR="$brew_prefix/vim"
-    fi
-    unset brew_prefix
+  brew_prefix="$(brew --prefix)/bin"
+  if [[ -x "$brew_prefix/vim" ]]; then
+    alias vim="$brew_prefix/vim"
+    alias vi="$brew_prefix/vim"
+    export EDITOR="$brew_prefix/vim"
+  fi
+  unset brew_prefix
 fi
 
 # Clearly, I really like vim.
 
 if (( ${+EDITOR} )); then
-    export VISUAL="${EDITOR}"
+  export VISUAL="${EDITOR}"
 fi
 
 # Clean up files that have the wrong line endings
@@ -147,14 +147,14 @@ fi
 
 # Use brew versions if present
 if can_haz brew; then
-    brew_prefix=$(brew --prefix)
-    if [ -x "${brew_prefix}/bin/mysql/bin/mysql" ]; then
-        alias mysql="${brew_prefix}/mysql/bin/mysql"
-    fi
+  brew_prefix=$(brew --prefix)
+  if [ -x "${brew_prefix}/bin/mysql/bin/mysql" ]; then
+    alias mysql="${brew_prefix}/mysql/bin/mysql"
+  fi
 
-    if [ -x "${brew_prefix}/bin/mysql/bin/mysqladmin" ]; then
-        alias mysqladmin="${brew_prefix}/mysql/bin/mysqladmin"
-    fi
+  if [ -x "${brew_prefix}/bin/mysql/bin/mysqladmin" ]; then
+    alias mysqladmin="${brew_prefix}/mysql/bin/mysqladmin"
+  fi
 fi
 
 # Help the lazy typists again.
@@ -163,8 +163,8 @@ alias ...="cd ../.."
 
 # Honor old .zsh_aliases.local customizations, but print depecation warning.
 if [ -f ${ZDOTDIR:-$HOME}/.zsh_aliases.local ]; then
-    # shellcheck disable=SC1090
-    source ${ZDOTDIR:-$HOME}/.zsh_aliases.local
-    echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
-    echo "Make entries in ${ZDOTDIR:-$HOME}/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
+  # shellcheck disable=SC1090
+  source ${ZDOTDIR:-$HOME}/.zsh_aliases.local
+  echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
+  echo "Make entries in ${ZDOTDIR:-$HOME}/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi

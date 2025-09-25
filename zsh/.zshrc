@@ -49,8 +49,8 @@ fi
 
 # Valid font modes:
 # flat, awesome-patched, awesome-fontconfig, nerdfont-complete, nerdfont-fontconfig
-if [[ -r ~/.powerlevel9k_font_mode ]]; then
-  POWERLEVEL9K_MODE=$(head -1 ~/.powerlevel9k_font_mode)
+if [[ -r ${ZDOTDIR:-$HOME}/.powerlevel9k_font_mode ]]; then
+  POWERLEVEL9K_MODE=$(head -1 ${ZDOTDIR:-$HOME}/.powerlevel9k_font_mode)
 fi
 
 # Unset COMPLETION_WAITING_DOTS in a file in ~/.zshrc.d if you want red dots to be displayed while waiting for completion
@@ -68,8 +68,8 @@ export _ZQS_SETTINGS_DIR
 # them is likely to break things badly.
 
 _zqs-trigger-init-rebuild() {
-  rm -f ~/.zgen/init.zsh
-  rm -f ~/.zgenom/init.zsh
+  rm -f ${ZDOTDIR:-$HOME}/.zgen/init.zsh
+  rm -f ${ZDOTDIR:-$HOME}/.zgenom/init.zsh
 }
 
 # We need to load shell fragment files often enough to make it a function
@@ -178,7 +178,7 @@ function zsh-quickstart-select-bullet-train() {
 }
 
 function zsh-quickstart-select-powerlevel10k() {
-  rm -f ~/.zsh-quickstart-use-bullet-train
+  rm -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-use-bullet-train
   _zqs-set-setting powerlevel10k true
   _zqs-set-setting bullet-train false
   _zqs-trigger-init-rebuild
@@ -223,13 +223,13 @@ function _zqs-disable-zmv-autoloading() {
 }
 
 function zsh-quickstart-disable-omz-plugins() {
-  rm -f ~/.zsh-quickstart-no-omz
+  rm -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz
   _zqs-set-setting load-omz-plugins false
   _zqs-trigger-init-rebuild
 }
 
 function zsh-quickstart-enable-omz-plugins() {
-  rm -f ~/.zsh-quickstart-no-omz
+  rm -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz
   _zqs-set-setting load-omz-plugins true
   _zqs-trigger-init-rebuild
 }
@@ -576,13 +576,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   # Load macOS-specific aliases
   # Apple renamed the OS, so use the macos one first
   [ -r ${ZDOTDIR:-$HOME}/.macos_aliases ] && source ${ZDOTDIR:-$HOME}/.macos_aliases
-  if [ -d ~/.macos_aliases.d ]; then
+  if [ -d ${ZDOTDIR:-$HOME}/.macos_aliases.d ]; then
     load-shell-fragments ${ZDOTDIR:-$HOME}/.macos_aliases.d
   fi
 
   # Keep supporting the old name, but emit a deprecation warning
   [ -r ${ZDOTDIR:-$HOME}/.osx_aliases ] && source ${ZDOTDIR:-$HOME}/.osx_aliases
-  if [ -d ~/.osx_aliases.d ]; then
+  if [ -d ${ZDOTDIR:-$HOME}/.osx_aliases.d ]; then
     echo "Apple renamed the os to macos - the .osx_aliases.d directory is deprecated in favor of .macos_aliases.d"
     load-shell-fragments ${ZDOTDIR:-$HOME}/.osx_aliases.d
   fi
@@ -908,10 +908,10 @@ function zqs() {
       zqs-quickstart-enable-control-c-decorator
       ;;
     'disable-debug-mode')
-      rm -f ~/.zqs-debug-mode
+      rm -f ${ZDOTDIR:-$HOME}/.zqs-debug-mode
       ;;
     'enable-debug-mode')
-      date > ~/.zqs-debug-mode
+      date > ${ZDOTDIR:-$HOME}/.zqs-debug-mode
       ;;
 
     'disable-diff-so-fancy')
@@ -961,11 +961,11 @@ function zqs() {
     # Profiling checks happen before the settings code is loaded, so we
     # touch the actual file instead of reading via _zqs-get-setting
     'disable-zsh-profiling')
-      rm -f ~/.zqs-zprof-enabled
+      rm -f ${ZDOTDIR:-$HOME}/.zqs-zprof-enabled
       echo "New ZSH sessions will no longer use profiling."
       ;;
     'enable-zsh-profiling')
-      touch ~/.zqs-zprof-enabled
+      touch ${ZDOTDIR:-$HOME}/.zqs-zprof-enabled
       echo "New ZSH sessions will use profiling."
       ;;
     *)
@@ -975,6 +975,6 @@ function zqs() {
   esac
 }
 
-if [[ -f ~/.zqs-zprof-enabled ]]; then
+if [[ -f ${ZDOTDIR:-$HOME}/.zqs-zprof-enabled ]]; then
   zprof
 fi
