@@ -47,7 +47,7 @@ function man() {
     LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
     LESS_TERMCAP_ue=$(printf "\e[0m") \
     LESS_TERMCAP_us=$(printf "\e[1;32m") \
-      man "$@"
+    man "$@"
 }
 
 if ! can_haz watch; then
@@ -97,10 +97,10 @@ alias mtr_url="mtr-url"
 function fix_tmux_ssh_agent() {
   if can_haz tmux; then
     for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
-      if (tmux show-environment | grep "^${key}" > /dev/null); then
-        value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
-        export ${key}="${value}"
-      fi
+    if (tmux show-environment | grep "^${key}" > /dev/null); then
+      value=$(tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//")
+      export ${key}="${value}"
+    fi
     done
   else
     echo "Can't find tmux in your PATH. Install it and try again."
@@ -158,8 +158,8 @@ function httpserver() {
 }
 
 # Honor old .zsh_functions.local customizations, but print depecation warning.
-if [ -f ~/.zsh_functions.local ]; then
-  source .zsh_functions.local
+if [ -f ${ZDOTDIR:-$HOME}/.zsh_functions.local ]; then
+  source ${ZDOTDIR:-$HOME}/.zsh_functions.local
   echo ".zsh_functions.local is deprecated and will stop working after June 1st, 2022."
-  echo "Make entries in ~/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
+  echo "Make entries in ${ZDOTDIR:-$HOME}/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi

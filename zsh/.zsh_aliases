@@ -39,38 +39,40 @@ export CVS_RSH=ssh
 alias historysummary="history | awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}' | sort -rn | head"
 
 if [ -x /bin/vim ]; then
-    alias vi="/bin/vim"
-    alias vim="/bin/vim"
-    export EDITOR="/bin/vim"
+  alias vi="/bin/vim"
+  alias vim="/bin/vim"
+  export EDITOR="/bin/vim"
 fi
 
 if [ -x /usr/bin/vim ]; then
-    alias vi="/usr/bin/vim"
-    alias vim="/usr/bin/vim"
-    export EDITOR="/usr/bin/vim"
+  alias vi="/usr/bin/vim"
+  alias vim="/usr/bin/vim"
+  export EDITOR="/usr/bin/vim"
 fi
 
 # MacPorts has a newer vim than Apple ships
 if [ -x /opt/local/bin/vim ]; then
-    alias vim="/opt/local/bin/vim"
-    alias vi="/opt/local/bin/vim"
-    export EDITOR="/opt/local/bin/vim"
+  alias vim="/opt/local/bin/vim"
+  alias vi="/opt/local/bin/vim"
+  export EDITOR="/opt/local/bin/vim"
 fi
 
 # So does brew
 if can_haz brew; then
   brew_prefix="$(brew --prefix)/bin"
   if [[ -x "$brew_prefix/vim" ]]; then
-      alias vim="$brew_prefix/vim"
-      alias vi="$brew_prefix/vim"
-      export EDITOR="$brew_prefix/vim"
+    alias vim="$brew_prefix/vim"
+    alias vi="$brew_prefix/vim"
+    export EDITOR="$brew_prefix/vim"
   fi
   unset brew_prefix
 fi
 
 # Clearly, I really like vim.
 
-export VISUAL=${EDITOR}
+if (( ${+EDITOR} )); then
+  export VISUAL="${EDITOR}"
+fi
 
 # Clean up files that have the wrong line endings
 alias mac2unix="tr '\015' '\012'"
@@ -120,9 +122,9 @@ alias wget="wget -c"
 alias zh="fc -l -d -D"
 
 # My typical tyops.
+alias grep='GREP_COLORS="1;37;41" LANG=C grep --color=auto'
 alias gerp='grep'
 alias grep-i='grep -i'
-alias grep='GREP_COLORS="1;37;41" LANG=C grep --color=auto'
 alias grepi='grep -i'
 alias knfie='knife'
 alias maek='make'
@@ -160,9 +162,9 @@ alias ..="cd .."
 alias ...="cd ../.."
 
 # Honor old .zsh_aliases.local customizations, but print depecation warning.
-if [ -f ~/.zsh_aliases.local ]; then
+if [ -f ${ZDOTDIR:-$HOME}/.zsh_aliases.local ]; then
   # shellcheck disable=SC1090
-  source ~/.zsh_aliases.local
+  source ${ZDOTDIR:-$HOME}/.zsh_aliases.local
   echo ".zsh_aliases.local is deprecated and will stop working after June 1st, 2022."
-  echo "Make entries in ~/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
+  echo "Make entries in ${ZDOTDIR:-$HOME}/.zshrc.d instead. See https://github.com/unixorn/zsh-quickstart-kit#zshrcd for more details."
 fi

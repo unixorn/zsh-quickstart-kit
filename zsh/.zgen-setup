@@ -8,20 +8,20 @@
 # BSD licensed, see LICENSE.txt
 
 # Clone zgenom if you haven't already
-if [[ -z "$ZGENOM_PARENT_DIR" ]]; then
-  ZGENOM_PARENT_DIR=$HOME
-  ZGENOM_SOURCE_FILE=$ZGENOM_PARENT_DIR/.zqs-zgenom/zgenom.zsh
+if [[ -z ${ZGENOM_PARENT_DIR-} ]]; then
+  ZGENOM_PARENT_DIR=${ZDOTDIR:-$HOME}
+  ZGENOM_SOURCE_FILE="$ZGENOM_PARENT_DIR/.zqs-zgenom/zgenom.zsh"
 
   # Set ZGENOM_SOURCE_FILE to the old directory if it already exists
   if [[ -f "$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh" ]] ; then
-    ZGENOM_SOURCE_FILE=$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh
+    ZGENOM_SOURCE_FILE="$ZGENOM_PARENT_DIR/zgenom/zgenom.zsh"
   fi
 fi
 
 # zgenom stores the clones plugins & themes in $ZGEN_DIR when it
 # is set. Otherwise it stuffs everything in the source tree, which
 # is unclean.
-ZGEN_DIR=${ZGEN_DIR:-$HOME/.zgenom}
+ZGEN_DIR=${ZGEN_DIR:-${ZDOTDIR:-$HOME}/.zgenom}
 
 if [[ ! -f "$ZGENOM_SOURCE_FILE" ]] ; then
   if [[ ! -d "$ZGENOM_PARENT_DIR" ]]; then
@@ -42,7 +42,7 @@ fi
 unset ZGENOM_PARENT_DIR ZGENOM_SOURCE_FILE
 
 warn-about-prompt-change() {
-  if [[ ! -f ~/.zsh-quickstart-kit-prompt-switch-warning ]]; then
+  if [[ ! -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-kit-prompt-switch-warning ]]; then
     echo
     echo "The default ZSH prompt in the quickstart kit has changed from"
     echo "bullet-train to powerlevel10k."
@@ -53,7 +53,7 @@ warn-about-prompt-change() {
     echo
     echo "If you do nothing, you will be switched to powerlevel10k"
     echo
-    touch ~/.zsh-quickstart-kit-prompt-switch-warning
+    touch ${ZDOTDIR:-$HOME}/.zsh-quickstart-kit-prompt-switch-warning
   fi
 }
 
@@ -62,7 +62,7 @@ load-starter-plugin-list() {
   ZGEN_LOADED=()
   ZGEN_COMPLETIONS=()
 
-  if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
+  if [[ ! -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
     zgenom oh-my-zsh
   fi
 
@@ -136,15 +136,15 @@ load-starter-plugin-list() {
   # in a repository securely by encrypting them with gnupg.
   zgenom load StackExchange/blackbox
 
-  if [[ -f ~/.zqs-add-plugins ]]; then
-    source ~/.zqs-add-plugins
+  if [[ -f ${ZDOTDIR:-$HOME}/.zqs-add-plugins ]]; then
+    source ${ZDOTDIR:-$HOME}/.zqs-add-plugins
   fi
 
-  if [[ -d ~/.zshrc.add-plugins.d ]]; then
-    load-shell-fragments ~/.zshrc.add-plugins.d
+  if [[ -d ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d ]]; then
+    load-shell-fragments ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d
   fi
 
-  if [[ ! -f ~/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
+  if [[ ! -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
     # Load some oh-my-zsh plugins
     zgenom oh-my-zsh plugins/pip
     zgenom oh-my-zsh plugins/sudo
@@ -184,7 +184,7 @@ load-starter-plugin-list() {
   zgenom load unixorn/1password-op.plugin.zsh
 
   # Load me last
-  GENCOMPL_FPATH=$HOME/.zsh/complete
+  GENCOMPL_FPATH=${ZDOTDIR:-$HOME}/.zsh/complete
 
   # Very cool plugin that generates zsh completion functions for commands
   # if they have getopt-style help text. It doesn't generate them on the fly,
@@ -200,7 +200,7 @@ load-starter-plugin-list() {
   zgenom load supercrabtree/k
 
   # Be compatible with the old settings files for now
-  if [[ -f ~/.zsh-quickstart-use-bullet-train ]] || [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
+  if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-use-bullet-train ]] || [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
     # Bullet train prompt setup.
     zgenom load https://github.com/caiogondim/bullet-train.zsh
   else
@@ -216,12 +216,12 @@ load-starter-plugin-list() {
 setup-zgen-repos() {
   ZQS_override_plugin_list=''
   # Check the old name for backward compatibility
-  if [[ -r $HOME/.zgen-local-plugins ]]; then
-    ZQS_override_plugin_list="$HOME/.zgen-local-plugins"
+  if [[ -r ${ZDOTDIR:-$HOME}/.zgen-local-plugins ]]; then
+    ZQS_override_plugin_list="${ZDOTDIR:-$HOME}/.zgen-local-plugins"
   fi
   # If they have both, the new name takes precedence
-  if [[ -r $HOME/.zsh-quickstart-local-plugins ]]; then
-    ZQS_override_plugin_list="$HOME/.zsh-quickstart-local-plugins"
+  if [[ -r ${ZDOTDIR:-$HOME}/.zsh-quickstart-local-plugins ]]; then
+    ZQS_override_plugin_list="${ZDOTDIR:-$HOME}/.zsh-quickstart-local-plugins"
   fi
 
   if [[ -r "$ZQS_override_plugin_list" ]]; then
@@ -266,11 +266,11 @@ fi
 # Unfortunately, stat will return the modification time of the
 # symlink instead of the target file, so construct a full path to hand off
 # to stat so it returns the modification time of the actual .zgen-setup file.
-if [[ -f ~/.zgen-setup ]]; then
-  REAL_ZGEN_SETUP=~/.zgen-setup
+if [[ -f ${ZDOTDIR:-$HOME}/.zgen-setup ]]; then
+  REAL_ZGEN_SETUP=${ZDOTDIR:-$HOME}/.zgen-setup
 fi
-if [[ -L ~/.zgen-setup ]]; then
-  REAL_ZGEN_SETUP="$(readlink ~/.zgen-setup)"
+if [[ -L ${ZDOTDIR:-$HOME}/.zgen-setup ]]; then
+  REAL_ZGEN_SETUP="$(readlink ${ZDOTDIR:-$HOME}/.zgen-setup)"
 fi
 
 # If you don't want my standard starter set of plugins, create a file named
@@ -282,34 +282,34 @@ fi
 #
 # Use readlink in case the user is symlinking from another repo checkout, so
 # they can use a personal dotfiles repository cleanly.
-if [[ -f ~/.zgen-local-plugins ]]; then
-  REAL_ZGEN_SETUP=~/.zgen-local-plugins
+if [[ -f ${ZDOTDIR:-$HOME}/.zgen-local-plugins ]]; then
+  REAL_ZGEN_SETUP=${ZDOTDIR:-$HOME}/.zgen-local-plugins
 fi
-if [[ -L ~/.zgen-local-plugins ]]; then
-  REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zgen-local-plugins)"
+if [[ -L ${ZDOTDIR:-$HOME}/.zgen-local-plugins ]]; then
+  REAL_ZGEN_SETUP="${ZDOTDIR:-$HOME}/$(readlink ${ZDOTDIR:-$HOME}/.zgen-local-plugins)"
 fi
 # Old file still works for backward compatibility, but we want the new file
 # to take precedence when both exist.
-if [[ -f ~/.zsh-quickstart-local-plugins ]]; then
-  REAL_ZGEN_SETUP=~/.zsh-quickstart-local-plugins
+if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-local-plugins ]]; then
+  REAL_ZGEN_SETUP=${ZDOTDIR:-$HOME}/.zsh-quickstart-local-plugins
 fi
-if [[ -L ~/.zsh-quickstart-local-plugins ]]; then
-  REAL_ZGEN_SETUP="${HOME}/$(readlink ~/.zsh-quickstart-local-plugins)"
+if [[ -L ${ZDOTDIR:-$HOME}/.zsh-quickstart-local-plugins ]]; then
+  REAL_ZGEN_SETUP="${ZDOTDIR:-$HOME}/$(readlink ${ZDOTDIR:-$HOME}/.zsh-quickstart-local-plugins)"
 fi
 
 # If .zgen-setup is newer than init.zsh, regenerate init.zsh
-if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ~/.zgenom/init.zsh) ]; then
+if [ $(get_file_modification_time ${REAL_ZGEN_SETUP}) -gt $(get_file_modification_time ${ZDOTDIR:-$HOME}/.zgenom/init.zsh) ]; then
   echo "$(basename ${REAL_ZGEN_SETUP}) ($REAL_ZGEN_SETUP) updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP}"
   setup-zgen-repos
-elif [ -d ~/.zshrc.add-plugins.d ]; then
-  init_timestamp=$(get_file_modification_time ~/.zgenom/init.zsh)
-  plugins_dir_timestamp=$(get_file_modification_time ~/.zshrc.add-plugins.d)
+elif [ -d ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d ]; then
+  init_timestamp=$(get_file_modification_time ${ZDOTDIR:-$HOME}/.zgenom/init.zsh)
+  plugins_dir_timestamp=$(get_file_modification_time ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d)
   if [ "$plugins_dir_timestamp" -gt "$init_timestamp" ]; then
-      need_update="true"
+    need_update="true"
   fi
 
-  if [[ -n "$("ls" -A ~/.zshrc.add-plugins.d)" ]] && [[ -z $need_update ]]; then
-    for file in ~/.zshrc.add-plugins.d/*; do
+  if [[ -n "$("ls" -A ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d)" ]] && [[ -z ${need_update-} ]]; then
+    for file in ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d/*; do
       if [[ $(get_file_modification_time "${file}") -gt ${init_timestamp} ]]; then
         need_update="true"
         break
@@ -317,8 +317,8 @@ elif [ -d ~/.zshrc.add-plugins.d ]; then
     done
   fi
 
-  if [[ -n $need_update ]]; then
-    echo "Some files in ~/.zshrc.add-plugins.d updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP} and plugins dir"
+  if [[ -n ${need_update-} ]]; then
+    echo "Some files in ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d updated; creating a new init.zsh from plugin list in ${REAL_ZGEN_SETUP} and plugins dir"
     setup-zgen-repos
   fi
   unset init_timestamp
