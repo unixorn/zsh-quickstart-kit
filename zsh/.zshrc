@@ -29,6 +29,23 @@ function can_haz() {
   which "$@" > /dev/null 2>&1
 }
 
+function zqs-compdef-as() {
+  if [ $# == 0 ]; then
+    echo "Makes it simpler to use one command's completions for another command too"
+    echo
+    echo "Usage: zqs-compdef-as sourcecommand target"
+    echo 
+    echo "Example: To make z.lua use the same completions as cd, run"
+    echo
+    echo "zqs-compdef-as cd _zlua"
+  fi
+  if (($+_comps[$1])); then
+    compdef $_comps[$1] ${^@[2,-1]}=$1
+  else
+    echo "Could not find a compdef for $1"
+  fi
+}
+
 function zqs-debug() {
   if [[ -f ${ZDOTDIR:-$HOME}/.zqs-debug-mode ]]; then
     echo $@
