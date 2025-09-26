@@ -17,3 +17,7 @@
 .DS_Store
 .idea
 .vscode
+# Make it easier to mark something not to be committed
+# dc = don't commit
+*.dc.*
+*.log
