@@ -34,7 +34,7 @@ function zqs-compdef-as() {
     echo "Makes it simpler to use one command's completions for another command too"
     echo
     echo "Usage: zqs-compdef-as sourcecommand target"
-    echo 
+    echo
     echo "Example: To make z.lua use the same completions as cd, run"
     echo
     echo "zqs-compdef-as cd _zlua"
@@ -997,7 +997,7 @@ function zqs() {
       touch ${ZDOTDIR:-$HOME}/.zqs-zprof-enabled
       echo "New ZSH sessions will use profiling."
       ;;
-      
+
     *)
       zqs-help
       ;;
