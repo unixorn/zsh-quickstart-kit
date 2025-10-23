@@ -25,6 +25,7 @@
   - [Behavior toggles](#behavior-toggles)
     - [zqs](#zqs)
       - [zqs check-for-updates](#zqs-check-for-updates)
+      - [zqs-compdef-as](#zqs-compdef-as)
       - [zqs disable-bindkey-handling](#zqs-disable-bindkey-handling)
       - [zqs disable-1password-agent](#zqs-disable-1password-agent)
       - [zqs enable-1password-agent](#zqs-enable-1password-agent)
