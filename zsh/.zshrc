@@ -826,6 +826,7 @@ function zqs-help() {
   echo "zqs update - Update the quickstart kit and all your plugins"
   echo "zqs update-plugins - Update your plugins"
   echo "zqs cleanup - Cleanup unused plugins after removing them from the list"
+  echo "zqs compdef-as - Set a command to use the same tab completion function as another command"
   echo ""
   echo "Quickstart settings commands:"
 
@@ -870,6 +871,10 @@ function zqs() {
 # Internal commands
     'cleanup')
       zgenom clean
+      ;;
+
+    'compdef-as')
+      zqs-compdef-as $@
       ;;
 
     'delete-setting')
