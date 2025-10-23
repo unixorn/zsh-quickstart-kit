@@ -25,6 +25,7 @@
   - [Behavior toggles](#behavior-toggles)
     - [zqs](#zqs)
       - [zqs check-for-updates](#zqs-check-for-updates)
+      - [zqs-compdef-as](#zqs-compdef-as)
       - [zqs disable-bindkey-handling](#zqs-disable-bindkey-handling)
       - [zqs disable-1password-agent](#zqs-disable-1password-agent)
       - [zqs enable-1password-agent](#zqs-enable-1password-agent)
@@ -250,6 +251,14 @@ As of 2021-11-13, I've added a `zqs` command to start exposing some of the confi
 ##### zqs check-for-updates
 
 Updates the quickstart kit if it has been longer than seven days since the last update.
+
+##### zqs-compdef-as
+
+Makes it simpler to use one command's completions for another command too.
+
+Usage: `zqs-compdef-as original_command target_command`
+
+Example: To make `z.lua` use the same completions as `cd`, run `zqs-compdef-as cd _zlua`
 
 ##### zqs disable-bindkey-handling
 
