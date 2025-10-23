@@ -251,6 +251,14 @@ As of 2021-11-13, I've added a `zqs` command to start exposing some of the confi
 
 Updates the quickstart kit if it has been longer than seven days since the last update.
 
+##### zqs-compdef-as
+
+Makes it simpler to use one command's completions for another command too.
+
+Usage: `zqs-compdef-as original_command target_command`
+
+Example: To make `z.lua` use the same completions as `cd`, run `zqs-compdef-as cd _zlua`
+
 ##### zqs disable-bindkey-handling
 
 Disable `bindkey` setup and alias expansion in the quickstart `.zshrc` so people can use plugins like [globalias](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/globalias) to handle it instead.
