@@ -308,6 +308,7 @@ for path_candidate in /Applications/Xcode.app/Contents/Developer/usr/bin \
   ~/.cargo/bin \
   ~/.linuxbrew/bin \
   ~/.linuxbrew/sbin \
+  ~/.local/bin \
   ~/.rbenv/bin \
   ~/bin \
   ~/src/gocode/bin \
