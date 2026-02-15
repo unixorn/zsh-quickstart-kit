@@ -276,6 +276,14 @@ Enable using 1Password's `ssh` agent starting with the next new ZSH session. Thi
 
 Let the quickstart's `.zshrc` configure `bindkey` setup and alias expansion. This is the default behavior.
 
+##### zqs disable-fzf-zsh-plugin
+
+Stop loading the [unixorn/fzf-zsh-plugin](https://github.com/unixorn/fzf-zsh-plugin) starting with the next ZSH session.
+
+##### zqs enable-fzf-zsh-plugin
+
+Start loading the [unixorn/fzf-zsh-plugin](https://github.com/unixorn/fzf-zsh-plugin) starting with the next ZSH session. This is the default behavior.
+
 ##### zqs disable-diff-so-fancy
 
 Stop loading the [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) plugin starting with the next ZSH session.

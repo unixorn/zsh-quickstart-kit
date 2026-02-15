@@ -219,6 +219,14 @@ function zsh-quickstart-enable-bindkey-handling() {
   _zqs-set-setting handle-bindkeys true
 }
 
+function zsh-quickstart-disable-fzf-zsh-plugin() {
+  _zqs-set-setting load-fzf-zsh-plugin false
+}
+
+function zsh-quickstart-enable-fzf-zsh-plugin() {
+  _zqs-set-setting load-fzf-zsh-plugin true
+}
+
 function zqs-quickstart-disable-control-c-decorator() {
   _zqs-set-setting control-c-decorator false
   echo "Disabled the control-c decorator in future zsh sessions."
@@ -837,6 +845,9 @@ function zqs-help() {
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
   echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. This is the default behavior."
 
+  echo "zqs disable-fzf-zsh-plugin - Don't load the unixorn/fzf-zsh-plugin"
+  echo "zqs enable-fzf-zsh-plugin - Load the unixorn/fzf-zsh-plugin (default)"
+
   echo "zqs enable-control-c-decorator - Creates a TRAPINT function to display '^C' when you type control-c instead of being silent. Default behavior."
   echo "zqs disable-control-c-decorator - No longer creates a TRAPINT function to display '^C' when you type control-c."
 
@@ -924,6 +935,14 @@ function zqs() {
 
     'enable-bindkey-handling')
       zsh-quickstart-enable-bindkey-handling
+      ;;
+
+    'disable-fzf-zsh-plugin')
+      zsh-quickstart-disable-fzf-zsh-plugin
+      ;;
+
+    'enable-fzf-zsh-plugin')
+      zsh-quickstart-enable-fzf-zsh-plugin
       ;;
 
     'disable-control-c-decorator')
@@ -1015,4 +1034,4 @@ if [[ -f ${ZDOTDIR:-$HOME}/.zqs-zprof-enabled ]]; then
   zprof
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && [[ "$(_zqs-get-setting load-fzf-zsh-plugin true)" == 'true' ]] && source ~/.fzf.zsh
