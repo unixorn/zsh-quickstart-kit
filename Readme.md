@@ -30,6 +30,8 @@
       - [zqs disable-1password-agent](#zqs-disable-1password-agent)
       - [zqs enable-1password-agent](#zqs-enable-1password-agent)
       - [zqs enable-bindkey-handling](#zqs-enable-bindkey-handling)
+      - [zqs disable-fzf-zsh-plugin](#zqs-disable-fzf-zsh-plugin)
+      - [zqs enable-fzf-zsh-plugin](#zqs-enable-fzf-zsh-plugin)
       - [zqs disable-diff-so-fancy](#zqs-disable-diff-so-fancy)
       - [zqs enable-diff-so-fancy](#zqs-enable-diff-so-fancy)
       - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
