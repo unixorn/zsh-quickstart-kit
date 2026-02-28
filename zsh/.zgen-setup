@@ -121,7 +121,9 @@ load-starter-plugin-list() {
   fi
 
   # Supercharge your history search with fzf
-  zgenom load unixorn/fzf-zsh-plugin
+  if [[ "$(_zqs-get-setting load-fzf-zsh-plugin true)" == 'true' ]]; then
+    zgenom load unixorn/fzf-zsh-plugin
+  fi
 
   # Add my bitbucket git helpers plugin.
   zgenom load unixorn/bitbucket-git-helpers.plugin.zsh
