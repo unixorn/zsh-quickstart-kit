@@ -1,0 +1,812 @@
+#!/usr/bin/env bash
+
+set -u
+set -o pipefail
+
+# Unixorn-style zsh bootstrap for macOS.
+# Proceeds with each action only when the user types capital Y.
+
+MONONOKI_CASK="${MONONOKI_CASK:-font-mononoki}"
+MONONOKI_NERD_CASK="${MONONOKI_NERD_CASK:-font-mononoki-nerd-font}"
+
+# iTerm2 expects a PostScript font name in profile JSON.
+# This matches the Mononoki Nerd Font Mono file installed by Homebrew.
+ITERM_FONT_NAME="${ITERM_FONT_NAME:-MononokiNerdFontMono-Regular}"
+ITERM_FONT_SIZE="${ITERM_FONT_SIZE:-13}"
+
+ZGENOM_DIR="${ZGENOM_DIR:-$HOME/zgenom}"
+ZQS_DIR="${ZQS_DIR:-$HOME/zsh-quickstart-kit}"
+COBALT2_DIR="${COBALT2_DIR:-$HOME/.local/share/cobalt2-iterm}"
+
+COBALT2_PROFILE_NAME="${COBALT2_PROFILE_NAME:-Cobalt2 + Mononoki}"
+COBALT2_PROFILE_GUID="${COBALT2_PROFILE_GUID:-8FCEB4A2-7A90-4A7E-9AC3-17E9BBA6CB4A}"
+
+ask_y() {
+  local prompt="$1"
+  echo
+  read -r -p "$prompt Type Y to continue: " answer
+  [[ "$answer" == "Y" ]]
+}
+
+section() {
+  echo
+  echo "============================================================"
+  echo "$1"
+  echo "============================================================"
+}
+
+run_cmd() {
+  echo "+ $*"
+  "$@"
+}
+
+fail_note() {
+  echo "⚠️  $1"
+}
+
+ok_note() {
+  echo "✅ $1"
+}
+
+is_macos() {
+  [[ "$(uname -s)" == "Darwin" ]]
+}
+
+load_brew_env() {
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+}
+
+have_brew() {
+  command -v brew >/dev/null 2>&1
+}
+
+brew_formula_installed() {
+  brew list --formula "$1" >/dev/null 2>&1
+}
+
+brew_cask_installed() {
+  brew list --cask "$1" >/dev/null 2>&1
+}
+
+have_python3() {
+  command -v python3 >/dev/null 2>&1
+}
+
+iterm_app_path() {
+  if [[ -d "/Applications/iTerm.app" ]]; then
+    echo "/Applications/iTerm.app"
+  elif [[ -d "$HOME/Applications/iTerm.app" ]]; then
+    echo "$HOME/Applications/iTerm.app"
+  else
+    echo ""
+  fi
+}
+
+iterm_version() {
+  local app
+  app="$(iterm_app_path)"
+  if [[ -n "$app" ]]; then
+    /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" \
+      "$app/Contents/Info.plist" 2>/dev/null || true
+  fi
+}
+
+version_lt() {
+  local IFS=.
+  local i
+  local -a a=($1)
+  local -a b=($2)
+
+  for ((i=0; i<3; i++)); do
+    a[$i]="${a[$i]:-0}"
+    b[$i]="${b[$i]:-0}"
+
+    if (( 10#${a[$i]} < 10#${b[$i]} )); then
+      return 0
+    elif (( 10#${a[$i]} > 10#${b[$i]} )); then
+      return 1
+    fi
+  done
+
+  return 1
+}
+
+current_login_shell() {
+  dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}'
+}
+
+preferred_zsh_path() {
+  if have_brew && brew_formula_installed zsh; then
+    local brew_zsh
+    brew_zsh="$(brew --prefix zsh)/bin/zsh"
+    if [[ -x "$brew_zsh" ]]; then
+      echo "$brew_zsh"
+      return
+    fi
+  fi
+
+  if [[ -x /bin/zsh ]]; then
+    echo "/bin/zsh"
+    return
+  fi
+
+  echo ""
+}
+
+register_shell_if_needed() {
+  local shell_path="$1"
+
+  if ! grep -qx "$shell_path" /etc/shells; then
+    if ask_y "$shell_path is not listed in /etc/shells. Add it with sudo?"; then
+      echo "$shell_path" | sudo tee -a /etc/shells >/dev/null
+      ok_note "Added $shell_path to /etc/shells."
+    else
+      fail_note "Cannot switch login shell until $shell_path is listed in /etc/shells."
+      return 1
+    fi
+  fi
+}
+
+install_brew_formula_if_missing() {
+  local formula="$1"
+  local label="${2:-$formula}"
+
+  if brew_formula_installed "$formula"; then
+    ok_note "$label is already installed."
+    return
+  fi
+
+  fail_note "$label is not installed."
+
+  if ask_y "Install $label with: brew install $formula ?"; then
+    brew install "$formula"
+  else
+    echo "Skipping $label."
+  fi
+}
+
+install_brew_cask_if_missing() {
+  local cask="$1"
+  local label="${2:-$cask}"
+
+  if brew_cask_installed "$cask"; then
+    ok_note "$label is already installed."
+    return
+  fi
+
+  fail_note "$label is not installed."
+
+  if ask_y "Install $label with: brew install --cask $cask ?"; then
+    brew install --cask "$cask"
+  else
+    echo "Skipping $label."
+  fi
+}
+
+clone_or_update_repo() {
+  local label="$1"
+  local repo_url="$2"
+  local target_dir="$3"
+
+  if [[ -d "$target_dir/.git" ]]; then
+    ok_note "$label repository already exists at: $target_dir"
+
+    if ask_y "Update $label with git pull --ff-only?"; then
+      git -C "$target_dir" pull --ff-only
+    else
+      echo "Skipping update for $label."
+    fi
+
+    return
+  fi
+
+  if [[ -e "$target_dir" ]]; then
+    fail_note "$target_dir exists but is not a git repository. Skipping $label clone."
+    return 1
+  fi
+
+  fail_note "$label repository is not installed."
+
+  if ask_y "Clone $label into $target_dir ?"; then
+    mkdir -p "$(dirname "$target_dir")"
+    git clone "$repo_url" "$target_dir"
+  else
+    echo "Skipping $label clone."
+  fi
+}
+
+check_command_line_tools() {
+  section "Step 0: Check Xcode Command Line Tools"
+
+  if xcode-select -p >/dev/null 2>&1; then
+    ok_note "Xcode Command Line Tools are installed."
+  else
+    fail_note "Xcode Command Line Tools are not installed. Homebrew and git may require them."
+
+    if ask_y "Open the Apple installer for Xcode Command Line Tools?"; then
+      xcode-select --install || true
+      echo
+      echo "After the installer completes, re-run this script."
+      exit 0
+    else
+      fail_note "Skipping Command Line Tools installation."
+    fi
+  fi
+}
+
+install_homebrew() {
+  section "Step 1: Check Homebrew"
+
+  load_brew_env
+
+  if have_brew; then
+    ok_note "Homebrew is installed at: $(command -v brew)"
+    brew --version | head -n 1
+    return
+  fi
+
+  fail_note "Homebrew is not installed."
+
+  if ask_y "Install Homebrew using the official install script from brew.sh?"; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    load_brew_env
+
+    if have_brew; then
+      ok_note "Homebrew installed successfully."
+      brew --version | head -n 1
+    else
+      fail_note "Homebrew install completed, but brew is not on PATH. Open a new terminal and re-run this script."
+      exit 1
+    fi
+  else
+    fail_note "Homebrew is required for the remaining automated steps."
+    exit 1
+  fi
+}
+
+install_or_upgrade_iterm2() {
+  section "Step 2: Check iTerm2 optional install"
+
+  local app
+  local version
+
+  app="$(iterm_app_path)"
+
+  if [[ -n "$app" ]]; then
+    version="$(iterm_version)"
+    ok_note "iTerm2 is installed at: $app"
+
+    if [[ -n "$version" ]]; then
+      echo "Detected iTerm2 version: $version"
+
+      if version_lt "$version" "3.3.6"; then
+        fail_note "This version is older than 3.3.6, which the Unixorn notes flag as affected by an RCE issue."
+
+        if ask_y "Upgrade iTerm2 with Homebrew Cask?"; then
+          brew upgrade --cask iterm2 || brew install --cask iterm2
+        fi
+      else
+        ok_note "iTerm2 is newer than the Unixorn minimum security note."
+      fi
+    fi
+
+    return
+  fi
+
+  fail_note "iTerm2 is not installed. This step is optional."
+
+  if ask_y "Install iTerm2 with Homebrew Cask?"; then
+    brew install --cask iterm2
+    ok_note "iTerm2 install attempted."
+  else
+    echo "Skipping iTerm2."
+  fi
+}
+
+install_stow() {
+  section "Step 3: Check GNU Stow"
+  install_brew_formula_if_missing "stow" "GNU Stow"
+
+  if command -v stow >/dev/null 2>&1; then
+    stow --version | head -n 1
+  fi
+}
+
+install_zsh() {
+  section "Step 4: Check Homebrew zsh"
+
+  if brew_formula_installed zsh; then
+    ok_note "Homebrew zsh is already installed."
+    "$(brew --prefix zsh)/bin/zsh" --version
+    return
+  fi
+
+  fail_note "Homebrew zsh is not installed."
+
+  if ask_y "Install newer Homebrew zsh with: brew install zsh ?"; then
+    brew install zsh
+    ok_note "Homebrew zsh install attempted."
+    "$(brew --prefix zsh)/bin/zsh" --version
+  else
+    echo "Skipping Homebrew zsh. The script can still use /bin/zsh if present."
+  fi
+}
+
+switch_shell_to_zsh() {
+  section "Step 5: Check login shell"
+
+  local current
+  local target
+
+  current="$(current_login_shell)"
+  target="$(preferred_zsh_path)"
+
+  if [[ -z "$target" ]]; then
+    fail_note "No usable zsh found."
+    return
+  fi
+
+  echo "Current login shell: ${current:-unknown}"
+  echo "Target login shell:  $target"
+
+  if [[ "$current" == "$target" ]]; then
+    ok_note "Your login shell is already set to $target."
+    return
+  fi
+
+  fail_note "Your login shell is not set to the target zsh."
+
+  if ask_y "Switch your login shell to $target ?"; then
+    register_shell_if_needed "$target" || return
+    chsh -s "$target" "$USER"
+    ok_note "Login shell switch attempted. Open a new terminal session for it to take effect."
+  else
+    echo "Skipping shell switch."
+  fi
+}
+
+install_mononoki_fonts() {
+  section "Step 6: Check Mononoki fonts"
+
+  install_brew_cask_if_missing "$MONONOKI_CASK" "Mononoki font"
+  install_brew_cask_if_missing "$MONONOKI_NERD_CASK" "Mononoki Nerd Font"
+
+  echo
+  echo "iTerm2 profile will use:"
+  echo "  ${ITERM_FONT_NAME} ${ITERM_FONT_SIZE}"
+  echo
+  echo "Override this before running if needed, for example:"
+  echo "  ITERM_FONT_NAME=MononokiNerdFont-Regular ITERM_FONT_SIZE=14 ./bootstrap-unixorn-zsh"
+}
+
+install_fzf() {
+  section "Step 7: Check fzf"
+
+  if brew_formula_installed fzf; then
+    ok_note "fzf is already installed."
+    fzf --version || true
+  else
+    fail_note "fzf is not installed."
+
+    if ask_y "Install fzf with: brew install fzf ?"; then
+      brew install fzf
+      ok_note "fzf install attempted."
+    else
+      echo "Skipping fzf."
+      return
+    fi
+  fi
+}
+
+configure_fzf() {
+  section "Step 8: Configure fzf shell integration"
+
+  if ! brew_formula_installed fzf; then
+    fail_note "fzf is not installed, so cannot configure it."
+    return
+  fi
+
+  local fzf_install
+  fzf_install="$(brew --prefix fzf)/install"
+
+  if [[ ! -x "$fzf_install" ]]; then
+    fail_note "Could not find executable fzf install script at: $fzf_install"
+    return
+  fi
+
+  if [[ -f "$HOME/.fzf.zsh" || -f "$HOME/.fzf.bash" ]]; then
+    ok_note "fzf shell integration files already exist."
+    echo "Found:"
+    [[ -f "$HOME/.fzf.zsh" ]] && echo "  $HOME/.fzf.zsh"
+    [[ -f "$HOME/.fzf.bash" ]] && echo "  $HOME/.fzf.bash"
+  else
+    fail_note "fzf shell integration files were not found."
+  fi
+
+  echo
+  echo "This will run the equivalent of:"
+  echo "  sh \"\$(brew --prefix fzf)/install\""
+  echo
+  echo "But it will automate the Unixorn choices:"
+  echo "  key bindings: yes"
+  echo "  completion:   yes"
+  echo "  update shell config files: no"
+  echo
+
+  if ask_y "Run fzf install with key bindings + completion, but without updating shell rc files?"; then
+    "$fzf_install" --key-bindings --completion --no-update-rc
+    ok_note "fzf shell integration attempted."
+
+    echo
+    echo "Because you chose not to update shell config files, add this manually if wanted:"
+    echo
+    echo '  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh'
+    echo
+    echo "For zsh, that usually goes in:"
+    echo "  ~/.zshrc"
+  else
+    echo "Skipping fzf shell integration."
+  fi
+}
+
+install_zgenom() {
+  section "Step 9: Install Zgenom"
+
+  clone_or_update_repo \
+    "Zgenom" \
+    "https://github.com/jandamm/zgenom.git" \
+    "$ZGENOM_DIR"
+}
+
+install_zsh_quickstart_kit() {
+  section "Step 10: Install Unixorn zsh quickstart kit"
+
+  clone_or_update_repo \
+    "Unixorn zsh quickstart kit" \
+    "https://github.com/unixorn/zsh-quickstart-kit.git" \
+    "$ZQS_DIR"
+}
+
+backup_stow_conflicts() {
+  local backup_dir
+  local src
+  local base
+  local target
+
+  backup_dir="$HOME/.unixorn-bootstrap-backups/$(date +%Y%m%d-%H%M%S)"
+  mkdir -p "$backup_dir"
+
+  for src in "$ZQS_DIR/zsh"/.[!.]* "$ZQS_DIR/zsh"/..?* "$ZQS_DIR/zsh"/*; do
+    [[ -e "$src" || -L "$src" ]] || continue
+
+    base="$(basename "$src")"
+    target="$HOME/$base"
+
+    [[ "$base" == "." || "$base" == ".." ]] && continue
+
+    if [[ -e "$target" || -L "$target" ]]; then
+      if [[ -L "$target" ]]; then
+        echo "Existing symlink found, leaving alone: $target"
+        continue
+      fi
+
+      if [[ -d "$target" && -d "$src" ]]; then
+        echo "Existing directory found, leaving for stow to merge: $target"
+        continue
+      fi
+
+      echo "Backing up $target to $backup_dir/$base"
+      mv "$target" "$backup_dir/$base"
+    fi
+  done
+
+  ok_note "Conflicting files backed up under: $backup_dir"
+}
+
+stow_zsh_quickstart_kit() {
+  section "Step 11: Configure zsh quickstart kit with Stow"
+
+  if [[ ! -d "$ZQS_DIR/zsh" ]]; then
+    fail_note "Cannot find $ZQS_DIR/zsh. Skipping Stow configuration."
+    return
+  fi
+
+  if ! command -v stow >/dev/null 2>&1; then
+    fail_note "GNU Stow is not available. Skipping Stow configuration."
+    return
+  fi
+
+  echo "This will symlink the quickstart kit's zsh dotfiles into:"
+  echo "  $HOME"
+  echo
+  echo "It uses:"
+  echo "  cd \"$ZQS_DIR\""
+  echo "  stow --target=\"$HOME\" zsh"
+
+  if ! ask_y "Configure zsh with Unixorn quickstart kit using Stow?"; then
+    echo "Skipping zsh quickstart Stow configuration."
+    return
+  fi
+
+  if (cd "$ZQS_DIR" && stow -n --target="$HOME" zsh); then
+    (cd "$ZQS_DIR" && stow --target="$HOME" zsh)
+    ok_note "Unixorn zsh quickstart kit stowed into $HOME."
+    return
+  fi
+
+  fail_note "Stow dry-run reported conflicts."
+
+  if ask_y "Back up likely conflicting dotfiles and retry Stow?"; then
+    backup_stow_conflicts
+
+    if (cd "$ZQS_DIR" && stow --target="$HOME" zsh); then
+      ok_note "Unixorn zsh quickstart kit stowed into $HOME."
+    else
+      fail_note "Stow still failed. You may need to inspect conflicts manually."
+    fi
+  else
+    echo "Skipping Stow after conflict."
+  fi
+}
+
+install_cobalt2_repo() {
+  section "Step 12: Install Cobalt2 iTerm repository"
+
+  clone_or_update_repo \
+    "Cobalt2 iTerm" \
+    "https://github.com/wesbos/cobalt2-iterm.git" \
+    "$COBALT2_DIR"
+}
+
+ensure_python3_for_iterm_profile() {
+  if have_python3; then
+    return 0
+  fi
+
+  fail_note "python3 is required to generate the iTerm2 Dynamic Profile."
+
+  if ask_y "Install Python with Homebrew?"; then
+    brew install python
+  else
+    fail_note "Skipping Python install. Cannot generate iTerm2 Dynamic Profile."
+    return 1
+  fi
+
+  have_python3
+}
+
+create_cobalt2_iterm_dynamic_profile() {
+  section "Step 13: Create iTerm2 Cobalt2 + Mononoki Dynamic Profile"
+
+  local colors_file
+  local dynamic_profiles_dir
+  local output_file
+
+  colors_file="$COBALT2_DIR/cobalt2.itermcolors"
+  dynamic_profiles_dir="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
+  output_file="$dynamic_profiles_dir/cobalt2-mononoki.json"
+
+  if [[ -z "$(iterm_app_path)" ]]; then
+    fail_note "iTerm2 is not installed, so skipping iTerm2 profile creation."
+    return
+  fi
+
+  if [[ ! -f "$colors_file" ]]; then
+    fail_note "Could not find Cobalt2 colour file at: $colors_file"
+    return
+  fi
+
+  ensure_python3_for_iterm_profile || return
+
+  echo "This will create or replace:"
+  echo "  $output_file"
+  echo
+  echo "Profile name:"
+  echo "  $COBALT2_PROFILE_NAME"
+  echo
+  echo "Font:"
+  echo "  ${ITERM_FONT_NAME} ${ITERM_FONT_SIZE}"
+
+  if ! ask_y "Create the iTerm2 Dynamic Profile for Cobalt2 + Mononoki?"; then
+    echo "Skipping iTerm2 Dynamic Profile creation."
+    return
+  fi
+
+  mkdir -p "$dynamic_profiles_dir"
+
+  python3 - "$colors_file" "$output_file" "$ITERM_FONT_NAME" "$ITERM_FONT_SIZE" "$COBALT2_PROFILE_GUID" "$COBALT2_PROFILE_NAME" <<'PY'
+import json
+import os
+import plistlib
+import sys
+
+colors_path, output_path, font_name, font_size, guid, profile_name = sys.argv[1:]
+
+with open(colors_path, "rb") as f:
+    colors = plistlib.load(f)
+
+profile = dict(colors)
+profile.update({
+    "Name": profile_name,
+    "Guid": guid,
+    "Normal Font": f"{font_name} {font_size}",
+    "Non Ascii Font": f"{font_name} {font_size}",
+    "Use Non-ASCII Font": True,
+    "ASCII Anti Aliased": True,
+    "Non-ASCII Anti Aliased": True,
+    "Tags": ["Unixorn", "Cobalt2", "Mononoki"],
+    "Rows": 30,
+    "Columns": 120,
+    "Unlimited Scrollback": True,
+    "Rewritable": True
+})
+
+payload = {"Profiles": [profile]}
+
+with open(output_path, "w", encoding="utf-8") as f:
+    json.dump(payload, f, indent=2, sort_keys=True)
+
+print(output_path)
+PY
+
+  ok_note "Created iTerm2 Dynamic Profile: $output_file"
+
+  echo
+  echo "iTerm2 should load this profile automatically when it starts or reloads Dynamic Profiles."
+  echo "Profile name: $COBALT2_PROFILE_NAME"
+}
+
+set_cobalt2_iterm_as_default() {
+  section "Step 14: Make Cobalt2 + Mononoki the default iTerm2 profile"
+
+  if [[ -z "$(iterm_app_path)" ]]; then
+    fail_note "iTerm2 is not installed, so skipping default profile setup."
+    return
+  fi
+
+  echo "This attempts to set iTerm2's default profile GUID to:"
+  echo "  $COBALT2_PROFILE_GUID"
+  echo
+  echo "If iTerm2 is currently running, quit and reopen it after this step."
+
+  if ask_y "Attempt to make Cobalt2 + Mononoki the default iTerm2 profile?"; then
+    defaults write com.googlecode.iterm2 "Default Bookmark Guid" -string "$COBALT2_PROFILE_GUID"
+    ok_note "Default iTerm2 profile GUID updated."
+
+    echo
+    echo "Manual fallback if iTerm2 does not pick it up:"
+    echo "  iTerm2 -> Settings -> Profiles"
+    echo "  Select '$COBALT2_PROFILE_NAME'"
+    echo "  Other Actions -> Set as Default"
+  else
+    echo "Skipping iTerm2 default profile update."
+  fi
+}
+
+install_cobalt2_zsh_theme_file() {
+  section "Step 15: Install optional Cobalt2 zsh theme file"
+
+  local source_theme
+  local omz_custom
+  local target_theme
+
+  source_theme="$COBALT2_DIR/cobalt2.zsh-theme"
+  omz_custom="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+  target_theme="$omz_custom/themes/cobalt2.zsh-theme"
+
+  if [[ ! -f "$source_theme" ]]; then
+    fail_note "Could not find Cobalt2 zsh theme at: $source_theme"
+    return
+  fi
+
+  echo "This installs the Cobalt2 zsh theme file into:"
+  echo "  $target_theme"
+  echo
+  echo "Note:"
+  echo "  The Unixorn quickstart kit currently defaults to powerlevel10k."
+  echo "  This step installs the Cobalt2 zsh theme file for availability,"
+  echo "  but it does not forcibly replace the quickstart kit prompt."
+
+  if ask_y "Install Cobalt2 zsh theme file into the oh-my-zsh custom themes directory?"; then
+    mkdir -p "$(dirname "$target_theme")"
+    cp "$source_theme" "$target_theme"
+    ok_note "Installed Cobalt2 zsh theme file."
+
+    echo
+    echo "To use it in a classic oh-my-zsh setup, set:"
+    echo '  ZSH_THEME="cobalt2"'
+    echo
+    echo "For the Unixorn quickstart kit, I would keep powerlevel10k unless you specifically want to rework the kit's prompt setup."
+  else
+    echo "Skipping Cobalt2 zsh theme file."
+  fi
+}
+
+initialize_zsh_quickstart_once() {
+  section "Step 16: Optional first zsh initialization"
+
+  local target_zsh
+  target_zsh="$(preferred_zsh_path)"
+
+  if [[ -z "$target_zsh" ]]; then
+    fail_note "No usable zsh found."
+    return
+  fi
+
+  echo "This opens a one-off zsh login shell so the quickstart kit can initialize plugins."
+  echo "You may see zgenom/oh-my-zsh/plugin setup output."
+
+  if ask_y "Run one-off zsh initialization now?"; then
+    "$target_zsh" -lic 'echo "zsh quickstart initialization complete."; exit'
+  else
+    echo "Skipping one-off zsh initialization."
+  fi
+}
+
+open_iterm2_optional() {
+  section "Step 17: Optional open iTerm2"
+
+  if [[ -z "$(iterm_app_path)" ]]; then
+    echo "iTerm2 is not installed, so skipping launch."
+    return
+  fi
+
+  if ask_y "Open iTerm2 now?"; then
+    open -a iTerm || open -a iTerm2 || true
+  else
+    echo "Skipping iTerm2 launch."
+  fi
+}
+
+main() {
+  section "Unixorn zsh bootstrap"
+
+  if ! is_macos; then
+    echo "This script is intended for macOS only."
+    exit 1
+  fi
+
+  echo "This script checks each step and only makes changes after you type capital Y."
+  echo "Anything else skips that step."
+
+  check_command_line_tools
+  install_homebrew
+
+  load_brew_env
+
+  install_or_upgrade_iterm2
+  install_stow
+  install_zsh
+  switch_shell_to_zsh
+  install_mononoki_fonts
+  install_fzf
+  configure_fzf
+  install_zgenom
+  install_zsh_quickstart_kit
+  stow_zsh_quickstart_kit
+  install_cobalt2_repo
+  create_cobalt2_iterm_dynamic_profile
+  set_cobalt2_iterm_as_default
+  install_cobalt2_zsh_theme_file
+  initialize_zsh_quickstart_once
+  open_iterm2_optional
+
+  section "Done"
+
+  echo "Bootstrap checks completed."
+  echo
+  echo "Recommended final checks:"
+  echo "  zsh --version"
+  echo "  echo \$SHELL"
+  echo "  brew list stow zsh fzf"
+  echo "  brew list --cask $MONONOKI_CASK $MONONOKI_NERD_CASK"
+  echo "  ls \"$HOME/Library/Application Support/iTerm2/DynamicProfiles\""
+  echo
+  echo "If your login shell changed, open a new terminal window."
+}
+
+main "$@"
