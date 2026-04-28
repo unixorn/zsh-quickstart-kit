@@ -17,6 +17,8 @@
   - [OS-specific setup](#os-specific-setup)
     - [fzf](#fzf)
     - [macOS](#macos)
+        - [Bootstrap](#bootstrap)
+        - [Mostly Manual](#mostly-manual)
     - [Linux](#linux)
   - [Set up Zgenom and the starter kit](#set-up-zgenom-and-the-starter-kit)
 - [Contents of the kit](#contents-of-the-kit)
