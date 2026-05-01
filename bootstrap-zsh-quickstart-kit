@@ -48,20 +48,20 @@ ok_note() {
   echo "✅ $1"
 }
 
+has() {
+  command -v "$@" >/dev/null 2>&1
+}
+
 is_macos() {
   [[ "$(uname -s)" == "Darwin" ]]
 }
 
 load_brew_env() {
-  if [[ -x /opt/homebrew/bin/brew ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  elif [[ -x /usr/local/bin/brew ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"
+  if has brew; then
+    eval "$(brew shellenv)"
+  else
+    fail_note "Can't find brew in your PATH"
   fi
-}
-
-have_brew() {
-  command -v brew >/dev/null 2>&1
 }
 
 brew_formula_installed() {
@@ -70,10 +70,6 @@ brew_formula_installed() {
 
 brew_cask_installed() {
   brew list --cask "$1" >/dev/null 2>&1
-}
-
-have_python3() {
-  command -v python3 >/dev/null 2>&1
 }
 
 iterm_app_path() {
@@ -120,7 +116,7 @@ current_login_shell() {
 }
 
 preferred_zsh_path() {
-  if have_brew && brew_formula_installed zsh; then
+  if has brew && brew_formula_installed zsh; then
     local brew_zsh
     brew_zsh="$(brew --prefix zsh)/bin/zsh"
     if [[ -x "$brew_zsh" ]]; then
@@ -243,7 +239,7 @@ install_homebrew() {
 
   load_brew_env
 
-  if have_brew; then
+  if has brew; then
     ok_note "Homebrew is installed at: $(command -v brew)"
     brew --version | head -n 1
     return
@@ -255,7 +251,7 @@ install_homebrew() {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     load_brew_env
 
-    if have_brew; then
+    if has brew; then
       ok_note "Homebrew installed successfully."
       brew --version | head -n 1
     else
@@ -311,7 +307,7 @@ install_stow() {
   section "Step 3: Check GNU Stow"
   install_brew_formula_if_missing "stow" "GNU Stow"
 
-  if command -v stow >/dev/null 2>&1; then
+  if has stow; then
     stow --version | head -n 1
   fi
 }
@@ -380,13 +376,13 @@ install_mononoki_fonts() {
   echo "  ${ITERM_FONT_NAME} ${ITERM_FONT_SIZE}"
   echo
   echo "Override this before running if needed, for example:"
-  echo "  ITERM_FONT_NAME=MononokiNerdFont-Regular ITERM_FONT_SIZE=14 ./bootstrap-unixorn-zsh"
+  echo "  ITERM_FONT_NAME=MononokiNerdFont-Regular ITERM_FONT_SIZE=14 ./bootstrap-zsh-quickstart-kit"
 }
 
 install_fzf() {
   section "Step 7: Check fzf"
 
-  if brew_formula_installed fzf; then
+  if has fzf; then
     ok_note "fzf is already installed."
     fzf --version || true
   else
@@ -405,7 +401,7 @@ install_fzf() {
 configure_fzf() {
   section "Step 8: Configure fzf shell integration"
 
-  if ! brew_formula_installed fzf; then
+  if ! has fzf; then
     fail_note "fzf is not installed, so cannot configure it."
     return
   fi
@@ -515,7 +511,7 @@ stow_zsh_quickstart_kit() {
     return
   fi
 
-  if ! command -v stow >/dev/null 2>&1; then
+  if ! has stow; then
     fail_note "GNU Stow is not available. Skipping Stow configuration."
     return
   fi
@@ -563,7 +559,7 @@ install_cobalt2_repo() {
 }
 
 ensure_python3_for_iterm_profile() {
-  if have_python3; then
+  if has python3; then
     return 0
   fi
 
@@ -576,7 +572,7 @@ ensure_python3_for_iterm_profile() {
     return 1
   fi
 
-  have_python3
+  has python3
 }
 
 create_cobalt2_iterm_dynamic_profile() {
