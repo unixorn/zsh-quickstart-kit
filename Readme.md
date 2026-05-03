@@ -126,8 +126,8 @@ To enable the enhanced history search, you'll need to install [fzf](https://gith
 ###### Bootstrap
 
 1. Clone this repo
-2. In a terminal of your choice run `chmod +x bootstrap-unixorn-zsh` to make bootstrap-unixorn-zsh executable
-3. In that same terminal run `./bootstrap-unixorn-zsh` and follow the onscreen prompts
+2. In a terminal of your choice run `chmod +x bootsrap-zsh-quickstart-kit` to make bootsrap-zsh-quickstart-kit executable
+3. In that same terminal run `./bootsrap-zsh-quickstart-kit` and follow the onscreen prompts
 
 ###### Mostly Manual
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com) (optional). In my opinion, it is considerably nicer than the stock Terminal application that comes with macOS. There is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
