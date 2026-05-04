@@ -96,7 +96,7 @@ function load-shell-fragments() {
   else
     if [[ -d "$1" ]]; then
       if [ -n "$(/bin/ls -A "$1")" ]; then
-        rm -f "$1"/.*.un\~
+        rm -f "$1"/.*.un\~(N)
         for _zqs_fragment in $(/bin/ls -A "$1")
         do
           if [ -r "$1/$_zqs_fragment" ]; then
