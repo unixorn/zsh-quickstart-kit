@@ -1,7 +1,7 @@
 # ZSH Quickstart Kit
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Funixorn%2Fzsh-quickstart-kit%2Fbadge&style=plastic)](https://actions-badge.atrox.dev/unixorn/zsh-quickstart-kit/goto)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Funixorn%2Fzsh-quickstart-kit%2Fbadge%3Fref%3Dmain&style=plastic)](https://actions-badge.atrox.dev/unixorn/zsh-quickstart-kit/goto?ref=main)
 ![Awesomebot](https://github.com/unixorn/zsh-quickstart-kit/actions/workflows/awesomebot.yml/badge.svg)
 ![Megalinter](https://github.com/unixorn/zsh-quickstart-kit/actions/workflows/mega-linter.yml/badge.svg)
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/unixorn/zsh-quickstart-kit/main.svg)](https://github.com/unixorn/zsh-quickstart-kit)
@@ -126,8 +126,8 @@ To enable the enhanced history search, you'll need to install [fzf](https://gith
 ###### Bootstrap
 
 1. Clone this repo
-2. In a terminal of your choice run `chmod +x bootstrap-unixorn-zsh` to make bootstrap-unixorn-zsh executable
-3. In that same terminal run `./bootstrap-unixorn-zsh` and follow the onscreen prompts
+2. In a terminal of your choice run `chmod +x bootsrap-zsh-quickstart-kit` to make bootsrap-zsh-quickstart-kit executable
+3. In that same terminal run `./bootsrap-zsh-quickstart-kit` and follow the onscreen prompts
 
 ###### Mostly Manual
 1. Download iTerm2 from [http://www.iterm2.com](http://www.iterm2.com) (optional). In my opinion, it is considerably nicer than the stock Terminal application that comes with macOS. There is an RCE flaw in all versions of iTerm 2 before 3.3.6, so update if you're using an affected version.
