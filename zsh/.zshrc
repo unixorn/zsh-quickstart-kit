@@ -281,6 +281,14 @@ function _zqs-disable-diff-so-fancy() {
   _zqs-set-setting diff-so-fancy false
 }
 
+function _zqs-enable-k-plugin() {
+  _zqs-set-setting enable-k-plugin true
+}
+
+function _zqs-disable-k-plugin() {
+  _zqs-set-setting enable-k-plugin false
+}
+
 function zsh-quickstart-check-for-ssh-askpass() {
   if ! can_haz ssh-askpass; then
     echo "If you disable the ssh-askpass-require feature, you'll"
@@ -852,6 +860,9 @@ function zqs-help() {
   echo "zqs enable-control-c-decorator - Creates a TRAPINT function to display '^C' when you type control-c instead of being silent. Default behavior."
   echo "zqs disable-control-c-decorator - No longer creates a TRAPINT function to display '^C' when you type control-c."
 
+  echo "zqs enable-k-plugin - Load the k ZSH plugin (defaults to true)"
+  echo "zqs disable-k-plugin - Don't load the k ZSH plugin"
+
   echo "zqs enable-diff-so-fancy - Load the diff-so-fancy ZSH plugin (defaults to true)"
   echo "zqs disable-diff-so-fancy - Don't load the diff-so-fancy ZSH plugin"
 
@@ -970,6 +981,14 @@ function zqs() {
     'enable-diff-so-fancy')
       echo "Enabling diff-so-fancy plugin. It will be loaded the next time you start a ZSH session."
       _zqs-set-setting diff-so-fancy true
+      ;;
+
+    'disable-k-plugin')
+      _zqs-disable-k-plugin
+      ;;
+
+    'enable-k-plugin')
+      _zqs-enable-k-plugin
       ;;
 
     'disable-zmv-autoloading')
