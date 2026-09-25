@@ -201,7 +201,9 @@ load-starter-plugin-list() {
   # k is a zsh script / plugin to make directory listings more readable,
   # adding a bit of color and some git status information on files and
   # directories.
-  zgenom load supercrabtree/k
+  if [[ $(_zqs-get-setting enable-k-plugin true) == 'true' ]]; then
+    zgenom load supercrabtree/k
+  fi
 
   # Be compatible with the old settings files for now
   if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-use-bullet-train ]] || [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then

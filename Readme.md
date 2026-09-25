@@ -36,6 +36,8 @@
       - [zqs enable-fzf-zsh-plugin](#zqs-enable-fzf-zsh-plugin)
       - [zqs disable-diff-so-fancy](#zqs-disable-diff-so-fancy)
       - [zqs enable-diff-so-fancy](#zqs-enable-diff-so-fancy)
+      - [zqs disable-k-plugin](#zqs-disable-k-plugin)
+      - [zqs enable-k-plugin](#zqs-enable-k-plugin)
       - [zqs disable-omz-plugins](#zqs-disable-omz-plugins)
       - [zqs enable-control-c-decorator](#zqs-enable-control-c-decorator)
       - [zqs disable-control-c-decorator](#zqs-disable-control-c-decorator)
@@ -302,6 +304,14 @@ Stop loading the [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) plug
 ##### zqs enable-diff-so-fancy
 
 Start loading the [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) plugin starting with the next ZSH session. This is the default behavior.
+
+##### zqs disable-k-plugin
+
+Stop loading the [supercrabtree/k](https://github.com/supercrabtree/k) plugin starting with the next ZSH session.
+
+##### zqs enable-k-plugin
+
+Start loading the [supercrabtree/k](https://github.com/supercrabtree/k) plugin starting with the next ZSH session. This is the default behavior.
 
 ##### zqs disable-omz-plugins
 
