@@ -2,7 +2,7 @@
 #
 # Only including a shebang to trigger editors to use shell syntax highlighting
 #
-# Copyright 2006-2021 Joseph Block <jpb@unixorn.net>
+# Copyright 2006-2026 Joseph Block <jpb@unixorn.net>
 #
 # The ZSH Starter Kit allows you to replace the curated plugins list it
 # ships with with a custom one by creating a file named .zsh-quickstart-local-plugins.
@@ -11,7 +11,7 @@
 # fork of the starter kit.
 #
 # This example file duplicates the list of plugins that shipped with the
-# kit as of 2020-01-01.
+# kit as of 2026-11-11.
 
 ZGEN_LOADED=()
 ZGEN_COMPLETIONS=()
@@ -82,7 +82,9 @@ zgenom load eventi/noreallyjustfuckingstopalready
 
 # Warn you when you run a command that you've set an alias for without
 # using the alias.
-zgenom load djui/alias-tips
+if [[ "$(_zqs-get-setting use-alias-tips true)" == 'true' ]]; then
+  zgenom load djui/alias-tips
+fi
 
 # Add my collection of git helper scripts.
 zgenom load unixorn/git-extra-commands
@@ -93,10 +95,9 @@ if [[ "$(_zqs-get-setting diff-so-fancy true)" == 'true' ]]; then
 fi
 
 # Supercharge your history search with fzf
-zgenom load unixorn/fzf-zsh-plugin
-
-# Soup up command history search with fzf.
-zgen load unixorn/fzf-zsh-plugin
+if [[ "$(_zqs-get-setting load-fzf-zsh-plugin true)" == 'true' ]]; then
+  zgenom load unixorn/fzf-zsh-plugin
+fi
 
 # Add my bitbucket git helpers plugin.
 zgenom load unixorn/bitbucket-git-helpers.plugin.zsh
@@ -111,7 +112,15 @@ zgenom load peterhurford/git-it-on.zsh
 # in a repository securely by encrypting them with gnupg.
 zgenom load StackExchange/blackbox
 
-if [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
+if [[ -f ${ZDOTDIR:-$HOME}/.zqs-add-plugins ]]; then
+  source ${ZDOTDIR:-$HOME}/.zqs-add-plugins
+fi
+
+if [[ -d ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d ]]; then
+  load-shell-fragments ${ZDOTDIR:-$HOME}/.zshrc.add-plugins.d
+fi
+
+if [[ ! -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-no-omz ]] || [[ $(_zqs-get-setting load-omz-plugins false) == 'true' ]]; then
   # Load some oh-my-zsh plugins
   zgenom oh-my-zsh plugins/pip
   zgenom oh-my-zsh plugins/sudo
@@ -124,12 +133,15 @@ if [[ $(_zqs-get-setting load-omz-plugins true) == 'true' ]]; then
   zgenom oh-my-zsh plugins/rsync
   zgenom oh-my-zsh plugins/screen
   zgenom oh-my-zsh plugins/vagrant
-  if [[ $(uname -a | grep -ci Darwin) = 1 ]]; then
-    # Load macOS-specific plugins
+
+  if (( $+commands[brew] )); then
     zgenom oh-my-zsh plugins/brew
-    zgenom oh-my-zsh plugins/macos
   fi
 
+  if [ $(uname -a | grep -ci Darwin) = 1 ]; then
+    # Load macOS-specific plugins
+    zgenom oh-my-zsh plugins/macos
+  fi
 fi
 
 # A set of shell functions to make it easy to install small apps and
@@ -148,7 +160,7 @@ zgenom load srijanshetty/docker-zsh
 zgenom load unixorn/1password-op.plugin.zsh
 
 # Load me last
-GENCOMPL_FPATH=$HOME/.zsh/complete
+GENCOMPL_FPATH=${ZDOTDIR:-$HOME}/.zsh/complete
 
 # Very cool plugin that generates zsh completion functions for commands
 # if they have getopt-style help text. It doesn't generate them on the fly,
@@ -165,7 +177,8 @@ if [[ $(_zqs-get-setting enable-k-plugin true) == 'true' ]]; then
   zgenom load supercrabtree/k
 fi
 
-if [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
+# Be compatible with the old settings files for now
+if [[ -f ${ZDOTDIR:-$HOME}/.zsh-quickstart-use-bullet-train ]] || [[ $(_zqs-get-setting bullet-train false) == 'true' ]]; then
   # Bullet train prompt setup.
   zgenom load https://github.com/caiogondim/bullet-train.zsh
 else
@@ -174,5 +187,5 @@ else
   warn-about-prompt-change
 fi
 
-# Save it all to init script
+# Save it all to init script.
 zgenom save
