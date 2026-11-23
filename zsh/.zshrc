@@ -851,6 +851,9 @@ function zqs-help() {
   echo "zqs disable-1password-agent - New sessions will not use 1Password's ssh agent"
   echo "zqs enable-1password-agent - New sessions will use 1Password's ssh agent if present."
 
+  echo "zqs disable-alias-tips - Don't display aliases for commands you type"
+  echo "zqs enable-alias-tips - Display aliases for commands you type (default)"
+
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
   echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. This is the default behavior."
 
@@ -930,6 +933,15 @@ function zqs() {
       ;;
 
 # Set/Unset settings
+    'disable-alias-tips')
+      echo "Disabling alias tips. New ZSH sessions will no longer display aliases for commands you type."
+      _zqs-set-setting use-alias-tips false
+      ;;
+
+    'enable-alias-tips')
+      echo "Enabling alias tips. New ZSH sessions will show aliases if one exists for a command you type."
+      _zqs-set-setting use-alias-tips true
+      ;;
 
     'disable-1password-agent')
       echo "Disabling 1password ssh-agent. New ZSH sessions will no longer use 1password's ssh agent."
