@@ -853,7 +853,7 @@ function zqs-help() {
 
   echo "zqs disable-alias-tips - Don't display aliases for commands you type"
   echo "zqs enable-alias-tips - Display aliases for commands you type (default)"
-  
+
   echo "zqs disable-bindkey-handling - Set the quickstart to not touch any bindkey settings. Useful if you're using another plugin to handle it."
   echo "zqs enable-bindkey-handling - Set the quickstart to configure your bindkey settings. This is the default behavior."
 
